@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>RALLY — Know Your Game</title>
+<meta name="description" content="A dynamic rating that moves with your game. Get matched to your level. Build your performance identity on court." />
+<meta property="og:title" content="RALLY — Know Your Game" />
+<meta property="og:description" content="Performance identity for padel & tennis. Coming soon to Madrid." />
+<meta property="og:url" content="https://rallyrating.app" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  :root {
+    --black: #0D0D0D;
+    --accent: #CCFF00;
+    --surface: #F2F2F0;
+    --mid: #6B6B6B;
+    --border: #E0E0E0;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    min-height: 100vh;
+    background: var(--black);
+    color: #fff;
+    font-family: 'DM Sans', sans-serif;
+    overflow-x: hidden;
+  }
+
+  .page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Subtle accent glow top-right */
+  .glow {
+    position: absolute;
+    width: 700px;
+    height: 700px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(204,255,0,0.08) 0%, transparent 65%);
+    top: -150px;
+    right: -150px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Court line SVG background */
+  .court-bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.04;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: relative;
+    z-index: 10;
+    padding: 2rem 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .logo {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.5rem;
+    letter-spacing: -0.01em;
+    color: #fff;
+    text-decoration: none;
+  }
+
+  .logo span {
+    color: var(--accent);
+  }
+
+  .nav-pill {
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    border: 1px solid rgba(204,255,0,0.25);
+    padding: 0.4rem 1rem;
+    border-radius: 100px;
+  }
+
+  /* ─── HERO ─── */
+  .hero {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 3rem 2rem 4rem;
+    position: relative;
+    z-index: 10;
+  }
+
+  .eyebrow {
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .eyebrow::before,
+  .eyebrow::after {
+    content: '';
+    display: block;
+    width: 28px;
+    height: 1px;
+    background: var(--accent);
+    opacity: 0.4;
+  }
+
+  h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(3.2rem, 9vw, 6.5rem);
+    line-height: 1.0;
+    letter-spacing: -0.025em;
+    color: #fff;
+  }
+
+  h1 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .sub {
+    font-size: clamp(0.9rem, 2vw, 1.05rem);
+    color: rgba(255,255,255,0.42);
+    font-weight: 300;
+    margin-top: 1.75rem;
+    margin-bottom: 2.75rem;
+    max-width: 400px;
+    line-height: 1.7;
+  }
+
+  /* ─── FORM ─── */
+  .invite-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    width: 100%;
+    max-width: 440px;
+  }
+
+  .invite-form {
+    display: flex;
+    width: 100%;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 100px;
+    overflow: hidden;
+    background: rgba(255,255,255,0.04);
+    transition: border-color 0.25s ease;
+  }
+
+  .invite-form:focus-within {
+    border-color: rgba(204,255,0,0.45);
+  }
+
+  .invite-form input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    padding: 0.875rem 1.25rem;
+    font-size: 0.9rem;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    color: #fff;
+    min-width: 0;
+  }
+
+  .invite-form input::placeholder {
+    color: rgba(255,255,255,0.28);
+  }
+
+  .invite-form button {
+    background: var(--accent);
+    color: var(--black);
+    border: none;
+    padding: 0.875rem 1.5rem;
+    font-size: 0.8rem;
+    font-weight: 500;
+    font-family: 'DM Sans', sans-serif;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    border-radius: 100px;
+    margin: 4px;
+    transition: opacity 0.2s, transform 0.15s;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .invite-form button:hover {
+    opacity: 0.85;
+  }
+
+  .invite-form button:active {
+    transform: scale(0.96);
+  }
+
+  .error-msg {
+    font-size: 0.78rem;
+    color: rgba(255,100,100,0.8);
+    display: none;
+  }
+
+  .success-msg {
+    font-size: 0.85rem;
+    color: var(--accent);
+    letter-spacing: 0.03em;
+    display: none;
+    padding: 0.875rem 1.5rem;
+    border: 1px solid rgba(204,255,0,0.2);
+    border-radius: 100px;
+    background: rgba(204,255,0,0.05);
+    width: 100%;
+    text-align: center;
+  }
+
+  /* ─── STATS ─── */
+  .stats {
+    display: flex;
+    gap: 3rem;
+    margin-top: 4.5rem;
+    align-items: center;
+  }
+
+  .stat {
+    text-align: center;
+  }
+
+  .stat-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2.2rem;
+    color: #fff;
+    line-height: 1;
+  }
+
+  .stat-num span {
+    color: var(--accent);
+  }
+
+  .stat-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.25);
+    margin-top: 0.4rem;
+    font-weight: 400;
+  }
+
+  .stat-divider {
+    width: 1px;
+    height: 36px;
+    background: rgba(255,255,255,0.07);
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    position: relative;
+    z-index: 10;
+    padding: 1.5rem 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid rgba(255,255,255,0.05);
+  }
+
+  .footer-left {
+    font-size: 0.7rem;
+    color: rgba(255,255,255,0.18);
+    letter-spacing: 0.03em;
+  }
+
+  .footer-left a {
+    color: rgba(255,255,255,0.3);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .footer-left a:hover {
+    color: var(--accent);
+  }
+
+  .footer-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .live-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    animation: livepulse 2.2s ease-in-out infinite;
+  }
+
+  @keyframes livepulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.35; transform: scale(0.65); }
+  }
+
+  .footer-status {
+    font-size: 0.7rem;
+    color: rgba(255,255,255,0.18);
+    letter-spacing: 0.04em;
+  }
+
+  /* ─── ANIMATIONS ─── */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeUp 0.75s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  }
+
+  @keyframes fadeUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .d1 { animation-delay: 0.05s; }
+  .d2 { animation-delay: 0.2s; }
+  .d3 { animation-delay: 0.35s; }
+  .d4 { animation-delay: 0.5s; }
+  .d5 { animation-delay: 0.65s; }
+  .d6 { animation-delay: 0.8s; }
+  .d7 { animation-delay: 0.95s; }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 640px) {
+    nav {
+      padding: 1.5rem 1.25rem;
+    }
+
+    .hero {
+      padding: 2rem 1.25rem 3rem;
+    }
+
+    .stats {
+      gap: 1.75rem;
+      margin-top: 3rem;
+    }
+
+    .stat-num {
+      font-size: 1.75rem;
+    }
+
+    footer {
+      padding: 1.25rem;
+      flex-direction: column;
+      gap: 0.75rem;
+      text-align: center;
+    }
+  }
+
+  @media (max-width: 400px) {
+    .invite-form button {
+      padding: 0.875rem 1rem;
+      font-size: 0.75rem;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <div class="glow"></div>
+
+  <svg class="court-bg" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <rect x="120" y="60" width="1200" height="780" fill="none" stroke="white" stroke-width="2"/>
+    <line x1="720" y1="60" x2="720" y2="840" stroke="white" stroke-width="2"/>
+    <rect x="300" y="60" width="840" height="360" fill="none" stroke="white" stroke-width="2"/>
+    <rect x="300" y="480" width="840" height="360" fill="none" stroke="white" stroke-width="2"/>
+    <line x1="120" y1="450" x2="1320" y2="450" stroke="white" stroke-width="3"/>
+    <line x1="720" y1="60" x2="720" y2="450" stroke="white" stroke-width="1" opacity="0.4"/>
+    <line x1="720" y1="450" x2="720" y2="840" stroke="white" stroke-width="1" opacity="0.4"/>
+  </svg>
+
+  <nav class="fade-up d1">
+    <a href="/" class="logo">RALL<span>Y</span></a>
+    <div class="nav-pill">Madrid · 2025</div>
+  </nav>
+
+  <main class="hero">
+
+    <div class="eyebrow fade-up d2">Performance identity for padel &amp; tennis</div>
+
+    <h1 class="fade-up d3">
+      RALLY.<br>
+      <em>Know your game.</em>
+    </h1>
+
+    <p class="sub fade-up d4">
+      A dynamic rating that moves with your game.<br>
+      Get matched to your level. Build your performance identity on court.
+    </p>
+
+    <div class="invite-wrap fade-up d5">
+      <div class="invite-form" id="form-wrap">
+        <input
+          type="email"
+          id="email-input"
+          placeholder="your@email.com"
+          autocomplete="email"
+          aria-label="Email address"
+        />
+        <button type="button" onclick="handleSubmit()" aria-label="Request invite">
+          Request invite
+        </button>
+      </div>
+      <div class="error-msg" id="error-msg">Please enter a valid email address.</div>
+      <div class="success-msg" id="success-msg">You're on the list — we'll be in touch soon.</div>
+    </div>
+
+    <div class="stats fade-up d6">
+      <div class="stat">
+        <div class="stat-num">20<span>+</span></div>
+        <div class="stat-label">Founding players</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat">
+        <div class="stat-num">Elo<span>.</span></div>
+        <div class="stat-label">Rating system</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat">
+        <div class="stat-num">Mad<span>.</span></div>
+        <div class="stat-label">Launching in</div>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="fade-up d7">
+    <div class="footer-left">
+      © 2025 RALLY &nbsp;·&nbsp;
+      <a href="/cdn-cgi/l/email-protection#a5cdc0c9c9cae5d7c4c9c9dcd7c4d1cccbc28bc4d5d5"><span class="__cf_email__" data-cfemail="cda5a8a1a1a28dbfaca1a1b4bfacb9a4a3aae3acbdbd">[email&#160;protected]</span></a>
+    </div>
+    <div class="footer-right">
+      <div class="live-dot"></div>
+      <span class="footer-status">Coming soon</span>
+    </div>
+  </footer>
+
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  function handleSubmit() {
+    var input = document.getElementById('email-input');
+    var formWrap = document.getElementById('form-wrap');
+    var errorMsg = document.getElementById('error-msg');
+    var successMsg = document.getElementById('success-msg');
+    var email = input.value.trim();
+    var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!emailRegex.test(email)) {
+      errorMsg.style.display = 'block';
+      input.focus();
+      setTimeout(function() { errorMsg.style.display = 'none'; }, 3000);
+      return;
+    }
+
+    formWrap.style.display = 'n
