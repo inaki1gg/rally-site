@@ -10,484 +10,1233 @@
 <meta property="og:url" content="https://rallyrating.app" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet"/>
+
 <style>
-  *, *::before, *::after {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-  }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  :root {
-    --black: #0D0D0D;
-    --accent: #CCFF00;
-    --surface: #F2F2F0;
-    --mid: #6B6B6B;
-    --border: #E0E0E0;
-  }
+:root {
+  --black: #0D0D0D;
+  --accent: #CCFF00;
+  --surface: #F2F2F0;
+  --mid: #6B6B6B;
+  --border: #E0E0E0;
+  --white: #ffffff;
+}
 
-  html {
-    scroll-behavior: smooth;
-  }
+html { scroll-behavior: smooth; }
 
-  body {
-    min-height: 100vh;
-    background: var(--black);
-    color: #fff;
-    font-family: 'DM Sans', sans-serif;
-    overflow-x: hidden;
-  }
+body {
+  background: var(--black);
+  color: var(--white);
+  font-family: 'DM Sans', sans-serif;
+  overflow-x: hidden;
+}
 
-  .page {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    overflow: hidden;
-  }
+/* ─── NAV ─── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: 1.25rem 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(13,13,13,0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  transition: padding 0.3s;
+}
 
-  /* Subtle accent glow top-right */
-  .glow {
-    position: absolute;
-    width: 700px;
-    height: 700px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(204,255,0,0.08) 0%, transparent 65%);
-    top: -150px;
-    right: -150px;
-    pointer-events: none;
-    z-index: 0;
-  }
+.logo {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.4rem;
+  letter-spacing: -0.01em;
+  color: var(--white);
+  text-decoration: none;
+}
+.logo span { color: var(--accent); }
 
-  /* Court line SVG background */
-  .court-bg {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0.04;
-    pointer-events: none;
-    z-index: 0;
-  }
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  list-style: none;
+}
 
-  /* ─── NAV ─── */
-  nav {
-    position: relative;
-    z-index: 10;
-    padding: 2rem 3rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
+.nav-links a {
+  font-size: 0.78rem;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.45);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--white); }
 
-  .logo {
-    font-family: 'DM Serif Display', serif;
-    font-size: 1.5rem;
-    letter-spacing: -0.01em;
-    color: #fff;
-    text-decoration: none;
-  }
+.nav-cta {
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--black) !important;
+  background: var(--accent);
+  padding: 0.5rem 1.25rem;
+  border-radius: 100px;
+  text-decoration: none;
+  transition: opacity 0.2s !important;
+}
+.nav-cta:hover { opacity: 0.85 !important; color: var(--black) !important; }
 
-  .logo span {
-    color: var(--accent);
-  }
+.mobile-menu-btn {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  flex-direction: column;
+  gap: 5px;
+  padding: 4px;
+}
+.mobile-menu-btn span {
+  display: block;
+  width: 22px;
+  height: 1.5px;
+  background: var(--white);
+  transition: 0.3s;
+}
 
-  .nav-pill {
-    font-size: 0.7rem;
-    font-weight: 500;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--accent);
-    border: 1px solid rgba(204,255,0,0.25);
-    padding: 0.4rem 1rem;
-    border-radius: 100px;
-  }
+.mobile-nav {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: var(--black);
+  z-index: 99;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2.5rem;
+}
+.mobile-nav.open { display: flex; }
+.mobile-nav a {
+  font-family: 'DM Serif Display', serif;
+  font-size: 2.2rem;
+  color: var(--white);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.mobile-nav a:hover { color: var(--accent); }
+.mobile-close {
+  position: absolute;
+  top: 1.5rem; right: 1.5rem;
+  background: none;
+  border: none;
+  color: var(--white);
+  font-size: 1.5rem;
+  cursor: pointer;
+}
 
-  /* ─── HERO ─── */
-  .hero {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 3rem 2rem 4rem;
-    position: relative;
-    z-index: 10;
-  }
+/* ─── SECTIONS ─── */
+section {
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
 
-  .eyebrow {
-    font-size: 0.68rem;
-    font-weight: 500;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 1.75rem;
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-  }
+/* ─── HERO ─── */
+#home {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 8rem 2rem 5rem;
+}
 
-  .eyebrow::before,
-  .eyebrow::after {
-    content: '';
-    display: block;
-    width: 28px;
-    height: 1px;
-    background: var(--accent);
-    opacity: 0.4;
-  }
+.glow {
+  position: absolute;
+  width: 800px;
+  height: 800px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(204,255,0,0.07) 0%, transparent 65%);
+  top: -200px; right: -200px;
+  pointer-events: none;
+}
 
-  h1 {
-    font-family: 'DM Serif Display', serif;
-    font-size: clamp(3.2rem, 9vw, 6.5rem);
-    line-height: 1.0;
-    letter-spacing: -0.025em;
-    color: #fff;
-  }
+.court-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%; height: 100%;
+  opacity: 0.035;
+  pointer-events: none;
+}
 
-  h1 em {
-    font-style: italic;
-    color: var(--accent);
-  }
+.eyebrow {
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 1.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  position: relative;
+  z-index: 2;
+}
+.eyebrow::before, .eyebrow::after {
+  content: '';
+  display: block;
+  width: 28px; height: 1px;
+  background: var(--accent);
+  opacity: 0.4;
+}
 
-  .sub {
-    font-size: clamp(0.9rem, 2vw, 1.05rem);
-    color: rgba(255,255,255,0.42);
-    font-weight: 300;
-    margin-top: 1.75rem;
-    margin-bottom: 2.75rem;
-    max-width: 400px;
-    line-height: 1.7;
-  }
+h1 {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(3.2rem, 9vw, 6.5rem);
+  line-height: 1.0;
+  letter-spacing: -0.025em;
+  color: var(--white);
+  position: relative;
+  z-index: 2;
+}
+h1 em { font-style: italic; color: var(--accent); }
 
-  /* ─── FORM ─── */
-  .invite-wrap {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.75rem;
-    width: 100%;
-    max-width: 440px;
-  }
+.hero-sub {
+  font-size: clamp(0.9rem, 2vw, 1.05rem);
+  color: rgba(255,255,255,0.42);
+  font-weight: 300;
+  margin-top: 1.75rem;
+  margin-bottom: 2.75rem;
+  max-width: 400px;
+  line-height: 1.7;
+  position: relative;
+  z-index: 2;
+}
 
-  .invite-form {
-    display: flex;
-    width: 100%;
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 100px;
-    overflow: hidden;
-    background: rgba(255,255,255,0.04);
-    transition: border-color 0.25s ease;
-  }
+/* ─── FORM ─── */
+.invite-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  max-width: 440px;
+  position: relative;
+  z-index: 2;
+}
 
-  .invite-form:focus-within {
-    border-color: rgba(204,255,0,0.45);
-  }
+.invite-row {
+  display: flex;
+  width: 100%;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 100px;
+  overflow: hidden;
+  background: rgba(255,255,255,0.04);
+  transition: border-color 0.25s;
+}
+.invite-row:focus-within { border-color: rgba(204,255,0,0.45); }
 
-  .invite-form input {
-    flex: 1;
-    background: transparent;
-    border: none;
-    outline: none;
-    padding: 0.875rem 1.25rem;
-    font-size: 0.9rem;
-    font-family: 'DM Sans', sans-serif;
-    font-weight: 300;
-    color: #fff;
-    min-width: 0;
-  }
+.invite-row input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  padding: 0.875rem 1.25rem;
+  font-size: 0.9rem;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 300;
+  color: var(--white);
+  min-width: 0;
+}
+.invite-row input::placeholder { color: rgba(255,255,255,0.28); }
 
-  .invite-form input::placeholder {
-    color: rgba(255,255,255,0.28);
-  }
+.invite-row button {
+  background: var(--accent);
+  color: var(--black);
+  border: none;
+  padding: 0.875rem 1.5rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  font-family: 'DM Sans', sans-serif;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  border-radius: 100px;
+  margin: 4px;
+  transition: opacity 0.2s, transform 0.15s;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.invite-row button:hover { opacity: 0.85; }
+.invite-row button:active { transform: scale(0.96); }
+.invite-row button:disabled { opacity: 0.6; cursor: not-allowed; }
 
-  .invite-form button {
-    background: var(--accent);
-    color: var(--black);
-    border: none;
-    padding: 0.875rem 1.5rem;
-    font-size: 0.8rem;
-    font-weight: 500;
-    font-family: 'DM Sans', sans-serif;
-    letter-spacing: 0.05em;
-    cursor: pointer;
-    border-radius: 100px;
-    margin: 4px;
-    transition: opacity 0.2s, transform 0.15s;
-    white-space: nowrap;
-    flex-shrink: 0;
-  }
+.form-msg {
+  font-size: 0.8rem;
+  display: none;
+  padding: 0.75rem 1.25rem;
+  border-radius: 100px;
+  width: 100%;
+  text-align: center;
+}
+.form-msg.error { color: rgba(255,100,100,0.9); background: rgba(255,100,100,0.06); border: 1px solid rgba(255,100,100,0.15); }
+.form-msg.success { color: var(--accent); background: rgba(204,255,0,0.05); border: 1px solid rgba(204,255,0,0.2); }
 
-  .invite-form button:hover {
-    opacity: 0.85;
-  }
+/* ─── HERO STATS ─── */
+.hero-stats {
+  display: flex;
+  gap: 3rem;
+  margin-top: 4.5rem;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+}
+.stat { text-align: center; }
+.stat-num {
+  font-family: 'DM Serif Display', serif;
+  font-size: 2.2rem;
+  line-height: 1;
+}
+.stat-num span { color: var(--accent); }
+.stat-label {
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.25);
+  margin-top: 0.4rem;
+}
+.stat-divider {
+  width: 1px; height: 36px;
+  background: rgba(255,255,255,0.07);
+}
 
-  .invite-form button:active {
-    transform: scale(0.96);
-  }
+/* ─── HOW IT WORKS ─── */
+#how-it-works {
+  padding: 7rem 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #0a0a0a;
+  min-height: auto;
+}
 
-  .error-msg {
-    font-size: 0.78rem;
-    color: rgba(255,100,100,0.8);
-    display: none;
-  }
+.section-label {
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 1rem;
+}
 
-  .success-msg {
-    font-size: 0.85rem;
-    color: var(--accent);
-    letter-spacing: 0.03em;
-    display: none;
-    padding: 0.875rem 1.5rem;
-    border: 1px solid rgba(204,255,0,0.2);
-    border-radius: 100px;
-    background: rgba(204,255,0,0.05);
-    width: 100%;
-    text-align: center;
-  }
+.section-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  text-align: center;
+  margin-bottom: 1rem;
+  max-width: 600px;
+}
+.section-title em { font-style: italic; color: var(--accent); }
 
-  /* ─── STATS ─── */
-  .stats {
-    display: flex;
-    gap: 3rem;
-    margin-top: 4.5rem;
-    align-items: center;
-  }
+.section-sub {
+  font-size: 1rem;
+  color: rgba(255,255,255,0.4);
+  font-weight: 300;
+  text-align: center;
+  max-width: 480px;
+  line-height: 1.7;
+  margin-bottom: 5rem;
+}
 
-  .stat {
-    text-align: center;
-  }
+.steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  width: 100%;
+  max-width: 960px;
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 16px;
+  overflow: hidden;
+}
 
-  .stat-num {
-    font-family: 'DM Serif Display', serif;
-    font-size: 2.2rem;
-    color: #fff;
-    line-height: 1;
-  }
+.step {
+  padding: 2.5rem 2rem;
+  background: rgba(255,255,255,0.02);
+  position: relative;
+  transition: background 0.3s;
+}
+.step:hover { background: rgba(255,255,255,0.04); }
 
-  .stat-num span {
-    color: var(--accent);
-  }
+.step-num {
+  font-family: 'DM Serif Display', serif;
+  font-size: 3rem;
+  color: rgba(204,255,0,0.12);
+  line-height: 1;
+  margin-bottom: 1.25rem;
+}
 
-  .stat-label {
-    font-size: 0.65rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.25);
-    margin-top: 0.4rem;
-    font-weight: 400;
-  }
+.step h3 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.25rem;
+  margin-bottom: 0.75rem;
+  letter-spacing: -0.01em;
+}
 
-  .stat-divider {
-    width: 1px;
-    height: 36px;
-    background: rgba(255,255,255,0.07);
-  }
+.step p {
+  font-size: 0.88rem;
+  color: rgba(255,255,255,0.4);
+  line-height: 1.7;
+  font-weight: 300;
+}
 
-  /* ─── FOOTER ─── */
+.step-border {
+  border-right: 1px solid rgba(255,255,255,0.06);
+}
+
+/* Elo visual */
+.elo-visual {
+  margin-top: 5rem;
+  width: 100%;
+  max-width: 960px;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 16px;
+  padding: 3rem;
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+}
+.elo-text { flex: 1; }
+.elo-text h3 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.6rem;
+  margin-bottom: 0.75rem;
+  letter-spacing: -0.02em;
+}
+.elo-text p {
+  font-size: 0.9rem;
+  color: rgba(255,255,255,0.4);
+  line-height: 1.75;
+  font-weight: 300;
+}
+.elo-chart { flex: 1; position: relative; height: 120px; }
+.elo-line {
+  width: 100%;
+  height: 100%;
+}
+
+/* ─── FOR CLUBS ─── */
+#for-clubs {
+  padding: 7rem 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  min-height: auto;
+}
+
+.clubs-accent-bg {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 60% 60% at 80% 50%, rgba(204,255,0,0.04) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.clubs-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  width: 100%;
+  max-width: 960px;
+  align-items: center;
+  margin-top: 2rem;
+}
+
+.clubs-left { }
+.clubs-left .section-title { text-align: left; }
+.clubs-left .section-sub { text-align: left; }
+
+.benefit-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.benefit-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.875rem;
+  font-size: 0.9rem;
+  color: rgba(255,255,255,0.55);
+  line-height: 1.6;
+  font-weight: 300;
+}
+.benefit-dot {
+  flex-shrink: 0;
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  background: rgba(204,255,0,0.1);
+  border: 1px solid rgba(204,255,0,0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2px;
+}
+.benefit-dot::after {
+  content: '';
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.clubs-right {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.club-card {
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 12px;
+  padding: 1.5rem;
+  transition: border-color 0.3s, background 0.3s;
+}
+.club-card:hover {
+  border-color: rgba(204,255,0,0.2);
+  background: rgba(204,255,0,0.02);
+}
+
+.club-card-icon {
+  font-size: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+.club-card h4 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1rem;
+  margin-bottom: 0.4rem;
+  letter-spacing: -0.01em;
+}
+.club-card p {
+  font-size: 0.82rem;
+  color: rgba(255,255,255,0.35);
+  line-height: 1.6;
+  font-weight: 300;
+}
+
+.clubs-cta {
+  margin-top: 2.5rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  color: var(--black);
+  background: var(--accent);
+  padding: 0.75rem 1.5rem;
+  border-radius: 100px;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+.clubs-cta:hover { opacity: 0.85; }
+
+/* ─── ABOUT ─── */
+#about {
+  padding: 7rem 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #0a0a0a;
+  min-height: auto;
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  width: 100%;
+  max-width: 960px;
+  margin-top: 3rem;
+  align-items: start;
+}
+
+.about-text p {
+  font-size: 0.95rem;
+  color: rgba(255,255,255,0.5);
+  line-height: 1.85;
+  font-weight: 300;
+  margin-bottom: 1.25rem;
+}
+
+.about-text p:last-child { margin-bottom: 0; }
+
+.about-text strong {
+  color: rgba(255,255,255,0.85);
+  font-weight: 400;
+}
+
+.about-right {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.founder-card {
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 12px;
+  padding: 1.5rem;
+}
+
+.founder-name {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.1rem;
+  margin-bottom: 0.25rem;
+}
+.founder-role {
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.75rem;
+}
+.founder-bio {
+  font-size: 0.84rem;
+  color: rgba(255,255,255,0.38);
+  line-height: 1.65;
+  font-weight: 300;
+}
+
+.values-strip {
+  width: 100%;
+  max-width: 960px;
+  margin-top: 5rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.value {
+  padding: 2rem;
+  background: rgba(255,255,255,0.015);
+}
+.value h4 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+.value p {
+  font-size: 0.82rem;
+  color: rgba(255,255,255,0.35);
+  line-height: 1.65;
+  font-weight: 300;
+}
+.value-border { border-right: 1px solid rgba(255,255,255,0.06); }
+
+/* ─── JOIN / WAITLIST ─── */
+#join {
+  padding: 8rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  min-height: auto;
+  position: relative;
+}
+
+.join-glow {
+  position: absolute;
+  width: 600px; height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(204,255,0,0.06) 0%, transparent 65%);
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.join-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--black);
+  background: var(--accent);
+  padding: 0.35rem 0.875rem;
+  border-radius: 100px;
+  margin-bottom: 2rem;
+  position: relative;
+  z-index: 2;
+}
+
+#join .section-title {
+  position: relative;
+  z-index: 2;
+  max-width: 640px;
+}
+#join .section-sub {
+  position: relative;
+  z-index: 2;
+  margin-bottom: 3rem;
+}
+
+.waitlist-form-wrap {
+  width: 100%;
+  max-width: 480px;
+  position: relative;
+  z-index: 2;
+}
+
+.waitlist-row {
+  display: flex;
+  gap: 0.75rem;
+  width: 100%;
+  margin-bottom: 0.75rem;
+}
+
+.waitlist-row input {
+  flex: 1;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 100px;
+  outline: none;
+  padding: 0.9rem 1.25rem;
+  font-size: 0.9rem;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 300;
+  color: var(--white);
+  transition: border-color 0.25s;
+}
+.waitlist-row input:focus { border-color: rgba(204,255,0,0.45); }
+.waitlist-row input::placeholder { color: rgba(255,255,255,0.25); }
+
+.waitlist-btn {
+  background: var(--accent);
+  color: var(--black);
+  border: none;
+  padding: 0.9rem 1.75rem;
+  font-size: 0.82rem;
+  font-weight: 500;
+  font-family: 'DM Sans', sans-serif;
+  letter-spacing: 0.05em;
+  border-radius: 100px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: opacity 0.2s, transform 0.15s;
+  flex-shrink: 0;
+}
+.waitlist-btn:hover { opacity: 0.85; }
+.waitlist-btn:active { transform: scale(0.97); }
+.waitlist-btn:disabled { opacity: 0.55; cursor: not-allowed; }
+
+.waitlist-note {
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.2);
+  letter-spacing: 0.03em;
+}
+
+.waitlist-msg {
+  display: none;
+  font-size: 0.85rem;
+  padding: 0.875rem 1.5rem;
+  border-radius: 100px;
+  margin-bottom: 0.75rem;
+  text-align: center;
+}
+.waitlist-msg.error { color: rgba(255,100,100,0.9); background: rgba(255,100,100,0.06); border: 1px solid rgba(255,100,100,0.15); }
+.waitlist-msg.success { color: var(--accent); background: rgba(204,255,0,0.05); border: 1px solid rgba(204,255,0,0.2); }
+
+/* ─── FOOTER ─── */
+footer {
+  padding: 2rem 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid rgba(255,255,255,0.05);
+}
+
+.footer-logo {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.1rem;
+  color: var(--white);
+  text-decoration: none;
+}
+.footer-logo span { color: var(--accent); }
+
+.footer-links {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+}
+.footer-links a {
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.25);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.footer-links a:hover { color: var(--accent); }
+
+.footer-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.live-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  animation: pulse 2.2s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%,100% { opacity:1; transform:scale(1); }
+  50% { opacity:0.35; transform:scale(0.65); }
+}
+.footer-status {
+  font-size: 0.7rem;
+  color: rgba(255,255,255,0.2);
+  letter-spacing: 0.04em;
+}
+
+/* ─── FADE ANIMATIONS ─── */
+.fade-up {
+  opacity: 0;
+  transform: translateY(24px);
+  animation: fadeUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+@keyframes fadeUp { to { opacity:1; transform:translateY(0); } }
+.d1{animation-delay:0.05s} .d2{animation-delay:0.2s} .d3{animation-delay:0.35s}
+.d4{animation-delay:0.5s} .d5{animation-delay:0.65s} .d6{animation-delay:0.8s}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s cubic-bezier(0.25,0.46,0.45,0.94), transform 0.7s cubic-bezier(0.25,0.46,0.45,0.94);
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 768px) {
+  nav { padding: 1.25rem 1.25rem; }
+  .nav-links { display: none; }
+  .mobile-menu-btn { display: flex; }
+
+  #home { padding: 7rem 1.25rem 4rem; }
+
+  .steps { grid-template-columns: 1fr; }
+  .step-border { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.06); }
+
+  .elo-visual { flex-direction: column; gap: 2rem; padding: 2rem; }
+
+  .clubs-grid { grid-template-columns: 1fr; gap: 3rem; }
+  .clubs-left .section-title,
+  .clubs-left .section-sub { text-align: center; }
+  .benefit-list { max-width: 400px; margin: 0 auto; }
+
+  .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+
+  .values-strip { grid-template-columns: 1fr; }
+  .value-border { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.06); }
+
+  .waitlist-row { flex-direction: column; }
+  .waitlist-btn { width: 100%; }
+
   footer {
-    position: relative;
-    z-index: 10;
-    padding: 1.5rem 3rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-top: 1px solid rgba(255,255,255,0.05);
+    flex-direction: column;
+    gap: 1.5rem;
+    text-align: center;
+    padding: 2rem 1.25rem;
   }
+  .footer-links { gap: 1.25rem; flex-wrap: wrap; justify-content: center; }
 
-  .footer-left {
-    font-size: 0.7rem;
-    color: rgba(255,255,255,0.18);
-    letter-spacing: 0.03em;
-  }
+  #how-it-works,
+  #for-clubs,
+  #about,
+  #join { padding: 5rem 1.25rem; }
 
-  .footer-left a {
-    color: rgba(255,255,255,0.3);
-    text-decoration: none;
-    transition: color 0.2s;
-  }
-
-  .footer-left a:hover {
-    color: var(--accent);
-  }
-
-  .footer-right {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .live-dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: var(--accent);
-    animation: livepulse 2.2s ease-in-out infinite;
-  }
-
-  @keyframes livepulse {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.35; transform: scale(0.65); }
-  }
-
-  .footer-status {
-    font-size: 0.7rem;
-    color: rgba(255,255,255,0.18);
-    letter-spacing: 0.04em;
-  }
-
-  /* ─── ANIMATIONS ─── */
-  .fade-up {
-    opacity: 0;
-    transform: translateY(20px);
-    animation: fadeUp 0.75s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
-  }
-
-  @keyframes fadeUp {
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  .d1 { animation-delay: 0.05s; }
-  .d2 { animation-delay: 0.2s; }
-  .d3 { animation-delay: 0.35s; }
-  .d4 { animation-delay: 0.5s; }
-  .d5 { animation-delay: 0.65s; }
-  .d6 { animation-delay: 0.8s; }
-  .d7 { animation-delay: 0.95s; }
-
-  /* ─── RESPONSIVE ─── */
-  @media (max-width: 640px) {
-    nav {
-      padding: 1.5rem 1.25rem;
-    }
-
-    .hero {
-      padding: 2rem 1.25rem 3rem;
-    }
-
-    .stats {
-      gap: 1.75rem;
-      margin-top: 3rem;
-    }
-
-    .stat-num {
-      font-size: 1.75rem;
-    }
-
-    footer {
-      padding: 1.25rem;
-      flex-direction: column;
-      gap: 0.75rem;
-      text-align: center;
-    }
-  }
-
-  @media (max-width: 400px) {
-    .invite-form button {
-      padding: 0.875rem 1rem;
-      font-size: 0.75rem;
-    }
-  }
+  .hero-stats { gap: 1.75rem; }
+}
 </style>
 </head>
 <body>
 
-<div class="page">
+<!-- ─── NAV ─── -->
+<nav>
+  <a href="#home" class="logo">RALL<span>Y</span></a>
+  <ul class="nav-links">
+    <li><a href="#how-it-works">How it works</a></li>
+    <li><a href="#for-clubs">For clubs</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#join" class="nav-cta">Join waitlist</a></li>
+  </ul>
+  <button class="mobile-menu-btn" onclick="toggleMenu()" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
 
+<!-- ─── MOBILE NAV ─── -->
+<div class="mobile-nav" id="mobile-nav">
+  <button class="mobile-close" onclick="toggleMenu()">✕</button>
+  <a href="#home" onclick="toggleMenu()">Home</a>
+  <a href="#how-it-works" onclick="toggleMenu()">How it works</a>
+  <a href="#for-clubs" onclick="toggleMenu()">For clubs</a>
+  <a href="#about" onclick="toggleMenu()">About</a>
+  <a href="#join" onclick="toggleMenu()">Join waitlist</a>
+</div>
+
+<!-- ─── HERO ─── -->
+<section id="home">
   <div class="glow"></div>
-
   <svg class="court-bg" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
     <rect x="120" y="60" width="1200" height="780" fill="none" stroke="white" stroke-width="2"/>
     <line x1="720" y1="60" x2="720" y2="840" stroke="white" stroke-width="2"/>
     <rect x="300" y="60" width="840" height="360" fill="none" stroke="white" stroke-width="2"/>
     <rect x="300" y="480" width="840" height="360" fill="none" stroke="white" stroke-width="2"/>
     <line x1="120" y1="450" x2="1320" y2="450" stroke="white" stroke-width="3"/>
-    <line x1="720" y1="60" x2="720" y2="450" stroke="white" stroke-width="1" opacity="0.4"/>
-    <line x1="720" y1="450" x2="720" y2="840" stroke="white" stroke-width="1" opacity="0.4"/>
   </svg>
 
-  <nav class="fade-up d1">
-    <a href="/" class="logo">RALL<span>Y</span></a>
-    <div class="nav-pill">Madrid · 2025</div>
-  </nav>
+  <div class="eyebrow fade-up d1">Performance identity for padel &amp; tennis</div>
 
-  <main class="hero">
+  <h1 class="fade-up d2">RALLY.<br><em>Know your game.</em></h1>
 
-    <div class="eyebrow fade-up d2">Performance identity for padel &amp; tennis</div>
+  <p class="hero-sub fade-up d3">
+    A dynamic rating that moves with your game.<br>
+    Get matched to your level. Build your performance identity on court.
+  </p>
 
-    <h1 class="fade-up d3">
-      RALLY.<br>
-      <em>Know your game.</em>
-    </h1>
-
-    <p class="sub fade-up d4">
-      A dynamic rating that moves with your game.<br>
-      Get matched to your level. Build your performance identity on court.
-    </p>
-
-    <div class="invite-wrap fade-up d5">
-      <div class="invite-form" id="form-wrap">
-        <input
-          type="email"
-          id="email-input"
-          placeholder="your@email.com"
-          autocomplete="email"
-          aria-label="Email address"
-        />
-        <button type="button" onclick="handleSubmit()" aria-label="Request invite">
-          Request invite
-        </button>
-      </div>
-      <div class="error-msg" id="error-msg">Please enter a valid email address.</div>
-      <div class="success-msg" id="success-msg">You're on the list — we'll be in touch soon.</div>
+  <div class="invite-wrap fade-up d4">
+    <div class="invite-row" id="hero-form-wrap">
+      <input type="email" id="hero-email" placeholder="your@email.com" autocomplete="email" aria-label="Email address" />
+      <button type="button" id="hero-btn" onclick="submitHeroForm()">Request invite</button>
     </div>
+    <div class="form-msg error" id="hero-error">Please enter a valid email address.</div>
+    <div class="form-msg success" id="hero-success">You're on the list — we'll be in touch soon.</div>
+  </div>
 
-    <div class="stats fade-up d6">
-      <div class="stat">
-        <div class="stat-num">20<span>+</span></div>
-        <div class="stat-label">Founding players</div>
+  <div class="hero-stats fade-up d5">
+    <div class="stat">
+      <div class="stat-num">Elo<span>.</span></div>
+      <div class="stat-label">Rating system</div>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat">
+      <div class="stat-num">2<span> sports</span></div>
+      <div class="stat-label">Padel &amp; Tennis</div>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat">
+      <div class="stat-num">Mad<span>.</span></div>
+      <div class="stat-label">Launching in</div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── HOW IT WORKS ─── -->
+<section id="how-it-works">
+  <div class="section-label reveal">How it works</div>
+  <h2 class="section-title reveal" style="margin-bottom:1rem;">Your rating, <em>earned on court.</em></h2>
+  <p class="section-sub reveal">RALLY tracks every match, calculates your Elo, and builds a performance identity that actually reflects how you play.</p>
+
+  <div class="steps reveal">
+    <div class="step step-border">
+      <div class="step-num">01</div>
+      <h3>Log your match</h3>
+      <p>Record the result after every game — singles or doubles, padel or tennis. Takes under 30 seconds.</p>
+    </div>
+    <div class="step step-border">
+      <div class="step-num">02</div>
+      <h3>Your Elo updates</h3>
+      <p>Win against a stronger player and your rating climbs more. Beat someone weaker and it barely moves. Honest, dynamic, fair.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <h3>Know your level</h3>
+      <p>See exactly where you stand, track your progress over time, and find opponents at your level.</p>
+    </div>
+  </div>
+
+  <div class="elo-visual reveal">
+    <div class="elo-text">
+      <h3>Why <em>Elo?</em></h3>
+      <p>The same system used in chess, table tennis, and football rankings. It adjusts based on the strength of your opposition — so beating a top player matters more than beating a beginner. Your rating is a true reflection of your game, not just your win count.</p>
+    </div>
+    <div class="elo-chart">
+      <svg class="elo-line" viewBox="0 0 400 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <defs>
+          <linearGradient id="lineGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#CCFF00" stop-opacity="0.3"/>
+            <stop offset="100%" stop-color="#CCFF00" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+        <!-- grid lines -->
+        <line x1="0" y1="30" x2="400" y2="30" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+        <line x1="0" y1="60" x2="400" y2="60" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+        <line x1="0" y1="90" x2="400" y2="90" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+        <!-- fill area -->
+        <path d="M0,90 L40,85 L80,70 L120,75 L160,55 L200,60 L240,40 L280,35 L320,20 L360,15 L400,10 L400,120 L0,120 Z" fill="url(#lineGrad)" opacity="0.6"/>
+        <!-- line -->
+        <polyline points="0,90 40,85 80,70 120,75 160,55 200,60 240,40 280,35 320,20 360,15 400,10" fill="none" stroke="#CCFF00" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+        <!-- dots -->
+        <circle cx="120" cy="75" r="3" fill="#0D0D0D" stroke="#CCFF00" stroke-width="1.5"/>
+        <circle cx="200" cy="60" r="3" fill="#0D0D0D" stroke="#CCFF00" stroke-width="1.5"/>
+        <circle cx="400" cy="10" r="4" fill="#CCFF00"/>
+        <!-- labels -->
+        <text x="0" y="115" font-size="9" fill="rgba(255,255,255,0.2)" font-family="DM Sans, sans-serif">Start</text>
+        <text x="370" y="8" font-size="9" fill="#CCFF00" font-family="DM Sans, sans-serif">Now</text>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FOR CLUBS & COACHES ─── -->
+<section id="for-clubs">
+  <div class="clubs-accent-bg"></div>
+  <div class="clubs-grid reveal">
+    <div class="clubs-left">
+      <div class="section-label">For clubs &amp; coaches</div>
+      <h2 class="section-title">A tool your players <em>will talk about.</em></h2>
+      <p class="section-sub" style="margin-bottom:2rem;">RALLY gives clubs and coaches a way to add real structure to player development — with ratings that mean something.</p>
+      <ul class="benefit-list">
+        <li>
+          <div class="benefit-dot"></div>
+          <span>Offer players a verified rating — not just a subjective level.</span>
+        </li>
+        <li>
+          <div class="benefit-dot"></div>
+          <span>Organise tournaments and leagues with fair, auto-balanced brackets.</span>
+        </li>
+        <li>
+          <div class="benefit-dot"></div>
+          <span>Track player progress over time — show the value of coaching.</span>
+        </li>
+        <li>
+          <div class="benefit-dot"></div>
+          <span>Attract players who take their game seriously.</span>
+        </li>
+      </ul>
+      <a href="/cdn-cgi/l/email-protection#b3dbd6dfdfdcf3c1d2dfdfcac1d2c7daddd49dd2c3c38cc0c6d1d9d6d0c78ee1f2ffffea968183e3d2c1c7ddd6c1c0dbdac3" class="clubs-cta">
+        Get in touch →
+      </a>
+    </div>
+    <div class="clubs-right">
+      <div class="club-card">
+        <div class="club-card-icon">🎾</div>
+        <h4>Structured academies</h4>
+        <p>Integrate RALLY into your academy programme. Students can track their rating improvement alongside their coaching sessions.</p>
       </div>
-      <div class="stat-divider"></div>
-      <div class="stat">
-        <div class="stat-num">Elo<span>.</span></div>
-        <div class="stat-label">Rating system</div>
+      <div class="club-card">
+        <div class="club-card-icon">🏆</div>
+        <h4>Club tournaments</h4>
+        <p>Run internal tournaments with automatic seeding based on Elo ratings. Fair draws, competitive matches, engaged players.</p>
       </div>
-      <div class="stat-divider"></div>
-      <div class="stat">
-        <div class="stat-num">Mad<span>.</span></div>
-        <div class="stat-label">Launching in</div>
+      <div class="club-card">
+        <div class="club-card-icon">📊</div>
+        <h4>Performance tracking</h4>
+        <p>Give players visibility on their progression. Coaches can use data to demonstrate development and retain members longer.</p>
       </div>
     </div>
+  </div>
+</section>
 
-  </main>
+<!-- ─── ABOUT ─── */
+<section id="about">
+  <div class="section-label reveal">About RALLY</div>
+  <h2 class="section-title reveal">Built by players, <em>for players.</em></h2>
 
-  <footer class="fade-up d7">
-    <div class="footer-left">
-      © 2025 RALLY &nbsp;·&nbsp;
-      <a href="/cdn-cgi/l/email-protection#a5cdc0c9c9cae5d7c4c9c9dcd7c4d1cccbc28bc4d5d5"><span class="__cf_email__" data-cfemail="cda5a8a1a1a28dbfaca1a1b4bfacb9a4a3aae3acbdbd">[email&#160;protected]</span></a>
+  <div class="about-grid reveal">
+    <div class="about-text">
+      <p>RALLY started with a simple frustration: <strong>padel and tennis have no shared, trusted way to know your level.</strong> You say "I'm a 4" or "I'm intermediate" — and nobody actually knows what that means.</p>
+      <p>We're building the performance identity layer for racket sports — starting in Madrid in 2026. A real rating, earned through real matches, that tells you and everyone else exactly where you stand.</p>
+      <p>The Elo system has been trusted in chess for decades. We believe it's the right foundation for racket sports too — <strong>dynamic, honest, and mathematically sound.</strong></p>
+      <p>We're launching with a small group of founding players who'll help shape what RALLY becomes. If you care about your game, we'd love you to be part of it.</p>
     </div>
-    <div class="footer-right">
-      <div class="live-dot"></div>
-      <span class="footer-status">Coming soon</span>
+    <div class="about-right">
+      <div class="founder-card">
+        <div class="founder-name">Iñaki</div>
+        <div class="founder-role">Commercial &amp; Strategy</div>
+        <div class="founder-bio">Leads partnerships, go-to-market, and everything commercial. Studying BBA in Madrid. Obsessed with building something that matters to players.</div>
+      </div>
+      <div class="founder-card">
+        <div class="founder-name">Sascha</div>
+        <div class="founder-role">Product &amp; Engineering</div>
+        <div class="founder-bio">Builds the platform. Responsible for the rating engine, the product experience, and making sure the numbers actually work.</div>
+      </div>
     </div>
-  </footer>
+  </div>
 
-</div>
+  <div class="values-strip reveal">
+    <div class="value value-border">
+      <h4>Honest ratings</h4>
+      <p>No vanity numbers. Your Elo reflects who you actually beat and who beat you. Nothing more, nothing less.</p>
+    </div>
+    <div class="value value-border">
+      <h4>Better matches</h4>
+      <p>Ratings only matter if they lead somewhere. RALLY is the foundation for finding opponents at exactly your level.</p>
+    </div>
+    <div class="value">
+      <h4>Built to last</h4>
+      <p>We're starting small, on purpose. 20 founding players in Madrid. Then we grow — the right way.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ─── JOIN / WAITLIST ─── -->
+<section id="join">
+  <div class="join-glow"></div>
+
+  <div class="join-label reveal">Founding players</div>
+
+  <h2 class="section-title reveal">Be one of the first<br><em>20 players.</em></h2>
+  <p class="section-sub reveal">We're hand-picking a founding group in Madrid. You'll shape the product, get early access, and carry a rating number that means something.</p>
+
+  <div class="waitlist-form-wrap reveal">
+    <div class="waitlist-msg error" id="join-error">Please enter a valid email address.</div>
+    <div class="waitlist-msg success" id="join-success">You're on the list — we'll be in touch soon. 🎾</div>
+    <div class="waitlist-row">
+      <input type="email" id="join-email" placeholder="your@email.com" autocomplete="email" aria-label="Email address" />
+      <button class="waitlist-btn" id="join-btn" type="button" onclick="submitJoinForm()">Join waitlist</button>
+    </div>
+    <div class="waitlist-note">Madrid-based players only for now. No spam, ever.</div>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <a href="#home" class="footer-logo">RALL<span>Y</span></a>
+  <ul class="footer-links">
+    <li><a href="#how-it-works">How it works</a></li>
+    <li><a href="#for-clubs">For clubs</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="/cdn-cgi/l/email-protection#a6cec3cacac9e6d4c7cacadfd4c7d2cfc8c188c7d6d6">Contact</a></li>
+  </ul>
+  <div class="footer-right">
+    <div class="live-dot"></div>
+    <span class="footer-status">Madrid · 2026</span>
+  </div>
+</footer>
 
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-  function handleSubmit() {
-    var input = document.getElementById('email-input');
-    var formWrap = document.getElementById('form-wrap');
-    var errorMsg = document.getElementById('error-msg');
-    var successMsg = document.getElementById('success-msg');
-    var email = input.value.trim();
-    var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+// ─── FORMSPREE ENDPOINT ───
+// IMPORTANT: Replace 'YOUR_FORM_ID' with your actual Formspree form ID
+// Go to formspree.io, create a free account, create a form, and paste the ID here
+var FORMSPREE_URL = 'https://formspree.io/f/maqlzpwa';
 
-    if (!emailRegex.test(email)) {
-      errorMsg.style.display = 'block';
-      input.focus();
-      setTimeout(function() { errorMsg.style.display = 'none'; }, 3000);
-      return;
+// ─── EMAIL VALIDATION ───
+function isValidEmail(email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+// ─── HERO FORM ───
+function submitHeroForm() {
+  var email = document.getElementById('hero-email').value.trim();
+  var btn = document.getElementById('hero-btn');
+  var error = document.getElementById('hero-error');
+  var success = document.getElementById('hero-success');
+
+  error.style.display = 'none';
+  success.style.display = 'none';
+
+  if (!isValidEmail(email)) {
+    error.style.display = 'block';
+    document.getElementById('hero-email').focus();
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = 'Sending…';
+
+  fetch(FORMSPREE_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+    body: JSON.stringify({ email: email, source: 'hero' })
+  })
+  .then(function(res) {
+    if (res.ok) {
+      document.getElementById('hero-form-wrap').style.display = 'none';
+      success.style.display = 'block';
+    } else {
+      throw new Error('Network error');
     }
+  })
+  .catch(function() {
+    btn.disabled = false;
+    btn.textContent = 'Request invite';
+    error.textContent = 'Something went wrong. Try again or email us directly.';
+    error.style.display = 'block';
+  });
+}
 
-    formWrap.style.display = 'n
+// ─── JOIN FORM ───
+function submitJoinForm() {
+  var email = document.getElementById('join-email').value.trim();
+  var btn = document.getElementById('join-btn');
+  var error = document.getElementById('join-error');
+  var success = document.getElementById('join-success');
+
+  error.style.display = 'none';
+  success.style.display = 'none';
+
+  if (!isValidEmail(email)) {
+    error.style.display = 'block';
+    document.getElementById('join-email').focus();
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = 'Sending…';
+
+  fetch(FORMSPREE_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+    body: JSON.stringify({ email: email, source: 'join' })
+  })
+  .then(function(res) {
+    if (res.ok) {
+      document.getElementById('join-email').value = '';
+      success.style.display = 'block';
+      btn.disabled = false;
+      btn.textContent = 'Join waitlist';
+    } else {
+      throw new Error('Network error');
+    }
+  })
+  .catch(function() {
+    btn.disabled = false;
+    btn.textContent = 'Join waitlist';
+    error.textContent = 'Something went wrong. Try again or email us directly.';
+    error.style.display = 'block';
+  });
+}
+
+// ─── ALLOW ENTER KEY ───
+document.getElementById('hero-email').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') submitHeroForm();
+});
+document.getElementById('join-email').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') submitJoinForm();
+});
+
+// ─── MOBILE MENU ───
+function toggleMenu() {
+  var nav = document.getElementById('mobile-nav');
+  nav.classList.toggle('open');
+  document.body.style.overflow = nav.classList.contains('open') ? 'hidden' : '';
+}
+
+// ─── SCROLL REVEAL ───
+var reveals = document.querySelectorAll('.reveal');
+var observer = new IntersectionObserver(function(entries) {
+  entries.forEach(function(entry) {
+    if (entry.isIntersecting) {
+      entry.targ
