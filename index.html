@@ -689,7 +689,7 @@ h1 em { font-style: italic; color: var(--accent); }
 
 .waitlist-form-wrap {
   width: 100%;
-  max-width: 480px;
+  max-width: 520px;
   position: relative;
   z-index: 2;
 }
@@ -752,6 +752,54 @@ h1 em { font-style: italic; color: var(--accent); }
 }
 .waitlist-msg.error { color: rgba(255,100,100,0.9); background: rgba(255,100,100,0.06); border: 1px solid rgba(255,100,100,0.15); }
 .waitlist-msg.success { color: var(--accent); background: rgba(204,255,0,0.05); border: 1px solid rgba(204,255,0,0.2); }
+
+/* ─── WAITLIST MULTI-FIELD FORM ─── */
+.waitlist-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.waitlist-field {
+  width: 100%;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 100px;
+  outline: none;
+  padding: 0.9rem 1.25rem;
+  font-size: 0.9rem;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', sans-serif;
+  font-weight: 300;
+  color: var(--white);
+  transition: border-color 0.25s;
+  box-sizing: border-box;
+  appearance: none;
+  -webkit-appearance: none;
+}
+.waitlist-field:focus { border-color: rgba(204,255,0,0.45); }
+.waitlist-field::placeholder { color: rgba(255,255,255,0.25); }
+select.waitlist-field { color: rgba(255,255,255,0.25); cursor: pointer; }
+select.waitlist-field.wf-chosen { color: var(--white); }
+select.waitlist-field option { background: #141414; color: #fff; }
+
+.wf-sel {
+  position: relative;
+}
+.wf-sel::after {
+  content: '';
+  position: absolute;
+  right: 1.15rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 5px solid rgba(255,255,255,0.35);
+  pointer-events: none;
+}
+.wf-sel select { padding-right: 2.5rem; }
 
 /* ─── FOOTER ─── */
 footer {
@@ -847,6 +895,7 @@ footer {
   .value-border { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.06); }
 
   .waitlist-row { flex-direction: column; }
+  .waitlist-grid { grid-template-columns: 1fr; }
   .waitlist-btn { width: 100%; }
 
   footer {
@@ -1099,13 +1148,250 @@ footer {
   <p class="section-sub reveal">We're hand-picking a founding group in Madrid. You'll shape the product, get early access, and carry a rating number that means something.</p>
 
   <div class="waitlist-form-wrap reveal">
-    <div class="waitlist-msg error" id="join-error">Please enter a valid email address.</div>
-    <div class="waitlist-msg success" id="join-success">You're on the list — we'll be in touch soon. 🎾</div>
-    <div class="waitlist-row">
-      <input type="email" id="join-email" placeholder="your@email.com" autocomplete="email" aria-label="Email address" />
-      <button class="waitlist-btn" id="join-btn" type="button" onclick="submitJoinForm()">Join waitlist</button>
+    <div class="waitlist-msg error" id="join-error">Please fill in all fields.</div>
+    <div class="waitlist-msg success" id="join-success">You're on the list — we'll be in touch soon.</div>
+
+    <div class="waitlist-grid">
+      <input type="text" id="join-name" class="waitlist-field" placeholder="Full name" autocomplete="name" />
+      <input type="email" id="join-email" class="waitlist-field" placeholder="Email address" autocomplete="email" />
     </div>
-    <div class="waitlist-note">Madrid-based players only for now. No spam, ever.</div>
+
+    <div class="waitlist-grid">
+      <div class="wf-sel">
+        <select id="join-gender" class="waitlist-field">
+          <option value="" disabled selected>Gender</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+      <div class="wf-sel">
+        <select id="join-role" class="waitlist-field">
+          <option value="" disabled selected>I am a...</option>
+          <option value="Player">Player</option>
+          <option value="Coach">Coach</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="waitlist-row">
+      <input type="text" id="join-location" class="waitlist-field" placeholder="City" autocomplete="address-level2" />
+    </div>
+
+    <div class="waitlist-row">
+      <div class="wf-sel" style="width:100%">
+        <select id="join-nationality" class="waitlist-field">
+          <option value="" disabled selected>Nationality</option>
+          <option>Afghan</option>
+          <option>Albanian</option>
+          <option>Algerian</option>
+          <option>Andorran</option>
+          <option>Angolan</option>
+          <option>Antiguan / Barbudan</option>
+          <option>Argentine</option>
+          <option>Armenian</option>
+          <option>Australian</option>
+          <option>Austrian</option>
+          <option>Azerbaijani</option>
+          <option>Bahamian</option>
+          <option>Bahraini</option>
+          <option>Bangladeshi</option>
+          <option>Barbadian</option>
+          <option>Belarusian</option>
+          <option>Belgian</option>
+          <option>Belizean</option>
+          <option>Beninese</option>
+          <option>Bhutanese</option>
+          <option>Bolivian</option>
+          <option>Bosnian / Herzegovinian</option>
+          <option>Botswanan</option>
+          <option>Brazilian</option>
+          <option>Bruneian</option>
+          <option>Bulgarian</option>
+          <option>Burkinabé</option>
+          <option>Burundian</option>
+          <option>Cabo Verdean</option>
+          <option>Cambodian</option>
+          <option>Cameroonian</option>
+          <option>Canadian</option>
+          <option>Central African</option>
+          <option>Chadian</option>
+          <option>Chilean</option>
+          <option>Chinese</option>
+          <option>Colombian</option>
+          <option>Comorian</option>
+          <option>Congolese (Brazzaville)</option>
+          <option>Congolese (DRC)</option>
+          <option>Costa Rican</option>
+          <option>Croatian</option>
+          <option>Cuban</option>
+          <option>Cypriot</option>
+          <option>Czech</option>
+          <option>Danish</option>
+          <option>Djiboutian</option>
+          <option>Dominican (Commonwealth)</option>
+          <option>Dominican (Republic)</option>
+          <option>Ecuadorian</option>
+          <option>Egyptian</option>
+          <option>Salvadoran</option>
+          <option>Equatoguinean</option>
+          <option>Eritrean</option>
+          <option>Estonian</option>
+          <option>Swazi</option>
+          <option>Ethiopian</option>
+          <option>Fijian</option>
+          <option>Finnish</option>
+          <option>French</option>
+          <option>Gabonese</option>
+          <option>Gambian</option>
+          <option>Georgian</option>
+          <option>German</option>
+          <option>Ghanaian</option>
+          <option>Greek</option>
+          <option>Grenadian</option>
+          <option>Guatemalan</option>
+          <option>Guinean</option>
+          <option>Bissau-Guinean</option>
+          <option>Guyanese</option>
+          <option>Haitian</option>
+          <option>Honduran</option>
+          <option>Hungarian</option>
+          <option>Icelandic</option>
+          <option>Indian</option>
+          <option>Indonesian</option>
+          <option>Iranian</option>
+          <option>Iraqi</option>
+          <option>Irish</option>
+          <option>Israeli</option>
+          <option>Italian</option>
+          <option>Jamaican</option>
+          <option>Japanese</option>
+          <option>Jordanian</option>
+          <option>Kazakhstani</option>
+          <option>Kenyan</option>
+          <option>I-Kiribati</option>
+          <option>Kuwaiti</option>
+          <option>Kyrgyz</option>
+          <option>Lao</option>
+          <option>Latvian</option>
+          <option>Lebanese</option>
+          <option>Basotho</option>
+          <option>Liberian</option>
+          <option>Libyan</option>
+          <option>Liechtenstein</option>
+          <option>Lithuanian</option>
+          <option>Luxembourgish</option>
+          <option>Malagasy</option>
+          <option>Malawian</option>
+          <option>Malaysian</option>
+          <option>Maldivian</option>
+          <option>Malian</option>
+          <option>Maltese</option>
+          <option>Marshallese</option>
+          <option>Mauritanian</option>
+          <option>Mauritian</option>
+          <option>Mexican</option>
+          <option>Micronesian</option>
+          <option>Moldovan</option>
+          <option>Monégasque</option>
+          <option>Mongolian</option>
+          <option>Montenegrin</option>
+          <option>Moroccan</option>
+          <option>Mozambican</option>
+          <option>Burmese</option>
+          <option>Namibian</option>
+          <option>Nauruan</option>
+          <option>Nepali</option>
+          <option>Dutch</option>
+          <option>New Zealander</option>
+          <option>Nicaraguan</option>
+          <option>Nigerien</option>
+          <option>Nigerian</option>
+          <option>North Korean</option>
+          <option>North Macedonian</option>
+          <option>Norwegian</option>
+          <option>Omani</option>
+          <option>Pakistani</option>
+          <option>Palauan</option>
+          <option>Palestinian</option>
+          <option>Panamanian</option>
+          <option>Papua New Guinean</option>
+          <option>Paraguayan</option>
+          <option>Peruvian</option>
+          <option>Filipino</option>
+          <option>Polish</option>
+          <option>Portuguese</option>
+          <option>Qatari</option>
+          <option>Romanian</option>
+          <option>Russian</option>
+          <option>Rwandan</option>
+          <option>Kittitian / Nevisian</option>
+          <option>Saint Lucian</option>
+          <option>Vincentian</option>
+          <option>Samoan</option>
+          <option>Sammarinese</option>
+          <option>São Toméan</option>
+          <option>Saudi</option>
+          <option>Senegalese</option>
+          <option>Serbian</option>
+          <option>Seychellois</option>
+          <option>Sierra Leonean</option>
+          <option>Singaporean</option>
+          <option>Slovak</option>
+          <option>Slovenian</option>
+          <option>Solomon Islander</option>
+          <option>Somali</option>
+          <option>South African</option>
+          <option>South Korean</option>
+          <option>South Sudanese</option>
+          <option>Spanish</option>
+          <option>Sri Lankan</option>
+          <option>Sudanese</option>
+          <option>Surinamese</option>
+          <option>Swedish</option>
+          <option>Swiss</option>
+          <option>Syrian</option>
+          <option>Tajik</option>
+          <option>Tanzanian</option>
+          <option>Thai</option>
+          <option>Timorese</option>
+          <option>Togolese</option>
+          <option>Tongan</option>
+          <option>Trinidadian / Tobagonian</option>
+          <option>Tunisian</option>
+          <option>Turkish</option>
+          <option>Turkmen</option>
+          <option>Tuvaluan</option>
+          <option>Ugandan</option>
+          <option>Ukrainian</option>
+          <option>Emirati</option>
+          <option>British</option>
+          <option>American</option>
+          <option>Uruguayan</option>
+          <option>Uzbek</option>
+          <option>Ni-Vanuatu</option>
+          <option>Venezuelan</option>
+          <option>Vietnamese</option>
+          <option>Yemeni</option>
+          <option>Zambian</option>
+          <option>Zimbabwean</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="waitlist-row">
+      <div class="wf-sel" style="width:100%">
+        <select id="join-frequency" class="waitlist-field">
+          <option value="" disabled selected>How often do you play?</option>
+          <option value="1x per week">1x per week</option>
+          <option value="2-3x per week">2–3x per week</option>
+          <option value="4x+ per week">4x+ per week</option>
+        </select>
+      </div>
+    </div>
+
+    <button class="waitlist-btn" id="join-btn" type="button" onclick="submitJoinForm()" style="width:100%;margin-top:0.25rem;">Join waitlist</button>
+    <div class="waitlist-note" style="margin-top:0.75rem;">No spam, ever.</div>
   </div>
 </section>
 
@@ -1167,30 +1453,49 @@ function submitHeroForm() {
 }
 
 function submitJoinForm() {
+  var name = document.getElementById('join-name').value.trim();
   var email = document.getElementById('join-email').value.trim();
+  var gender = document.getElementById('join-gender').value;
+  var role = document.getElementById('join-role').value;
+  var location = document.getElementById('join-location').value.trim();
+  var nationality = document.getElementById('join-nationality').value;
+  var frequency = document.getElementById('join-frequency').value;
   var btn = document.getElementById('join-btn');
   var error = document.getElementById('join-error');
   var success = document.getElementById('join-success');
   error.style.display = 'none';
   success.style.display = 'none';
-  if (!isValidEmail(email)) {
+  if (!name || !isValidEmail(email) || !gender || !role || !location || !nationality || !frequency) {
+    error.textContent = !isValidEmail(email) ? 'Please enter a valid email address.' : 'Please fill in all fields.';
     error.style.display = 'block';
-    document.getElementById('join-email').focus();
     return;
   }
   btn.disabled = true;
   btn.textContent = 'Sending…';
-  sendToFormspree(email, 'join', function() {
-    document.getElementById('join-email').value = '';
-    success.style.display = 'block';
-    btn.disabled = false;
-    btn.textContent = 'Join waitlist';
-  }, function() {
-    btn.disabled = false;
-    btn.textContent = 'Join waitlist';
-    error.textContent = 'Something went wrong — email us at hello@rallyrating.app';
-    error.style.display = 'block';
-  });
+  var data = new FormData();
+  data.append('name', name);
+  data.append('email', email);
+  data.append('gender', gender);
+  data.append('role', role);
+  data.append('location', location);
+  data.append('nationality', nationality);
+  data.append('frequency', frequency);
+  data.append('source', 'join');
+  fetch(FORMSPREE_URL, { method: 'POST', body: data, headers: { 'Accept': 'application/json' } })
+    .then(function(res) { return res.json(); })
+    .then(function(json) {
+      if (json.ok) {
+        success.style.display = 'block';
+        btn.disabled = false;
+        btn.textContent = 'Join waitlist';
+      } else { throw new Error(); }
+    })
+    .catch(function() {
+      btn.disabled = false;
+      btn.textContent = 'Join waitlist';
+      error.textContent = 'Something went wrong — email us at hello@rallyrating.app';
+      error.style.display = 'block';
+    });
 }
 
 document.getElementById('hero-email').addEventListener('keydown', function(e) { if (e.key === 'Enter') submitHeroForm(); });
@@ -1262,7 +1567,13 @@ function submitHeroForm() {
 
 // ─── JOIN FORM ───
 function submitJoinForm() {
+  var name = document.getElementById('join-name').value.trim();
   var email = document.getElementById('join-email').value.trim();
+  var gender = document.getElementById('join-gender').value;
+  var role = document.getElementById('join-role').value;
+  var location = document.getElementById('join-location').value.trim();
+  var nationality = document.getElementById('join-nationality').value;
+  var frequency = document.getElementById('join-frequency').value;
   var btn = document.getElementById('join-btn');
   var error = document.getElementById('join-error');
   var success = document.getElementById('join-success');
@@ -1270,9 +1581,9 @@ function submitJoinForm() {
   error.style.display = 'none';
   success.style.display = 'none';
 
-  if (!isValidEmail(email)) {
+  if (!name || !isValidEmail(email) || !gender || !role || !location || !nationality || !frequency) {
+    error.textContent = !isValidEmail(email) ? 'Please enter a valid email address.' : 'Please fill in all fields.';
     error.style.display = 'block';
-    document.getElementById('join-email').focus();
     return;
   }
 
@@ -1282,11 +1593,19 @@ function submitJoinForm() {
   fetch(FORMSPREE_URL, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-    body: JSON.stringify({ email: email, source: 'join' })
+    body: JSON.stringify({
+      name: name,
+      email: email,
+      gender: gender,
+      role: role,
+      location: location,
+      nationality: nationality,
+      frequency: frequency,
+      source: 'join'
+    })
   })
   .then(function(res) {
     if (res.ok) {
-      document.getElementById('join-email').value = '';
       success.style.display = 'block';
       btn.disabled = false;
       btn.textContent = 'Join waitlist';
@@ -1306,8 +1625,12 @@ function submitJoinForm() {
 document.getElementById('hero-email').addEventListener('keydown', function(e) {
   if (e.key === 'Enter') submitHeroForm();
 });
-document.getElementById('join-email').addEventListener('keydown', function(e) {
-  if (e.key === 'Enter') submitJoinForm();
+
+// ─── SELECT PLACEHOLDER COLOR ───
+document.querySelectorAll('select.waitlist-field').forEach(function(sel) {
+  sel.addEventListener('change', function() {
+    this.classList.toggle('wf-chosen', this.value !== '');
+  });
 });
 
 // ─── MOBILE MENU ───
