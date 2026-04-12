@@ -963,14 +963,7 @@ footer {
     Get matched to your level. Build your performance identity on court.
   </p>
 
-  <div class="invite-wrap fade-up d4">
-    <div class="invite-row" id="hero-form-wrap">
-      <input type="email" id="hero-email" placeholder="your@email.com" autocomplete="email" aria-label="Email address" />
-      <button type="button" id="hero-btn" onclick="submitHeroForm()">Request invite</button>
-    </div>
-    <div class="form-msg error" id="hero-error">Please enter a valid email address.</div>
-    <div class="form-msg success" id="hero-success">You're on the list — we'll be in touch soon.</div>
-  </div>
+  <a href="#join" class="nav-cta fade-up d4">Join waitlist</a>
 
   <div class="hero-stats fade-up d5">
     <div class="stat">
@@ -1498,7 +1491,6 @@ function submitJoinForm() {
     });
 }
 
-document.getElementById('hero-email').addEventListener('keydown', function(e) { if (e.key === 'Enter') submitHeroForm(); });
 document.getElementById('join-email').addEventListener('keydown', function(e) { if (e.key === 'Enter') submitJoinForm(); });
 
 function toggleMenu() {
@@ -1622,9 +1614,6 @@ function submitJoinForm() {
 }
 
 // ─── ALLOW ENTER KEY ───
-document.getElementById('hero-email').addEventListener('keydown', function(e) {
-  if (e.key === 'Enter') submitHeroForm();
-});
 
 // ─── SELECT PLACEHOLDER COLOR ───
 document.querySelectorAll('select.waitlist-field').forEach(function(sel) {
