@@ -1,5 +1,3 @@
 {
-  "rewrites": [
-    { "source": "/auth/reset-password", "destination": "/auth/reset-password.html" }
-  ]
+  "cleanUrls": true
 }
