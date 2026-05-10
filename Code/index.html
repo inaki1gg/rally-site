@@ -977,6 +977,13 @@ footer {
   color: rgba(255,255,255,0.4);
   line-height: 1.5;
 }
+.strip-sublabel {
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.22);
+  margin-top: 0.2rem;
+}
 </style>
 </head>
 <body>
@@ -1065,8 +1072,9 @@ footer {
     <div class="strip-label">Rating Systems That Move With Every Match</div>
   </div>
   <div class="strip-col">
-    <div class="strip-num">100</div>
-    <div class="strip-label">Founding Player Spots · Madrid · 2026</div>
+    <div class="strip-num" id="spots-remaining">100</div>
+    <div class="strip-label">Madrid · Launching 2026</div>
+    <div class="strip-sublabel">spots remaining</div>
   </div>
 </div>
 
@@ -1224,7 +1232,7 @@ footer {
 
   <div class="join-label reveal">Founding players</div>
 
-  <h2 class="section-title reveal">Be one of the first<br><em>100 players.</em></h2>
+  <h2 class="section-title reveal">Be one of the first<br><em><span id="spots-remaining-join">100</span> players.</em></h2>
   <p class="section-sub reveal">We're hand-picking a founding group in Madrid. You'll shape the product, get early access, and carry a rating number that means something.</p>
 
   <a href="mailto:hello@rallyrating.app" class="nav-cta reveal" style="font-size:0.9rem;padding:0.75rem 2rem;">Apply to join →</a>
@@ -1259,6 +1267,24 @@ var observer = new IntersectionObserver(function(entries) {
   });
 }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
 reveals.forEach(function(el) { observer.observe(el); });
+
+fetch('https://sbosbkbrkicpyktrzgjo.supabase.co/rest/v1/profiles?select=founding_number&founding_number=not.is.null', {
+  headers: {
+    'apikey': 'sb_publishable_XLcXQNlCkK6xgNUkcn1wZQ_Lfp_rq5F',
+    'Prefer': 'count=exact',
+    'Range': '0-0'
+  }
+}).then(function(res) {
+  var cr = res.headers.get('Content-Range');
+  if (!cr) return;
+  var claimed = parseInt(cr.split('/')[1], 10);
+  if (isNaN(claimed)) return;
+  var remaining = Math.max(0, 100 - claimed);
+  var el1 = document.getElementById('spots-remaining');
+  var el2 = document.getElementById('spots-remaining-join');
+  if (el1) el1.textContent = remaining;
+  if (el2) el2.textContent = remaining;
+}).catch(function() {});
 </script>
 </body>
 </html>
