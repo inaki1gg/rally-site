@@ -912,6 +912,70 @@ footer {
   #join { padding: 5rem 1.25rem; }
 
   .hero-stats { gap: 1.75rem; }
+
+  .ticker-track { animation-duration: 55s; }
+
+  .stats-strip { grid-template-columns: 1fr; border-right: none; }
+  .stats-strip .strip-col { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.07); padding: 2rem 1.25rem; }
+  .stats-strip .strip-col:last-child { border-bottom: none; }
+}
+
+/* ─── TICKER ─── */
+.ticker {
+  width: 100%;
+  background: #0D0D0D;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  overflow: hidden;
+  padding: 0.6rem 0;
+  white-space: nowrap;
+  position: relative;
+  z-index: 10;
+}
+.ticker-track {
+  display: inline-block;
+  white-space: nowrap;
+  animation: ticker-scroll 35s linear infinite;
+}
+.ticker-track span {
+  display: inline-block;
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #CCFF00;
+}
+@keyframes ticker-scroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* ─── STATS STRIP ─── */
+.stats-strip {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-top: 1px solid rgba(255,255,255,0.07);
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  width: 100%;
+}
+.strip-col {
+  padding: 2.5rem 0;
+  text-align: center;
+  border-right: 1px solid rgba(255,255,255,0.07);
+}
+.strip-col:last-child { border-right: none; }
+.strip-num {
+  font-size: clamp(2.2rem, 5vw, 3.5rem);
+  font-weight: 700;
+  color: #CCFF00;
+  line-height: 1;
+  margin-bottom: 0.5rem;
+}
+.strip-label {
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.4);
+  line-height: 1.5;
 }
 </style>
 </head>
@@ -931,6 +995,13 @@ footer {
     <span></span><span></span><span></span>
   </button>
 </nav>
+
+<!-- ─── TICKER ─── -->
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-track">
+    <span>MADRID · LAUNCHING 2026 · 100 FOUNDING PLAYERS · BE PART OF IT · PADEL &amp; TENNIS · THE FASTEST GROWING RACKET SPORTS IN THE WORLD · PERFORMANCE IDENTITY · HONEST · EARNED · &nbsp;&nbsp;&nbsp;&nbsp;MADRID · LAUNCHING 2026 · 100 FOUNDING PLAYERS · BE PART OF IT · PADEL &amp; TENNIS · THE FASTEST GROWING RACKET SPORTS IN THE WORLD · PERFORMANCE IDENTITY · HONEST · EARNED · &nbsp;&nbsp;&nbsp;&nbsp;</span>
+  </div>
+</div>
 
 <!-- ─── MOBILE NAV ─── -->
 <div class="mobile-nav" id="mobile-nav">
@@ -982,6 +1053,22 @@ footer {
     </div>
   </div>
 </section>
+
+<!-- ─── STATS STRIP ─── -->
+<div class="stats-strip">
+  <div class="strip-col">
+    <div class="strip-num">5M+</div>
+    <div class="strip-label">Padel &amp; Tennis Players in Spain</div>
+  </div>
+  <div class="strip-col">
+    <div class="strip-num">0</div>
+    <div class="strip-label">Rating Systems That Move With Every Match</div>
+  </div>
+  <div class="strip-col">
+    <div class="strip-num">100</div>
+    <div class="strip-label">Founding Player Spots · Madrid · 2026</div>
+  </div>
+</div>
 
 <!-- ─── HOW IT WORKS ─── -->
 <section id="how-it-works">
