@@ -18,12 +18,12 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --black:    #0D0D0D;
-      --acid:     #CCFF00;
-      --white:    #F2F2F0;
-      --grey:     #888;
-      --grey-dim: #555;
-      --card:     #161616;
+      --black:       #0D0D0D;
+      --acid:        #CCFF00;
+      --white:       #F2F2F0;
+      --grey:        #888;
+      --grey-dim:    #555;
+      --card:        #161616;
       --card-border: #242424;
     }
 
@@ -37,7 +37,7 @@
       min-height: 100dvh;
     }
 
-    /* ── Loading ─────────────────────────────── */
+    /* ── Splash ──────────────────────────────── */
     #splash {
       position: fixed; inset: 0;
       display: flex; flex-direction: column;
@@ -64,6 +64,16 @@
     }
     @keyframes spin { to { transform: rotate(360deg); } }
 
+    /* ── Animations ──────────────────────────── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes posterIn {
+      from { opacity: 0; transform: translateY(28px) scale(0.97); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
     /* ── Not-found ───────────────────────────── */
     #notfound {
       display: none;
@@ -80,23 +90,7 @@
       color: var(--grey); max-width: 260px; line-height: 1.6;
     }
 
-    /* ── Profile page ────────────────────────── */
-    #profile {
-      display: none;
-      max-width: 430px;
-      margin: 0 auto;
-      padding: 0 20px 56px;
-    }
-    #profile.visible { display: block; }
-
-    /* Top bar */
-    .topbar {
-      display: flex; align-items: center;
-      justify-content: flex-end;
-      gap: 10px;
-      padding: 20px 0 12px;
-    }
-
+    /* ── Shared pill ─────────────────────────── */
     .pill {
       display: inline-flex; align-items: center; gap: 6px;
       padding: 8px 16px;
@@ -108,7 +102,7 @@
       font-size: 11px; font-weight: 700;
       letter-spacing: 0.6px; text-transform: uppercase;
       cursor: pointer; text-decoration: none;
-      transition: border-color 0.18s;
+      transition: border-color 0.18s, background 0.18s;
       white-space: nowrap;
     }
     .pill:hover { border-color: #666; }
@@ -117,6 +111,36 @@
       color: #0D0D0D;
     }
     .pill.acid:hover { background: #b8e600; border-color: #b8e600; }
+
+    /* ══════════════════════════════════════════
+       PROFILE VIEW
+    ══════════════════════════════════════════ */
+    #profile {
+      display: none;
+      max-width: 430px;
+      margin: 0 auto;
+      padding: 0 20px 64px;
+    }
+    #profile.visible { display: block; }
+
+    /* Staggered entrance */
+    #profile.visible .topbar        { animation: fadeUp 0.45s cubic-bezier(0.16,1,0.3,1) both 0.00s; }
+    #profile.visible .avatar-wrap   { animation: fadeUp 0.50s cubic-bezier(0.16,1,0.3,1) both 0.07s; }
+    #profile.visible .rating-wrap   { animation: fadeUp 0.50s cubic-bezier(0.16,1,0.3,1) both 0.15s; }
+    #profile.visible .rank-row      { animation: fadeUp 0.50s cubic-bezier(0.16,1,0.3,1) both 0.22s; }
+    #profile.visible .form-section  { animation: fadeUp 0.50s cubic-bezier(0.16,1,0.3,1) both 0.28s; }
+    #profile.visible .stats-section { animation: fadeUp 0.50s cubic-bezier(0.16,1,0.3,1) both 0.34s; }
+    #profile.visible .streak-card   { animation: fadeUp 0.50s cubic-bezier(0.16,1,0.3,1) both 0.40s; }
+    #profile.visible .level-card    { animation: fadeUp 0.50s cubic-bezier(0.16,1,0.3,1) both 0.46s; }
+    #profile.visible .cta-wrap      { animation: fadeUp 0.50s cubic-bezier(0.16,1,0.3,1) both 0.54s; }
+
+    /* Top bar */
+    .topbar {
+      display: flex; align-items: center;
+      justify-content: flex-end;
+      gap: 10px;
+      padding: 20px 0 12px;
+    }
 
     /* Avatar */
     .avatar-wrap {
@@ -217,34 +241,28 @@
       border-radius: 100px;
       background: linear-gradient(
         to right,
-        #3B82F6 0%,
-        #06B6D4 22%,
-        #22C55E 50%,
-        #A3E635 75%,
-        #CCFF00 100%
+        #3B82F6 0%, #06B6D4 22%, #22C55E 50%, #A3E635 75%, #CCFF00 100%
       );
       overflow: visible;
     }
 
-    /* tick marks */
     .form-bar-outer::before {
       content: '';
       position: absolute; inset: 0;
       border-radius: 100px;
-      background:
-        repeating-linear-gradient(
-          to right,
-          transparent 0px,
-          transparent calc(33.33% - 0.75px),
-          rgba(0,0,0,0.35) calc(33.33% - 0.75px),
-          rgba(0,0,0,0.35) calc(33.33% + 0.75px),
-          transparent calc(33.33% + 0.75px),
-          transparent calc(66.66% - 0.75px),
-          rgba(0,0,0,0.35) calc(66.66% - 0.75px),
-          rgba(0,0,0,0.35) calc(66.66% + 0.75px),
-          transparent calc(66.66% + 0.75px),
-          transparent 100%
-        );
+      background: repeating-linear-gradient(
+        to right,
+        transparent 0px,
+        transparent calc(33.33% - 0.75px),
+        rgba(0,0,0,0.35) calc(33.33% - 0.75px),
+        rgba(0,0,0,0.35) calc(33.33% + 0.75px),
+        transparent calc(33.33% + 0.75px),
+        transparent calc(66.66% - 0.75px),
+        rgba(0,0,0,0.35) calc(66.66% - 0.75px),
+        rgba(0,0,0,0.35) calc(66.66% + 0.75px),
+        transparent calc(66.66% + 0.75px),
+        transparent 100%
+      );
     }
 
     .form-marker {
@@ -264,7 +282,7 @@
     .form-scale span {
       font-size: 11px; font-weight: 600; color: #555;
     }
-    .form-scale .cold  { color: #3B82F6; }
+    .form-scale .cold   { color: #3B82F6; }
     .form-scale .scorch { color: var(--acid); }
 
     /* Stats cards */
@@ -362,10 +380,224 @@
 
     /* CTA */
     .cta-wrap {
-      text-align: center; margin-top: 44px;
+      text-align: center; margin-top: 48px;
+    }
+    .cta-eyebrow {
+      font-size: 10px; font-weight: 700;
+      letter-spacing: 2.5px; color: #444;
+      text-transform: uppercase; margin-bottom: 10px;
+    }
+    .cta-headline {
+      font-size: 22px; font-weight: 800;
+      color: var(--white);
+      letter-spacing: -0.5px; line-height: 1.2;
+      margin-bottom: 6px;
+    }
+    .cta-sub {
+      font-size: 13px; font-weight: 500;
+      color: #555; line-height: 1.5;
+      margin-bottom: 22px;
     }
 
-    /* Toast */
+    /* ══════════════════════════════════════════
+       SHARE CARD VIEW
+    ══════════════════════════════════════════ */
+    #cardview {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100dvh;
+      padding: 16px 20px 48px;
+    }
+    #cardview.visible { display: flex; }
+
+    .card-topbar {
+      width: 100%;
+      max-width: 390px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 0 18px;
+    }
+
+    .card-topbar-label {
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 1.5px; color: #444;
+      text-transform: uppercase;
+    }
+
+    /* The poster itself */
+    .share-poster {
+      width: 100%;
+      max-width: 390px;
+      background: #111;
+      border: 1px solid #222;
+      border-radius: 28px;
+      padding: 30px 28px 28px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    #cardview.visible .share-poster {
+      animation: posterIn 0.55s cubic-bezier(0.16,1,0.3,1) both 0.05s;
+    }
+    #cardview.visible .card-actions {
+      animation: fadeUp 0.45s cubic-bezier(0.16,1,0.3,1) both 0.25s;
+    }
+
+    /* Ambient glow behind rating */
+    .share-poster::before {
+      content: '';
+      position: absolute;
+      top: 38%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 320px; height: 320px;
+      background: radial-gradient(circle, rgba(204,255,0,0.09) 0%, transparent 68%);
+      pointer-events: none;
+    }
+
+    /* Dot-grid texture */
+    .share-poster::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(circle, rgba(255,255,255,0.025) 1px, transparent 1px);
+      background-size: 22px 22px;
+      border-radius: 28px;
+      pointer-events: none;
+    }
+
+    .poster-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      position: relative; z-index: 1;
+    }
+
+    .poster-wordmark {
+      font-size: 20px; font-weight: 900;
+      letter-spacing: -1.2px; color: var(--white);
+      line-height: 1;
+    }
+    .poster-wordmark em { color: var(--acid); font-style: normal; }
+    .poster-wordmark .dot { color: var(--acid); }
+
+    .poster-flag {
+      font-size: 24px; line-height: 1;
+    }
+
+    /* Hero rating */
+    .poster-rating-wrap {
+      text-align: center;
+      padding: 36px 0 6px;
+      position: relative; z-index: 1;
+    }
+
+    .poster-rating-num {
+      font-size: 92px; font-weight: 900;
+      letter-spacing: -6px;
+      color: var(--acid);
+      line-height: 0.95;
+      text-shadow:
+        0 0 28px rgba(204,255,0,0.75),
+        0 0 60px rgba(204,255,0,0.40),
+        0 0 120px rgba(204,255,0,0.18),
+        0 0 240px rgba(204,255,0,0.07);
+    }
+
+    .poster-rating-label {
+      font-size: 9px; font-weight: 700;
+      letter-spacing: 3.5px; color: #3a3a3a;
+      text-transform: uppercase;
+      margin-top: 12px;
+    }
+
+    /* Player identity */
+    .poster-identity {
+      text-align: center;
+      padding: 20px 0 22px;
+      position: relative; z-index: 1;
+    }
+
+    .poster-name {
+      font-size: 21px; font-weight: 700;
+      color: var(--white);
+      letter-spacing: -0.3px; line-height: 1.2;
+    }
+
+    .poster-username {
+      font-size: 13px; font-weight: 500;
+      color: #3a3a3a;
+      margin-top: 4px;
+    }
+
+    /* Divider */
+    .poster-divider {
+      height: 1px;
+      background: linear-gradient(to right, transparent, #242424 20%, #242424 80%, transparent);
+      position: relative; z-index: 1;
+    }
+
+    /* Stats grid */
+    .poster-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: 16px;
+      position: relative; z-index: 1;
+    }
+
+    .poster-stat {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid #1e1e1e;
+      border-radius: 16px;
+      padding: 16px 10px 14px;
+      text-align: center;
+    }
+
+    .poster-stat-val {
+      font-size: 26px; font-weight: 800;
+      color: var(--white);
+      line-height: 1; letter-spacing: -0.8px;
+    }
+
+    .poster-stat-lbl {
+      font-size: 8px; font-weight: 700;
+      letter-spacing: 1.8px; color: #3a3a3a;
+      text-transform: uppercase;
+      margin-top: 6px; line-height: 1.4;
+    }
+
+    /* Watermark */
+    .poster-watermark {
+      text-align: right;
+      margin-top: 18px;
+      font-size: 10px; font-weight: 600;
+      color: #2a2a2a;
+      letter-spacing: 0.8px;
+      position: relative; z-index: 1;
+    }
+
+    /* Card actions */
+    .card-actions {
+      width: 100%;
+      max-width: 390px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .card-actions .pill {
+      justify-content: center;
+      padding: 14px 24px;
+      font-size: 12px;
+      width: 100%;
+    }
+
+    /* ── Toast ───────────────────────────────── */
     #toast {
       position: fixed; bottom: 32px; left: 50%;
       transform: translateX(-50%) translateY(8px);
@@ -398,11 +630,11 @@
   </a>
 </div>
 
-<!-- Profile -->
+<!-- ── Profile ──────────────────────────────────────────────────────────── -->
 <div id="profile">
-  <!-- Top bar -->
+
   <div class="topbar">
-    <button class="pill" onclick="copyURL()">
+    <button class="pill" onclick="openShareCard()">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
            stroke="currentColor" stroke-width="2.5"
            stroke-linecap="round" stroke-linejoin="round">
@@ -417,7 +649,6 @@
     <a class="pill acid" href="https://rallyrating.app">Download Rally</a>
   </div>
 
-  <!-- Avatar + name + meta -->
   <div class="avatar-wrap">
     <div class="avatar" id="p-avatar"></div>
     <div>
@@ -426,20 +657,17 @@
     </div>
   </div>
 
-  <!-- Rating -->
   <div class="rating-wrap">
     <div class="rating-label">Padel Rating</div>
     <div class="rating-num" id="p-rating"></div>
   </div>
 
-  <!-- Rank pills -->
   <div class="rank-row">
     <div class="rank-pill country" id="p-rank-country"></div>
     <div class="rank-pill global"  id="p-rank-global"></div>
   </div>
 
-  <!-- Form -->
-  <div class="section">
+  <div class="section form-section">
     <div class="form-header">
       <span class="form-title">Form</span>
       <span class="form-status" id="p-form-status"></span>
@@ -455,8 +683,7 @@
     </div>
   </div>
 
-  <!-- Stats -->
-  <div class="section">
+  <div class="section stats-section">
     <div class="stats-grid">
       <div class="stat-card">
         <div class="stat-val" id="p-matches"></div>
@@ -473,18 +700,16 @@
     </div>
   </div>
 
-  <!-- Streak -->
   <div class="streak-card">
     <div class="streak-header">
       <span class="streak-icon">🔥</span>
       <span class="streak-lbl">Week Streak</span>
     </div>
     <div class="streak-best-lbl">Best</div>
-    <div class="streak-num"  id="p-streak"></div>
+    <div class="streak-num"      id="p-streak"></div>
     <div class="streak-best-num" id="p-streak-best"></div>
   </div>
 
-  <!-- Level -->
   <div class="level-card">
     <div class="level-header">
       <span class="level-title" id="p-level-title"></span>
@@ -495,11 +720,77 @@
     </div>
   </div>
 
-  <!-- Bottom CTA -->
   <div class="cta-wrap">
+    <div class="cta-eyebrow">Join Rally</div>
+    <div class="cta-headline">Get your own<br>padel rating</div>
+    <div class="cta-sub">Track every match. Climb the ranks.<br>See where you really stand.</div>
     <a class="pill acid" href="https://rallyrating.app"
-       style="font-size:13px;padding:14px 32px;">
+       style="font-size:13px;padding:14px 36px;">
       Download Rally
+    </a>
+  </div>
+</div>
+
+<!-- ── Share card view ──────────────────────────────────────────────────── -->
+<div id="cardview">
+
+  <div class="card-topbar">
+    <button class="pill" onclick="goBackToProfile()">← Back</button>
+    <span class="card-topbar-label">Share Card</span>
+  </div>
+
+  <div class="share-poster">
+    <div class="poster-header">
+      <div class="poster-wordmark">RALL<em>Y</em><span class="dot">.</span></div>
+      <div class="poster-flag" id="c-flag"></div>
+    </div>
+
+    <div class="poster-rating-wrap">
+      <div class="poster-rating-num" id="c-rating"></div>
+      <div class="poster-rating-label">Padel Rating</div>
+    </div>
+
+    <div class="poster-identity">
+      <div class="poster-name"     id="c-name"></div>
+      <div class="poster-username" id="c-username"></div>
+    </div>
+
+    <div class="poster-divider"></div>
+
+    <div class="poster-stats">
+      <div class="poster-stat">
+        <div class="poster-stat-val" id="c-rank-country"></div>
+        <div class="poster-stat-lbl" id="c-rank-country-lbl"></div>
+      </div>
+      <div class="poster-stat">
+        <div class="poster-stat-val" id="c-rank-global"></div>
+        <div class="poster-stat-lbl">Global Rank</div>
+      </div>
+      <div class="poster-stat">
+        <div class="poster-stat-val" id="c-winrate"></div>
+        <div class="poster-stat-lbl">Win Rate</div>
+      </div>
+      <div class="poster-stat">
+        <div class="poster-stat-val" id="c-streak"></div>
+        <div class="poster-stat-lbl">Week Streak</div>
+      </div>
+    </div>
+
+    <div class="poster-watermark">rallyrating.app</div>
+  </div>
+
+  <div class="card-actions">
+    <button class="pill" onclick="copyProfileURL()">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
+           stroke="currentColor" stroke-width="2.5"
+           stroke-linecap="round" stroke-linejoin="round">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+      </svg>
+      Copy Profile Link
+    </button>
+    <a class="pill acid" href="https://rallyrating.app">
+      Get Your RALLY Rating
     </a>
   </div>
 </div>
@@ -507,10 +798,10 @@
 <div id="toast"></div>
 
 <script>
-  // ─── Config ──────────────────────────────────────────────────────────────
+  // ─── Config ───────────────────────────────────────────────────────────────
   const SUPABASE_REF      = 'sbosbkbrkicpyktrzgjo';
-  // Paste your anon key below (safe to expose; RLS protects the data):
-  const SUPABASE_ANON_KEY = window.__RALLY_SUPABASE_ANON_KEY__ || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNib3Nia2Jya2ljcHlrdHJ6Z2pvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQzNDA1OTQsImV4cCI6MjA4OTkxNjU5NH0.3UKDbRaoZpLChArFy3UD4LByadpvuawXMmmCwmK-tu4';
+  const SUPABASE_ANON_KEY = window.__RALLY_SUPABASE_ANON_KEY__ ||
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNib3Nia2Jya2ljcHlrdHJ6Z2pvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQzNDA1OTQsImV4cCI6MjA4OTkxNjU5NH0.3UKDbRaoZpLChArFy3UD4LByadpvuawXMmmCwmK-tu4';
 
   const BASE    = `https://${SUPABASE_REF}.supabase.co/rest/v1`;
   const HEADERS = {
@@ -518,13 +809,35 @@
     Authorization: 'Bearer ' + SUPABASE_ANON_KEY,
   };
 
-  // ─── URL ─────────────────────────────────────────────────────────────────
+  const IS_CARD = new URLSearchParams(window.location.search).get('view') === 'card';
+
+  // ─── Routing helpers ──────────────────────────────────────────────────────
   function getUsername() {
     const seg = window.location.pathname.split('/').filter(Boolean)[0] || '';
     return seg.replace(/\.html$/, '').toLowerCase();
   }
 
-  // ─── Helpers ─────────────────────────────────────────────────────────────
+  function openShareCard() {
+    const url = new URL(window.location.href);
+    url.searchParams.set('view', 'card');
+    window.location.href = url.toString();
+  }
+
+  function goBackToProfile() {
+    const url = new URL(window.location.href);
+    url.searchParams.delete('view');
+    window.location.href = url.toString();
+  }
+
+  function copyProfileURL() {
+    const url = new URL(window.location.href);
+    url.searchParams.delete('view');
+    navigator.clipboard.writeText(url.toString())
+      .then(() => toast('Link copied!'))
+      .catch(() => {});
+  }
+
+  // ─── Helpers ──────────────────────────────────────────────────────────────
   function initials(name) {
     if (!name) return '??';
     const parts = name.trim().split(/\s+/);
@@ -559,11 +872,8 @@
   }
 
   function level(matches) {
-    // Boundaries: L1=0, L2=6, L3=18, L4=30, … (+12 each after the first)
     const bounds = [0, 6];
-    while (bounds[bounds.length - 1] <= matches + 12) {
-      bounds.push(bounds[bounds.length - 1] + 12);
-    }
+    while (bounds[bounds.length - 1] <= matches + 12) bounds.push(bounds[bounds.length - 1] + 12);
     let lvl = 1;
     for (let i = 1; i < bounds.length; i++) {
       if (matches >= bounds[i]) lvl = i + 1; else break;
@@ -578,13 +888,12 @@
 
   function countryAbbr(country) {
     const MAP = {
-      'Spain':'SPAIN','United States':'USA','USA':'USA',
-      'United Kingdom':'UK','UK':'UK','France':'FRANCE',
-      'Germany':'GER','Italy':'ITALY','Netherlands':'NED',
-      'Portugal':'PORT','Argentina':'ARG','Brazil':'BRA',
+      'Spain':'SPAIN','United States':'USA','USA':'USA','United Kingdom':'UK',
+      'UK':'UK','France':'FRANCE','Germany':'GER','Italy':'ITALY',
+      'Netherlands':'NED','Portugal':'PORT','Argentina':'ARG','Brazil':'BRA',
       'Australia':'AUS','Canada':'CAN','Sweden':'SWE',
     };
-    return MAP[country] || (country || 'LOCAL').slice(0,6).toUpperCase();
+    return MAP[country] || (country || 'LOCAL').slice(0, 6).toUpperCase();
   }
 
   // ─── Supabase ─────────────────────────────────────────────────────────────
@@ -594,8 +903,8 @@
     const res = await fetch(url, {
       headers: { ...HEADERS, Prefer: 'count=exact', Range: '0-0' },
     });
-    const cr  = res.headers.get('content-range') || '';
-    const m   = cr.match(/\/(\d+|\*)$/);
+    const cr = res.headers.get('content-range') || '';
+    const m  = cr.match(/\/(\d+|\*)$/);
     return m && m[1] !== '*' ? parseInt(m[1], 10) : 0;
   }
 
@@ -608,28 +917,22 @@
 
   function showNotFound(username) {
     document.title = 'RALLY — Player Not Found';
-    if (username) {
-      document.getElementById('nf-msg').textContent =
-        `@${username} isn't on Rally yet.`;
-    }
+    if (username) document.getElementById('nf-msg').textContent = `@${username} isn't on Rally yet.`;
     hideSplash();
     document.getElementById('notfound').classList.add('visible');
   }
 
   function showProfile(p, globalRank, countryRank) {
-    const rating    = p.padel_rating || p.rating || 1200;
-    const winPct    = p.matches_played > 0
-                      ? Math.round((p.wins / p.matches_played) * 100)
-                      : 0;
-    const formPos   = Math.max(3, Math.min(97, winPct));
-    const lvl       = level(p.matches_played);
-    const abbr      = countryAbbr(p.country);
+    const rating  = p.padel_rating || p.rating || 1200;
+    const winPct  = p.matches_played > 0 ? Math.round((p.wins / p.matches_played) * 100) : 0;
+    const formPos = Math.max(3, Math.min(97, winPct));
+    const lvl     = level(p.matches_played);
+    const abbr    = countryAbbr(p.country);
 
     document.title = `${p.full_name || p.username} — RALLY`;
 
-    document.getElementById('p-avatar').textContent  = initials(p.full_name);
-    document.getElementById('p-name').textContent    = p.full_name || p.username;
-
+    document.getElementById('p-avatar').textContent = initials(p.full_name);
+    document.getElementById('p-name').textContent   = p.full_name || p.username;
     document.getElementById('p-meta').innerHTML =
       `<span>@${p.username}</span>`
       + `<span class="meta-dot">·</span>`
@@ -637,45 +940,46 @@
       + `<span class="meta-dot">·</span>`
       + `<span>Member since ${memberSince(p.created_at)}</span>`;
 
-    document.getElementById('p-rating').textContent =
-      rating.toLocaleString('en-US');
-
+    document.getElementById('p-rating').textContent       = rating.toLocaleString('en-US');
     document.getElementById('p-rank-country').textContent = `#${countryRank} ${abbr}`;
     document.getElementById('p-rank-global').textContent  = `#${globalRank} GLOBAL`;
+    document.getElementById('p-form-status').textContent  = formStatus(winPct);
+    document.getElementById('p-form-marker').style.left   = `${formPos}%`;
+    document.getElementById('p-matches').textContent      = p.matches_played;
+    document.getElementById('p-winrate').textContent      = winPct + '%';
+    document.getElementById('p-rivals').textContent       = '—';
+    document.getElementById('p-streak').textContent       = p.current_week_streak;
+    document.getElementById('p-streak-best').textContent  = p.max_week_streak;
 
-    document.getElementById('p-form-status').textContent = formStatus(winPct);
-    document.getElementById('p-form-marker').style.left  = `${formPos}%`;
-
-    document.getElementById('p-matches').textContent = p.matches_played;
-    document.getElementById('p-winrate').textContent = winPct + '%';
-    document.getElementById('p-rivals').textContent  = '—';
-
-    document.getElementById('p-streak').textContent      = p.current_week_streak;
-    document.getElementById('p-streak-best').textContent = p.max_week_streak;
-
-    document.getElementById('p-level-title').textContent =
-      `LEVEL ${lvl.lvl}`;
+    document.getElementById('p-level-title').textContent = `LEVEL ${lvl.lvl}`;
     document.getElementById('p-level-sub').textContent   =
       `${lvl.left} match${lvl.left === 1 ? '' : 'es'} to lvl ${lvl.lvl + 1}`;
-    document.getElementById('p-level-bar').style.width   =
-      `${Math.round(lvl.progress * 100)}%`;
+    document.getElementById('p-level-bar').style.width   = `${Math.round(lvl.progress * 100)}%`;
 
     hideSplash();
     document.getElementById('profile').classList.add('visible');
   }
 
-  // ─── Share ────────────────────────────────────────────────────────────────
-  function copyURL() {
-    const url = window.location.href;
-    if (navigator.share) {
-      navigator.share({ title: document.title, url }).catch(() => fallbackCopy(url));
-    } else {
-      fallbackCopy(url);
-    }
-  }
+  function showCard(p, globalRank, countryRank) {
+    const rating  = p.padel_rating || p.rating || 1200;
+    const winPct  = p.matches_played > 0 ? Math.round((p.wins / p.matches_played) * 100) : 0;
+    const abbr    = countryAbbr(p.country);
+    const streak  = p.current_week_streak ?? 0;
 
-  function fallbackCopy(url) {
-    navigator.clipboard.writeText(url).then(() => toast('Link copied!')).catch(() => {});
+    document.title = `${p.full_name || p.username} — RALLY`;
+
+    document.getElementById('c-flag').textContent           = flag(p.country);
+    document.getElementById('c-rating').textContent         = rating.toLocaleString('en-US');
+    document.getElementById('c-name').textContent           = p.full_name || p.username;
+    document.getElementById('c-username').textContent       = `@${p.username}`;
+    document.getElementById('c-rank-country').textContent   = `#${countryRank}`;
+    document.getElementById('c-rank-country-lbl').textContent = abbr + ' Rank';
+    document.getElementById('c-rank-global').textContent    = `#${globalRank}`;
+    document.getElementById('c-winrate').textContent        = winPct + '%';
+    document.getElementById('c-streak').textContent         = streak > 0 ? `${streak} 🔥` : streak;
+
+    hideSplash();
+    document.getElementById('cardview').classList.add('visible');
   }
 
   function toast(msg) {
@@ -688,11 +992,7 @@
   // ─── Init ─────────────────────────────────────────────────────────────────
   (async function init() {
     const username = getUsername();
-
-    if (!username) {
-      window.location.replace('/');
-      return;
-    }
+    if (!username) { window.location.replace('/'); return; }
 
     try {
       const res  = await fetch(
@@ -701,10 +1001,7 @@
       );
       const rows = await res.json();
 
-      if (!Array.isArray(rows) || rows.length === 0) {
-        showNotFound(username);
-        return;
-      }
+      if (!Array.isArray(rows) || rows.length === 0) { showNotFound(username); return; }
 
       const p      = rows[0];
       const rating = p.padel_rating || p.rating || 1200;
@@ -715,7 +1012,10 @@
         countHigher('padel_rating', rating, `country=eq.${ctry}`),
       ]);
 
-      showProfile(p, gCount + 1, cCount + 1);
+      IS_CARD
+        ? showCard(p, gCount + 1, cCount + 1)
+        : showProfile(p, gCount + 1, cCount + 1);
+
     } catch (err) {
       console.error('[RALLY profile]', err);
       showNotFound(username);
