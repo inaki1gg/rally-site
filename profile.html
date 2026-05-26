@@ -407,7 +407,7 @@
       flex-direction: column;
       align-items: center;
       min-height: 100dvh;
-      padding: 16px 20px 48px;
+      padding: 32px 20px 52px;
     }
     #cardview.visible { display: flex; }
 
@@ -586,16 +586,33 @@
       max-width: 390px;
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      align-items: center;
+      gap: 14px;
       margin-top: 18px;
     }
 
     .card-actions .pill {
       justify-content: center;
-      padding: 14px 24px;
+      padding: 15px 24px;
       font-size: 12px;
       width: 100%;
     }
+
+    .copy-link-text {
+      background: none;
+      border: none;
+      color: #484848;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 12px; font-weight: 600;
+      letter-spacing: 0.3px;
+      cursor: pointer;
+      padding: 4px 0;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: color 0.15s;
+    }
+    .copy-link-text:hover { color: #777; }
 
     /* ── Toast ───────────────────────────────── */
     #toast {
@@ -617,13 +634,13 @@
 
 <!-- Loading splash -->
 <div id="splash">
-  <div class="wordmark">RALL<em>Y</em></div>
+  <div class="wordmark">RALL<em>Y.</em></div>
   <div class="spinner"></div>
 </div>
 
 <!-- Not found -->
 <div id="notfound">
-  <div class="wordmark">RALL<em>Y</em></div>
+  <div class="wordmark">RALL<em>Y.</em></div>
   <p class="nf-message" id="nf-msg">This player isn't on Rally yet.</p>
   <a class="pill acid" href="https://rallyrating.app" style="font-size:13px;padding:12px 28px;">
     Download Rally
@@ -734,11 +751,6 @@
 <!-- ── Share card view ──────────────────────────────────────────────────── -->
 <div id="cardview">
 
-  <div class="card-topbar">
-    <button class="pill" onclick="goBackToProfile()">← Back</button>
-    <span class="card-topbar-label">Share Card</span>
-  </div>
-
   <div class="share-poster">
     <div class="poster-header">
       <div class="poster-wordmark">RALL<em>Y</em><span class="dot">.</span></div>
@@ -780,18 +792,18 @@
   </div>
 
   <div class="card-actions">
-    <button class="pill" onclick="copyProfileURL()">
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
+    <a class="pill acid" href="https://rallyrating.app">
+      Get Your RALLY Rating
+    </a>
+    <button class="copy-link-text" onclick="copyProfileURL()">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none"
            stroke="currentColor" stroke-width="2.5"
            stroke-linecap="round" stroke-linejoin="round">
         <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
         <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
       </svg>
-      Copy Profile Link
+      Copy profile link
     </button>
-    <a class="pill acid" href="https://rallyrating.app">
-      Get Your RALLY Rating
-    </a>
   </div>
 </div>
 
@@ -809,7 +821,7 @@
     Authorization: 'Bearer ' + SUPABASE_ANON_KEY,
   };
 
-  const IS_CARD = new URLSearchParams(window.location.search).get('view') === 'card';
+  const IS_CARD = true; // card is now the default and only public view
 
   // ─── Routing helpers ──────────────────────────────────────────────────────
   function getUsername() {
