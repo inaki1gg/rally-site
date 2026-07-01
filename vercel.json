@@ -1,6 +1,7 @@
 {
   "rewrites": [
     { "source": "/privacy", "destination": "/privacy.html" },
+    { "source": "/apply", "destination": "/apply.html" },
     { "source": "/:username", "destination": "/profile.html" }
   ]
 }

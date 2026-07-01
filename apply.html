@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="robots" content="index,follow" />
+<title>Apply to join — RALLY</title>
+<meta name="description" content="Apply to the RALLY Founding 100 in Madrid. Hand-picked founding players, reviewed in waves." />
+<meta property="og:title" content="Apply to join — RALLY" />
+<meta property="og:description" content="Apply to the RALLY Founding 100 in Madrid. Hand-picked, reviewed in waves." />
+<meta property="og:url" content="https://rallyrating.app/apply" />
+<!--
+  RALLY · Apply (Founding 100)
+  Static page, wired like the rest of the site: self-hosted Montserrat (/fonts, no Google CDN,
+  matching privacy.html), design tokens + classes mirrored from index.html. Client-side insert
+  into public.founding_applications via the same Supabase REST pattern profile.html uses.
+-->
+<style>
+  @font-face{font-family:'Montserrat';font-style:normal;font-weight:400;font-display:swap;src:url('/fonts/montserrat-latin-400-normal.woff2') format('woff2');}
+  @font-face{font-family:'Montserrat';font-style:normal;font-weight:700;font-display:swap;src:url('/fonts/montserrat-latin-700-normal.woff2') format('woff2');}
+  @font-face{font-family:'Montserrat';font-style:normal;font-weight:900;font-display:swap;src:url('/fonts/montserrat-latin-900-normal.woff2') format('woff2');}
+
+  /* tokens — mirrored from index.html (incl. --neg, the site's negative/validation red) */
+  :root{
+    --bg:#0D0D0D;--bg-deep:#080808;--surf-1:#141414;--surf-2:#1A1A1A;--surf-3:#222222;
+    --line:#1E1E1E;--line-2:#2A2A2A;--text:#F2F2F0;--dim:#888888;--muted:#555555;--ghost:#3A3A3A;
+    --acid:#CCFF00;--neg:#FF4444;
+    --font:'Montserrat',-apple-system,BlinkMacSystemFont,'Helvetica Neue',sans-serif;
+    --gutter:clamp(20px,4vw,48px);
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--bg);color:var(--text);font-family:var(--font);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+  body{overflow-x:hidden;min-height:100vh}
+  a{color:inherit;text-decoration:none}
+  button{font-family:inherit}
+  ::selection{background:var(--acid);color:#000}
+
+  /* nav — same as index.html */
+  nav.top{position:sticky;top:0;z-index:50;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);background:rgba(13,13,13,.78);border-bottom:.5px solid var(--line)}
+  nav.top .row{max-width:1280px;margin:0 auto;padding:14px var(--gutter);display:flex;align-items:center;justify-content:space-between;gap:24px}
+  .wordmark{font-weight:900;font-size:20px;letter-spacing:-.02em;color:var(--text);user-select:none}
+  .wordmark span{color:var(--acid)}
+  .cta-outline{display:inline-flex;align-items:center;gap:8px;background:transparent;color:var(--text);border:.5px solid var(--line-2);padding:10px 18px;border-radius:999px;font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;transition:border-color .2s,color .2s}
+  .cta-outline:hover{border-color:var(--acid);color:var(--acid)}
+  .cta-outline svg{width:12px;height:12px}
+
+  /* page shell + acid-grid + glow (mirrors .hero) */
+  .shell{position:relative;max-width:640px;margin:0 auto;padding:clamp(48px,7vw,88px) var(--gutter) 96px}
+  .grid-bg{position:fixed;inset:0;z-index:0;pointer-events:none;background-image:linear-gradient(rgba(204,255,0,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(204,255,0,.035) 1px,transparent 1px);background-size:80px 80px;mask:radial-gradient(ellipse 70% 55% at 50% 22%,#000 20%,transparent 100%);-webkit-mask:radial-gradient(ellipse 70% 55% at 50% 22%,#000 20%,transparent 100%)}
+  .glow-bg{position:fixed;top:-300px;left:50%;transform:translateX(-50%);width:820px;height:820px;border-radius:50%;background:radial-gradient(circle,rgba(204,255,0,.06) 0%,transparent 60%);z-index:0;pointer-events:none}
+  .shell>*{position:relative;z-index:1}
+
+  /* header */
+  .eyebrow{font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:20px}
+  h1{font-weight:900;letter-spacing:-.025em;line-height:.95;font-size:clamp(40px,7vw,68px);margin-bottom:16px}
+  h1 .dot{color:var(--acid)}
+  .lede{font-size:15px;font-weight:300;line-height:1.7;color:var(--dim);max-width:460px;margin-bottom:36px}
+
+  /* card — mirrors .rating-card */
+  .card{background:var(--surf-2);border:.5px solid var(--line);border-radius:24px;padding:clamp(24px,4vw,40px);box-shadow:0 0 0 1px rgba(204,255,0,.02),0 40px 80px -20px rgba(0,0,0,.6)}
+
+  /* form */
+  .form{display:flex;flex-direction:column;gap:22px}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .field{display:flex;flex-direction:column;gap:9px;min-width:0}
+  .flabel{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);display:flex;gap:8px;align-items:baseline}
+  .flabel .opt{color:var(--ghost);font-weight:600}
+  .finput,.fselect,.ftextarea{background:var(--surf-1);border:.5px solid var(--line-2);border-radius:12px;padding:14px 16px;color:var(--text);font-family:var(--font);font-size:14px;font-weight:400;width:100%;outline:none;-webkit-appearance:none;appearance:none;transition:border-color .2s,box-shadow .2s}
+  .finput::placeholder,.ftextarea::placeholder{color:var(--muted)}
+  .ftextarea{resize:vertical;min-height:84px;line-height:1.6}
+  .fselect{cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2.5' stroke-linecap='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 16px center;padding-right:42px}
+  .fselect.placeholder{color:var(--muted)}
+  .fselect option{background:var(--surf-1);color:var(--text)}
+  /* acid focus rings (keyboard + mouse) */
+  .finput:focus-visible,.fselect:focus-visible,.ftextarea:focus-visible{border-color:var(--acid);box-shadow:0 0 0 3px rgba(204,255,0,.22)}
+  .finput.err,.fselect.err,.ftextarea.err{border-color:var(--neg)}
+
+  /* segmented control */
+  fieldset{border:0;padding:0;margin:0;min-width:0}
+  .seg{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:8px}
+  .seg.two{grid-auto-flow:initial;grid-template-columns:1fr 1fr}
+  .seg-opt{position:relative}
+  .seg-opt input{position:absolute;opacity:0;width:0;height:0}
+  .seg-opt span{display:block;text-align:center;padding:13px 10px;background:var(--surf-1);border:.5px solid var(--line-2);border-radius:12px;font-size:13px;font-weight:500;color:var(--dim);cursor:pointer;user-select:none;transition:border-color .15s,background .15s,color .15s}
+  .seg-opt:hover span{border-color:var(--muted)}
+  /* selected: acid ring + tint, text stays off-white (acid never fills letterforms) */
+  .seg-opt input:checked+span{border-color:var(--acid);background:rgba(204,255,0,.06);color:var(--text);font-weight:700}
+  .seg-opt input:focus-visible+span{box-shadow:0 0 0 3px rgba(204,255,0,.22);border-color:var(--acid)}
+  .seg.err .seg-opt span{border-color:var(--neg)}
+
+  /* conditional group reveal */
+  .conditional{display:flex;flex-direction:column;gap:22px;padding:20px;border:.5px dashed var(--line-2);border-radius:12px;background:rgba(255,255,255,.015)}
+
+  /* consent + honeypot */
+  .consent{display:flex;align-items:flex-start;gap:12px}
+  .consent input{appearance:none;-webkit-appearance:none;flex-shrink:0;width:20px;height:20px;margin-top:1px;background:var(--surf-1);border:.5px solid var(--line-2);border-radius:5px;cursor:pointer;position:relative;transition:border-color .2s,box-shadow .2s,background .2s}
+  .consent input:checked{background:var(--acid);border-color:var(--acid)}
+  .consent input:checked::after{content:"";position:absolute;left:6px;top:2px;width:5px;height:10px;border:solid #0D0D0D;border-width:0 2px 2px 0;transform:rotate(45deg)}
+  .consent input:focus-visible{box-shadow:0 0 0 3px rgba(204,255,0,.22);border-color:var(--acid)}
+  .consent input.err{border-color:var(--neg)}
+  .consent label{font-size:13px;font-weight:300;line-height:1.6;color:var(--dim);cursor:pointer}
+  .consent a{color:var(--acid);text-decoration:underline;text-underline-offset:2px}
+  .consent a:focus-visible{outline:2px solid var(--acid);outline-offset:2px;border-radius:2px}
+  .hp{position:absolute;left:-9999px;top:-9999px;width:1px;height:1px;overflow:hidden}
+
+  .field-error{font-size:11px;color:var(--neg);letter-spacing:.02em}
+  .form-alert{font-size:13px;color:var(--neg);background:rgba(255,68,68,.06);border:.5px solid rgba(255,68,68,.28);border-radius:12px;padding:12px 16px}
+  .char-count{font-size:11px;color:var(--muted);letter-spacing:.04em;text-align:right}
+  .char-count.over{color:var(--neg)}
+
+  /* submit — the acid button (mirrors .apply) */
+  .submit{display:inline-flex;align-items:center;justify-content:center;gap:10px;width:100%;background:var(--acid);color:#0D0D0D;border:0;padding:17px 26px;border-radius:999px;font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;transition:transform .2s,box-shadow .25s,opacity .2s}
+  .submit:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 0 0 6px rgba(204,255,0,.12)}
+  .submit:focus-visible{outline:none;box-shadow:0 0 0 3px #0D0D0D,0 0 0 6px var(--acid)}
+  .submit:disabled{opacity:.4;cursor:not-allowed}
+  .form-note{font-size:11px;color:var(--muted);text-align:center;letter-spacing:.04em;line-height:1.5}
+
+  /* confirmation */
+  .confirm{display:none}
+  .confirm.show{display:block}
+  .form-live.hide{display:none}
+  .confirm .mark{width:52px;height:52px;border-radius:50%;background:rgba(204,255,0,.1);border:.5px solid rgba(204,255,0,.35);display:flex;align-items:center;justify-content:center;margin-bottom:24px}
+  .confirm h2{font-weight:900;letter-spacing:-.02em;line-height:1;font-size:clamp(28px,5vw,40px);margin-bottom:20px}
+  .confirm h2 .dot{color:var(--acid)}
+  .confirm p{font-size:15px;font-weight:300;line-height:1.75;color:var(--dim);margin-bottom:16px}
+  .confirm p strong{color:var(--text);font-weight:600}
+  .confirm .back{display:inline-flex;align-items:center;gap:8px;margin-top:12px;font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--text)}
+  .confirm .back svg{width:12px;height:12px}
+  .confirm .back:focus-visible{outline:2px solid var(--acid);outline-offset:3px;border-radius:2px}
+
+  footer{border-top:.5px solid var(--line);padding:32px var(--gutter);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;position:relative;z-index:1}
+  footer .links{display:flex;gap:24px;flex-wrap:wrap}
+  footer .links a{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);transition:color .2s}
+  footer .links a:hover{color:var(--text)}
+  footer .live{display:flex;align-items:center;gap:10px;font-size:11px;color:var(--ghost);letter-spacing:.06em}
+  footer .live::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--acid)}
+
+  @media(max-width:560px){ .row2{grid-template-columns:1fr} }
+  @media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+
+<div class="grid-bg" aria-hidden="true"></div>
+<div class="glow-bg" aria-hidden="true"></div>
+
+<nav class="top">
+  <div class="row">
+    <a href="/" class="wordmark" aria-label="RALLY home">RALL<span>Y.</span></a>
+    <a href="/" class="cta-outline" aria-label="Back to rallyrating.app">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"></path></svg>
+      Back
+    </a>
+  </div>
+</nav>
+
+<main class="shell">
+
+  <!-- LIVE FORM -->
+  <div class="form-live">
+    <div class="eyebrow">Founding 100 · Madrid</div>
+    <h1>Apply to join<span class="dot">.</span></h1>
+    <p class="lede">We&rsquo;re hand-picking the founding group in Madrid &mdash; players who&rsquo;ll shape the product, get early access, and carry a rating number that means something. Tell us about your game.</p>
+
+    <form class="card form" id="applyForm" novalidate>
+      <div class="form-alert" id="formAlert" role="alert" style="display:none"></div>
+
+      <div class="row2">
+        <div class="field">
+          <label class="flabel" for="name">Full name</label>
+          <input class="finput" id="name" name="name" type="text" autocomplete="name" placeholder="Iñaki González" />
+          <span class="field-error" id="err-name" hidden></span>
+        </div>
+        <div class="field">
+          <label class="flabel" for="email">Email</label>
+          <input class="finput" id="email" name="email" type="email" autocomplete="email" placeholder="you@email.com" />
+          <span class="field-error" id="err-email" hidden></span>
+        </div>
+      </div>
+
+      <fieldset class="field">
+        <legend class="flabel" style="margin-bottom:9px">Sport</legend>
+        <div class="seg" id="segSport">
+          <label class="seg-opt"><input type="radio" name="sport" value="padel" /><span>Padel</span></label>
+          <label class="seg-opt"><input type="radio" name="sport" value="tennis" /><span>Tennis</span></label>
+          <label class="seg-opt"><input type="radio" name="sport" value="both" /><span>Both</span></label>
+        </div>
+        <span class="field-error" id="err-sport" hidden style="margin-top:9px"></span>
+      </fieldset>
+
+      <div class="field">
+        <label class="flabel" for="club">Where you play</label>
+        <input class="finput" id="club" name="club" type="text" placeholder="Club + area in Madrid" />
+        <span class="field-error" id="err-club" hidden></span>
+      </div>
+
+      <div class="row2">
+        <div class="field">
+          <label class="flabel" for="level">Level</label>
+          <select class="fselect placeholder" id="level" name="level">
+            <option value="" disabled selected>Select&hellip;</option>
+            <option value="New to the sport">New to the sport</option>
+            <option value="Casual">Casual</option>
+            <option value="Solid club player">Solid club player</option>
+            <option value="Competitive">Competitive</option>
+          </select>
+          <span class="field-error" id="err-level" hidden></span>
+        </div>
+        <div class="field">
+          <label class="flabel" for="rating">Known rating <span class="opt">Optional</span></label>
+          <input class="finput" id="rating" name="rating" type="text" placeholder="Playtomic level, NTRP, etc. — if you have one" />
+        </div>
+      </div>
+
+      <fieldset class="field">
+        <legend class="flabel" style="margin-bottom:9px">Do you have a regular group you play with?</legend>
+        <div class="seg two" id="segGroup">
+          <label class="seg-opt"><input type="radio" name="hasGroup" value="yes" /><span>Yes</span></label>
+          <label class="seg-opt"><input type="radio" name="hasGroup" value="no" /><span>No</span></label>
+        </div>
+        <span class="field-error" id="err-hasGroup" hidden style="margin-top:9px"></span>
+      </fieldset>
+
+      <div class="conditional" id="groupFields" hidden>
+        <div class="field">
+          <label class="flabel" for="groupSize">How many of you play together?</label>
+          <input class="finput" id="groupSize" name="groupSize" type="number" min="1" inputmode="numeric" placeholder="e.g. 4" />
+        </div>
+        <div class="field">
+          <label class="flabel" for="groupNote">Their names or @handles <span class="opt">Optional</span></label>
+          <input class="finput" id="groupNote" name="groupNote" type="text" placeholder="Names or Instagram handles" />
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="flabel" for="instagram">Instagram handle <span class="opt">Optional</span></label>
+        <input class="finput" id="instagram" name="instagram" type="text" placeholder="@yourhandle" />
+      </div>
+
+      <div class="field">
+        <label class="flabel" for="motivation">Why you want a rating <span class="opt">Optional</span></label>
+        <textarea class="ftextarea" id="motivation" name="motivation" rows="3" placeholder="A line or two — what you’re chasing on court."></textarea>
+        <span class="char-count" id="charCount">0/140</span>
+      </div>
+
+      <!-- Honeypot: off-screen, aria-hidden, not tabbable. Real users never fill it. -->
+      <div class="hp" aria-hidden="true">
+        <label for="company">Company</label>
+        <input id="company" name="company" type="text" tabindex="-1" autocomplete="off" />
+      </div>
+
+      <div class="field">
+        <div class="consent">
+          <input id="consent" name="consent" type="checkbox" />
+          <label for="consent">I agree to RALLY processing my details in line with the <a href="/privacy" target="_blank" rel="noopener noreferrer">Privacy Policy</a>.</label>
+        </div>
+        <span class="field-error" id="err-consent" hidden></span>
+      </div>
+
+      <button type="submit" class="submit" id="submitBtn" disabled>Submit application</button>
+      <p class="form-note">Hand-reviewed in waves. We only email you about your application.</p>
+    </form>
+  </div>
+
+  <!-- CONFIRMATION (replaces form in place on success) -->
+  <div class="confirm card" id="confirm" tabindex="-1">
+    <div class="mark" aria-hidden="true">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#CCFF00" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+    </div>
+    <h2>Application received<span class="dot">.</span></h2>
+    <p>Thanks &mdash; your details are in, and there&rsquo;s nothing else to do right now.</p>
+    <p>We read every application and review them in <strong>waves</strong>. The founding group is hand-picked, not first-come, so this won&rsquo;t be instant. As each wave is onboarded, founding numbers <strong>#001&ndash;#100</strong> get assigned one by one.</p>
+    <p>If you&rsquo;re a fit for a wave, you&rsquo;ll hear from us at the email you gave. Until then, keep playing.</p>
+    <a href="/" class="back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"></path></svg>Back to RALLY</a>
+  </div>
+
+</main>
+
+<footer>
+  <a href="/" class="wordmark">RALL<span>Y.</span></a>
+  <div class="links">
+    <a href="/#how">How it works</a>
+    <a href="/#clubs">For clubs</a>
+    <a href="/#about">About</a>
+    <a href="mailto:hello@rallyrating.app">Contact</a>
+  </div>
+  <div class="live">Madrid · September 2026</div>
+</footer>
+
+<script>
+  // ─── Supabase (same client-side REST pattern + anon key as profile.html) ───
+  const SUPABASE_REF      = 'sbosbkbrkicpyktrzgjo';
+  const SUPABASE_ANON_KEY = window.__RALLY_SUPABASE_ANON_KEY__ ||
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNib3Nia2Jya2ljcHlrdHJ6Z2pvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQzNDA1OTQsImV4cCI6MjA4OTkxNjU5NH0.3UKDbRaoZpLChArFy3UD4LByadpvuawXMmmCwmK-tu4';
+  const BASE = `https://${SUPABASE_REF}.supabase.co/rest/v1`;
+  const HEADERS = { apikey: SUPABASE_ANON_KEY, Authorization: 'Bearer ' + SUPABASE_ANON_KEY };
+
+  const $ = (id) => document.getElementById(id);
+  const form = $('applyForm');
+  const submitBtn = $('submitBtn');
+  const consent = $('consent');
+  const motivation = $('motivation');
+  const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  // Submit stays disabled until consent is ticked (never pre-checked).
+  consent.addEventListener('change', () => { submitBtn.disabled = !consent.checked; });
+
+  // Live 140-char soft cap counter (soft: over is allowed, just flagged).
+  const charCount = $('charCount');
+  motivation.addEventListener('input', () => {
+    const n = motivation.value.length;
+    charCount.textContent = n + '/140';
+    charCount.classList.toggle('over', n > 140);
+  });
+
+  // Conditional group fields reveal when "Yes".
+  const groupFields = $('groupFields');
+  document.querySelectorAll('input[name="hasGroup"]').forEach((r) => {
+    r.addEventListener('change', () => { groupFields.hidden = r.value !== 'yes'; clearErr('hasGroup', $('segGroup')); });
+  });
+  document.querySelectorAll('input[name="sport"]').forEach((r) => {
+    r.addEventListener('change', () => clearErr('sport', $('segSport')));
+  });
+
+  function setErr(key, msg, el) {
+    const e = $('err-' + key);
+    if (e) { e.textContent = msg; e.hidden = false; }
+    if (el) el.classList.add('err');
+  }
+  function clearErr(key, el) {
+    const e = $('err-' + key);
+    if (e) e.hidden = true;
+    if (el) el.classList.remove('err');
+  }
+  function val(id) { return ($(id).value || '').trim(); }
+  function radio(name) { const c = document.querySelector(`input[name="${name}"]:checked`); return c ? c.value : ''; }
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    $('formAlert').style.display = 'none';
+    ['name','email','sport','club','level','hasGroup','consent'].forEach((k) => {
+      clearErr(k, form.querySelector('#' + (k === 'sport' ? 'segSport' : k === 'hasGroup' ? 'segGroup' : k)) || $(k));
+    });
+
+    // ─── client-side validation ───
+    let firstBad = null; const bad = (fn) => { if (!firstBad) firstBad = fn; };
+    const name = val('name'), email = val('email'), sport = radio('sport'),
+          club = val('club'), level = val('level'), hasGroup = radio('hasGroup');
+
+    if (!name) { setErr('name', 'Please add your name.', $('name')); bad(() => $('name').focus()); }
+    if (!email) { setErr('email', 'Please add your email.', $('email')); bad(() => $('email').focus()); }
+    else if (!EMAIL_RE.test(email)) { setErr('email', 'That email doesn’t look right.', $('email')); bad(() => $('email').focus()); }
+    if (!sport) { setErr('sport', 'Pick one.', $('segSport')); bad(() => document.querySelector('input[name="sport"]').focus()); }
+    if (!club) { setErr('club', 'Where do you play?', $('club')); bad(() => $('club').focus()); }
+    if (!level) { setErr('level', 'Pick your level.', $('level')); bad(() => $('level').focus()); }
+    if (!hasGroup) { setErr('hasGroup', 'Pick one.', $('segGroup')); bad(() => document.querySelector('input[name="hasGroup"]').focus()); }
+    if (!consent.checked) { setErr('consent', 'Please agree to continue.', consent); bad(() => consent.focus()); }
+    if (firstBad) { firstBad(); return; }
+
+    // ─── honeypot: if filled, it's a bot. Show success, insert nothing. ───
+    const honeypot = val('company');
+
+    // build row (columns map 1:1 to public.founding_applications)
+    const groupYes = hasGroup === 'yes';
+    const sizeRaw = parseInt(val('groupSize'), 10);
+    const row = {
+      name, email, sport, club, level,
+      known_rating: val('rating') || null,
+      has_group: groupYes,
+      group_size: groupYes && Number.isFinite(sizeRaw) && sizeRaw > 0 ? sizeRaw : null,
+      group_note: groupYes ? (val('groupNote') || null) : null,
+      instagram: val('instagram') || null,
+      motivation: val('motivation') || null,
+      // status + founding_number intentionally omitted → DB defaults.
+    };
+
+    submitBtn.disabled = true;
+    const label = submitBtn.textContent;
+    submitBtn.textContent = 'Submitting…';
+
+    try {
+      if (!honeypot) {
+        // INSERT-ONLY RLS: anon can insert but cannot read. Prefer:return=minimal means
+        // no representation is returned — the REST equivalent of not chaining .select().
+        // Success = response ok (no error). A present error = failure.
+        const res = await fetch(`${BASE}/founding_applications`, {
+          method: 'POST',
+          headers: { ...HEADERS, 'Content-Type': 'application/json', Prefer: 'return=minimal' },
+          body: JSON.stringify(row),
+        });
+        if (!res.ok) {
+          const detail = await res.text().catch(() => '');
+          throw new Error('Insert failed ' + res.status + ' ' + detail);
+        }
+      }
+      // NOTE: server-sent confirmation email (Resend) is deferred — it needs a server-side
+      // secret this static site doesn't have. It'll be added as a serverless function
+      // post-DNS; no email is sent from here. Success state below is honest regardless.
+      showConfirmation();
+    } catch (err) {
+      console.error('[apply] submit error:', err);
+      submitBtn.disabled = false;
+      submitBtn.textContent = label;
+      const a = $('formAlert');
+      a.textContent = 'Something went wrong sending your application. Please try again in a moment.';
+      a.style.display = 'block';
+      a.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      // Everything the user typed is preserved — nothing is cleared.
+    }
+  });
+
+  function showConfirmation() {
+    document.querySelector('.form-live').classList.add('hide');
+    const c = $('confirm');
+    c.classList.add('show');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    c.focus();
+  }
+</script>
+</body>
+</html>
