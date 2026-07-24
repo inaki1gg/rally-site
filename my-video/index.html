@@ -1,0 +1,457 @@
+<!doctype html>
+<!--
+  RALLY — rally-rank-post reel (1080×1920, 9:16, silent, ~13s)
+  This IS the "rally-rank-post" composition. HyperFrames hard-requires the single
+  root composition to be named index.html (check/render discover index.html only,
+  and two root compositions fail lint), so the working file lives here.
+  Beats: 1 excuses stack (0–5.5s) · 2 the turn (5.5–7s) · 3 rank cell (7–11s) · 4 end card (11–13s)
+-->
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="vendor/gsap.min.js"></script>
+    <style>
+      @font-face {
+        font-family: "Montserrat";
+        font-style: normal;
+        font-weight: 400;
+        font-display: block;
+        src: url("fonts/montserrat-latin-400-normal.woff2") format("woff2");
+      }
+      @font-face {
+        font-family: "Montserrat";
+        font-style: normal;
+        font-weight: 700;
+        font-display: block;
+        src: url("fonts/montserrat-latin-700-normal.woff2") format("woff2");
+      }
+      @font-face {
+        font-family: "Montserrat";
+        font-style: normal;
+        font-weight: 900;
+        font-display: block;
+        src: url("fonts/montserrat-latin-900-normal.woff2") format("woff2");
+      }
+
+      :root {
+        --bg: #0d0d0d;
+        --bg-deep: #080808;
+        --surf-1: #141414;
+        --surf-2: #1a1a1a;
+        --surf-3: #222222;
+        --line: #1e1e1e;
+        --line-2: #2a2a2a;
+        --text: #f2f2f0;
+        --dim: #888888;
+        --muted: #555555;
+        --ghost: #3a3a3a;
+        --acid: #ccff00;
+        --font: "Montserrat", -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        width: 1080px;
+        height: 1920px;
+        overflow: hidden;
+        background: #0d0d0d;
+      }
+      body {
+        font-family: var(--font);
+        color: var(--text);
+        -webkit-font-smoothing: antialiased;
+        text-rendering: geometricPrecision;
+      }
+
+      /* ---------- background ---------- */
+      #bg {
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(120% 80% at 50% 42%, #131313 0%, #0d0d0d 55%, #090909 100%);
+      }
+      #bg::after {
+        /* subtle vignette for depth */
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(130% 90% at 50% 50%, transparent 58%, rgba(0, 0, 0, 0.55) 100%);
+      }
+
+      /* ---------- beat 1: excuses ---------- */
+      .excuse {
+        position: absolute;
+        left: 70px;
+        right: 70px;
+        text-align: center;
+        font-weight: 700;
+        font-size: 54px;
+        line-height: 1.1;
+        letter-spacing: -0.01em;
+        color: var(--text);
+        white-space: nowrap;
+        text-shadow: 0 2px 20px rgba(0, 0, 0, 0.6);
+      }
+      #exc1 { top: 690px; }
+      #exc2 { top: 808px; }
+      #exc3 { top: 926px; font-size: 50px; }
+      #exc4 { top: 1044px; }
+
+      /* ---------- beat 2: the turn ---------- */
+      #turn {
+        position: absolute;
+        left: 100px;
+        right: 100px;
+        top: 858px;
+        text-align: center;
+        font-weight: 900;
+        font-size: 92px;
+        line-height: 1.02;
+        letter-spacing: -0.02em;
+        color: var(--text);
+        text-shadow: 0 4px 30px rgba(0, 0, 0, 0.7);
+      }
+
+      /* ---------- beat 3: rank cell ---------- */
+      #rankcell {
+        position: absolute;
+        left: 110px;
+        right: 110px;
+        top: 648px;
+      }
+      #rank-shell {
+        position: relative;
+        will-change: transform, opacity;
+      }
+      #rank-float {
+        position: relative;
+        border-radius: 30px;
+        padding: 44px 44px 30px;
+        background:
+          linear-gradient(180deg, rgba(26, 26, 26, 0.92) 0%, rgba(18, 18, 18, 0.94) 100%);
+        border: 1px solid rgba(204, 255, 0, 0.5);
+        box-shadow:
+          0 0 0 1px rgba(204, 255, 0, 0.08),
+          0 40px 90px -30px rgba(0, 0, 0, 0.9),
+          0 0 70px -10px rgba(204, 255, 0, 0.12);
+        overflow: hidden;
+        backdrop-filter: blur(2px);
+      }
+      /* sheen sweep overlay */
+      #rank-sheen {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: -60%;
+        width: 60%;
+        z-index: 1;
+        pointer-events: none;
+        background: linear-gradient(
+          105deg,
+          transparent 0%,
+          rgba(255, 255, 255, 0.055) 46%,
+          rgba(255, 255, 255, 0.02) 60%,
+          transparent 100%
+        );
+      }
+      .rank-content {
+        position: relative;
+        z-index: 2;
+      }
+      .rank-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-bottom: 26px;
+        border-bottom: 1px solid var(--line);
+      }
+      .rank-title {
+        font-weight: 700;
+        font-size: 24px;
+        letter-spacing: 0.22em;
+        color: var(--dim);
+      }
+      .club-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-weight: 700;
+        font-size: 20px;
+        letter-spacing: 0.14em;
+        color: var(--dim);
+        background: var(--surf-3);
+        border: 1px solid var(--line-2);
+        border-radius: 999px;
+        padding: 10px 20px;
+      }
+      .club-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 999px;
+        background: var(--acid);
+      }
+      .rank-row {
+        position: relative;
+        display: flex;
+        align-items: center;
+        padding: 30px 6px;
+        border-bottom: 1px solid var(--line);
+      }
+      .rank-row:last-child {
+        border-bottom: none;
+      }
+      .rank-pos {
+        width: 74px;
+        flex: 0 0 74px;
+        font-weight: 900;
+        font-size: 44px;
+        color: #707070;
+        letter-spacing: -0.02em;
+      }
+      .rank-name {
+        flex: 1 1 auto;
+        display: flex;
+        align-items: baseline;
+        gap: 16px;
+        font-weight: 700;
+        font-size: 40px;
+        letter-spacing: -0.01em;
+        color: var(--text);
+      }
+      .rank-val {
+        font-weight: 900;
+        font-size: 44px;
+        letter-spacing: -0.02em;
+        color: var(--text);
+        font-variant-numeric: tabular-nums;
+      }
+      /* YOU row */
+      #row-you {
+        border-radius: 18px;
+        background: rgba(204, 255, 0, 0.065);
+        margin: 0 -12px;
+        padding: 30px 18px;
+        box-shadow:
+          inset 3px 0 0 var(--acid),
+          0 14px 30px -20px rgba(204, 255, 0, 0.4);
+        border-bottom-color: transparent;
+      }
+      #row-you .rank-pos { color: var(--text); }
+      #row-you .rank-name { color: #ffffff; }
+      #row-you .rank-val { color: var(--acid); }
+      .you-tag {
+        font-weight: 900;
+        font-size: 19px;
+        letter-spacing: 0.12em;
+        color: #0d0d0d;
+        background: var(--acid);
+        border-radius: 6px;
+        padding: 5px 10px;
+        transform: translateY(-4px);
+      }
+
+      /* ---------- beat 4: end card ---------- */
+      #endcard {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 800px;
+        text-align: center;
+      }
+      #wordmark {
+        font-weight: 900;
+        font-size: 150px;
+        letter-spacing: -0.04em;
+        line-height: 1;
+        color: var(--text);
+      }
+      #wordmark .acid {
+        color: var(--acid);
+        text-shadow:
+          0 0 20px rgba(204, 255, 0, 0.55),
+          0 0 48px rgba(204, 255, 0, 0.28);
+      }
+      #tagline {
+        margin-top: 40px;
+        font-weight: 500;
+        font-size: 36px;
+        letter-spacing: 0.005em;
+        color: var(--text);
+      }
+      #url {
+        margin-top: 26px;
+        font-weight: 700;
+        font-size: 30px;
+        letter-spacing: 0.14em;
+        color: var(--text);
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="main"
+      data-start="0"
+      data-duration="13"
+      data-fps="30"
+      data-width="1080"
+      data-height="1920"
+    >
+      <div id="bg"></div>
+
+      <!-- BEAT 1 — the excuses -->
+      <div id="exc1" class="excuse clip" data-start="0.3" data-duration="5.55" data-track-index="1">
+        <div class="ei">&ldquo;No calenté.&rdquo;</div>
+      </div>
+      <div id="exc2" class="excuse clip" data-start="1.4" data-duration="4.45" data-track-index="2">
+        <div class="ei">&ldquo;Me tocó de revés.&rdquo;</div>
+      </div>
+      <div id="exc3" class="excuse clip" data-start="2.5" data-duration="3.35" data-track-index="3">
+        <div class="ei">&ldquo;La pala nueva todavía no me va.&rdquo;</div>
+      </div>
+      <div id="exc4" class="excuse clip" data-start="3.6" data-duration="2.25" data-track-index="4">
+        <div class="ei">&ldquo;El otro día te gané, ¿eh?&rdquo;</div>
+      </div>
+
+      <!-- BEAT 2 — the turn -->
+      <div id="turn" class="clip" data-start="5.85" data-duration="1.15" data-track-index="5">
+        <div id="turn-inner">Tu rating no escucha excusas.</div>
+      </div>
+
+      <!-- BEAT 3 — the proof -->
+      <div id="rankcell" class="clip" data-start="7" data-duration="4.3" data-track-index="6">
+        <div id="rank-shell">
+          <div id="rank-float">
+            <div id="rank-sheen" data-layout-allow-overflow></div>
+            <div class="rank-content">
+              <div class="rank-head">
+                <div class="rank-title">CLASIFICACIÓN</div>
+                <div class="club-pill"><span class="club-dot"></span>CLUB</div>
+              </div>
+
+              <div class="rank-row" id="row-1">
+                <div class="rank-pos">1</div>
+                <div class="rank-name">Sascha D.</div>
+                <div class="rank-val" id="v1">1,200</div>
+              </div>
+
+              <div class="rank-row" id="row-you">
+                <div class="rank-pos">2</div>
+                <div class="rank-name">Iñaki <span class="you-tag">TÚ</span></div>
+                <div class="rank-val" id="v2">1,200</div>
+              </div>
+
+              <div class="rank-row" id="row-3">
+                <div class="rank-pos">3</div>
+                <div class="rank-name">Alejandro R.</div>
+                <div class="rank-val" id="v3">1,200</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- BEAT 4 — end card -->
+      <div id="endcard" class="clip" data-start="11.3" data-duration="1.7" data-track-index="7">
+        <div id="wordmark">RALL<span class="acid">Y.</span></div>
+        <div id="tagline">El rating verificado del pádel.</div>
+        <div id="url">rallyrating.app/apply</div>
+      </div>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+
+      /* ---------- BEAT 1 — excuses stack in, hold, clear together ---------- */
+      const excuses = [
+        { sel: "#exc1 .ei", t: 0.3 },
+        { sel: "#exc2 .ei", t: 1.4 },
+        { sel: "#exc3 .ei", t: 2.5 },
+        { sel: "#exc4 .ei", t: 3.6 },
+      ];
+      excuses.forEach((e) => {
+        tl.from(e.sel, { opacity: 0, y: 30, duration: 0.6, ease: "power3.out" }, e.t);
+      });
+      // all four clear together, quickly
+      const allExc = "#exc1 .ei, #exc2 .ei, #exc3 .ei, #exc4 .ei";
+      tl.to(allExc, { opacity: 0, y: -22, duration: 0.32, ease: "power2.in" }, 5.5);
+      tl.set(allExc, { opacity: 0 }, 5.85);
+
+      /* ---------- BEAT 2 — the turn ---------- */
+      tl.from("#turn-inner", { opacity: 0, y: 34, duration: 0.5, ease: "power3.out" }, 5.92);
+      tl.to("#turn-inner", { opacity: 0, y: -16, duration: 0.3, ease: "power2.in" }, 6.68);
+      tl.set("#turn-inner", { opacity: 0 }, 7.0);
+
+      /* ---------- BEAT 3 — rank cell builds ---------- */
+      tl.from("#rank-shell", { opacity: 0, y: 40, scale: 0.955, duration: 0.55, ease: "power3.out" }, 7.0);
+
+      // rows cascade top-to-bottom
+      tl.from("#row-1", { opacity: 0, y: -18, duration: 0.42, ease: "power3.out" }, 7.5);
+      tl.from("#row-you", { opacity: 0, y: -18, duration: 0.42, ease: "power3.out" }, 7.8);
+      tl.from("#row-3", { opacity: 0, y: -18, duration: 0.42, ease: "power3.out" }, 8.1);
+
+      // ratings count up as they settle
+      function countUp(id, to, at) {
+        const el = document.getElementById(id);
+        const o = { v: 1200 };
+        tl.to(
+          o,
+          {
+            v: to,
+            duration: 0.9,
+            ease: "power2.out",
+            onUpdate: () => {
+              el.textContent = Math.round(o.v).toLocaleString("en-US");
+            },
+          },
+          at
+        );
+      }
+      countUp("v1", 1387, 7.62);
+      countUp("v2", 1370, 7.92);
+      countUp("v3", 1362, 8.22);
+
+      // YOU row light + lift
+      tl.fromTo(
+        "#row-you",
+        { boxShadow: "inset 3px 0 0 rgba(204,255,0,1), 0 14px 30px -20px rgba(204,255,0,0.0)" },
+        {
+          boxShadow: "inset 3px 0 0 rgba(204,255,0,1), 0 14px 30px -20px rgba(204,255,0,0.4)",
+          y: -6,
+          duration: 0.5,
+          ease: "power2.out",
+        },
+        8.5
+      );
+
+      // idle float (finite, seek-safe)
+      tl.to("#rank-float", { y: -8, duration: 1.8, ease: "sine.inOut", repeat: 2, yoyo: true }, 7.7);
+
+      // slow sheen sweep across the glass (finite)
+      tl.fromTo(
+        "#rank-sheen",
+        { x: 0 },
+        { x: 1500, duration: 3.0, ease: "sine.inOut" },
+        7.8
+      );
+
+      // rank cell clears
+      tl.to("#rank-shell", { opacity: 0, y: 34, duration: 0.3, ease: "power2.in" }, 11.0);
+      tl.set("#rank-shell", { opacity: 0 }, 11.3);
+
+      /* ---------- BEAT 4 — end card ---------- */
+      tl.from("#wordmark", { opacity: 0, y: 26, duration: 0.5, ease: "power3.out" }, 11.35);
+      tl.from("#tagline", { opacity: 0, y: 18, duration: 0.5, ease: "power3.out" }, 11.6);
+      tl.from("#url", { opacity: 0, y: 16, duration: 0.5, ease: "power3.out" }, 11.78);
+
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>
