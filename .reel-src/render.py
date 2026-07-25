@@ -163,10 +163,10 @@ def endcard_text(base, tag_a, url_a):
     ft = ImageFont.truetype(FMED, tfs); ttr = int(tfs * 0.04)
     tw = tracked_w("Know your game.", ft, ttr)
     draw_tracked(d, (OW - tw) / 2, OH * 0.605, "Know your game.", ft, (235, 235, 235, int(255 * tag_a)), ttr)
-    ufs = fit_fs("rallyrating.com/apply", 0.46 * OW, 0.05, FBOLD)
+    ufs = fit_fs("rallyrating.app/apply", 0.46 * OW, 0.05, FBOLD)
     fu = ImageFont.truetype(FBOLD, ufs); utr = int(ufs * 0.05)
-    uw = tracked_w("rallyrating.com/apply", fu, utr)
-    draw_tracked(d, (OW - uw) / 2, OH * 0.70, "rallyrating.com/apply", fu, (*ACID, int(255 * url_a)), utr)
+    uw = tracked_w("rallyrating.app/apply", fu, utr)
+    draw_tracked(d, (OW - uw) / 2, OH * 0.70, "rallyrating.app/apply", fu, (*ACID, int(255 * url_a)), utr)
     return over(base, np.asarray(img).astype(np.float32))
 
 # ---- timeline ----
