@@ -14,9 +14,12 @@ CLEAN, ETCH, FBOLD, FMED, OUTDIR = sys.argv[1:6]
 MODE = sys.argv[6] if len(sys.argv) > 6 else 'full'
 os.makedirs(OUTDIR, exist_ok=True)
 
-OW, OH = 1920, 1080
+OW = int(os.environ.get('OW', '1920'))
+OH = int(os.environ.get('OH', '1080'))
 FPS = 25
+RESAMPLE = Image.LANCZOS if os.environ.get('FAST') != '1' else Image.BILINEAR
 ACID = (204, 255, 0)
+K = OH / 1080.0  # scale type sizes to output resolution
 
 clean = Image.open(CLEAN).convert('RGB')
 etch = Image.open(ETCH).convert('RGB')
@@ -58,11 +61,11 @@ def sample(progress, jphase):
     # etch visibility ramp: ~0 at wide -> full before tight (imperceptible->clear)
     a = smooth((zp - 0.06) / 0.66)
     box = (x0, y0, x0 + cw, y0 + ch)
-    c = clean.resize((OW, OH), Image.LANCZOS, box=box)
+    c = clean.resize((OW, OH), RESAMPLE, box=box)
     if a < 0.004:
         out = np.asarray(c).astype(np.float32)
     else:
-        e = etch.resize((OW, OH), Image.LANCZOS, box=box)
+        e = etch.resize((OW, OH), RESAMPLE, box=box)
         out = np.asarray(c).astype(np.float32) * (1 - a) + np.asarray(e).astype(np.float32) * a
     return out
 
@@ -96,7 +99,7 @@ def wordmark_layer(scale=1.0, alpha=1.0, y_center=None):
     """RALLY. wordmark on transparent layer. Returns RGBA np array."""
     img = Image.new('RGBA', (OW, OH), (0, 0, 0, 0))
     d = ImageDraw.Draw(img)
-    fs = int(150 * scale)
+    fs = int(150 * scale * K)
     f = load(FBOLD, fs)
     tr = int(fs * 0.06)
     word = "RALLY"
@@ -119,7 +122,7 @@ def logo_R_layer(scale, alpha, cx_frac=0.5, cy_frac=0.45):
     """Big 'R.' mark centered (the icon resolving on black)."""
     img = Image.new('RGBA', (OW, OH), (0, 0, 0, 0))
     d = ImageDraw.Draw(img)
-    fs = int(360 * scale)
+    fs = int(360 * scale * K)
     f = load(FBOLD, fs)
     rw = d.textbbox((0, 0), "R", font=f)[2]
     dot_w = d.textbbox((0, 0), ".", font=f)[2]
@@ -142,11 +145,11 @@ def over(base, layer):
 def endcard_text(base, tag_a, url_a):
     img = Image.new('RGBA', (OW, OH), (0, 0, 0, 0))
     d = ImageDraw.Draw(img)
-    ft = load(FMED, 46)
+    ft = load(FMED, int(46 * K))
     tag = "Know your game."
     tw = text_w(d, tag, ft, 2)
     draw_tracked(d, (OW - tw) / 2, OH * 0.605, tag, ft, (235, 235, 235, int(255 * tag_a)), 2)
-    fu = load(FBOLD, 40)
+    fu = load(FBOLD, int(40 * K))
     url = "rallyrating.com/apply"
     uw = text_w(d, url, fu, 3)
     draw_tracked(d, (OW - uw) / 2, OH * 0.70, url, fu, (ACID[0], ACID[1], ACID[2], int(255 * url_a)), 3)
