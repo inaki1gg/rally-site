@@ -19,6 +19,7 @@ OH = int(os.environ.get('OH', '1080'))
 FPS = 25
 RESAMPLE = Image.LANCZOS if os.environ.get('FAST') != '1' else Image.BILINEAR
 ACID = (204, 255, 0)
+HOOK = os.environ.get('HOOK', '')  # on-screen scroll-stopper over the opening
 
 clean = Image.open(CLEAN).convert('RGB')
 etch = Image.open(ETCH).convert('RGB')
@@ -128,6 +129,34 @@ def logo_R_layer(scale, alpha, cy_frac=0.45):
     arr = np.asarray(img).astype(np.float32); arr[..., 3] *= alpha
     return arr
 
+def hook_alpha(i):
+    # fade in ~0.3s, hold, fade out before the R resolves (~frame 72)
+    if i < 8 or i > 74:
+        return 0.0
+    if i < 22:
+        return smooth((i - 8) / 14.0)
+    if i <= 52:
+        return 1.0
+    return 1.0 - smooth((i - 52) / 22.0)
+
+def hook_layer(alpha):
+    fs = int(fit_fs(HOOK.upper(), 0.66 * OW, 0.13, FBOLD))
+    fs = min(fs, int(0.045 * OH))          # keep it restrained, not a banner
+    f = ImageFont.truetype(FBOLD, fs)
+    tr = int(fs * 0.13)
+    text = HOOK.upper()
+    w = tracked_w(text, f, tr)
+    x = (OW - w) / 2.0
+    y = 0.11 * OH
+    sh = Image.new('RGBA', (OW, OH), (0, 0, 0, 0))
+    draw_tracked(ImageDraw.Draw(sh), x + 2, y + 3, text, f, (0, 0, 0, 210), tr)
+    sh = sh.filter(ImageFilter.GaussianBlur(6))
+    tx = Image.new('RGBA', (OW, OH), (0, 0, 0, 0))
+    draw_tracked(ImageDraw.Draw(tx), x, y, text, f, (255, 255, 255, 255), tr)
+    comp = Image.alpha_composite(sh, tx)
+    arr = np.asarray(comp).astype(np.float32); arr[..., 3] *= alpha
+    return arr
+
 def endcard_text(base, tag_a, url_a):
     img = Image.new('RGBA', (OW, OH), (0, 0, 0, 0)); d = ImageDraw.Draw(img)
     tfs = fit_fs("Know your game.", 0.44 * OW, 0.04, FMED)
@@ -146,7 +175,12 @@ TOTAL = PUSH + HOLD + DISS + BUILD + TAGIN + URLIN + ENDHOLD
 
 def render_index(i):
     if i < PUSH:
-        return finish(sample(i / (PUSH - 1), i * 0.13))
+        arr = sample(i / (PUSH - 1), i * 0.13)
+        if HOOK:
+            a = hook_alpha(i)
+            if a > 0.004:
+                arr = over(arr, hook_layer(a))
+        return finish(arr)
     i2 = i - PUSH
     if i2 < HOLD:
         return finish(sample(1.0, (PUSH + i2) * 0.13))
