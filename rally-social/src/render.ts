@@ -45,7 +45,7 @@ async function main() {
   await page.evaluate(() => (document as any).fonts.ready);
 
   const measured: Measured[] = await page.evaluate(() => {
-    const sel = '.wordmark, .hero-pos, .hero-of, .kicker, .eyebrow, .standings';
+    const sel = '.wordmark, .statement, .hero-pos, .hero-of, .eyebrow, .standings, .payoff';
     return [...document.querySelectorAll(sel)].map((el) => {
       const r = el.getBoundingClientRect();
       return {

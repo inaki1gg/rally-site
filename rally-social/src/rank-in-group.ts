@@ -38,6 +38,7 @@ function redactionRow(position: number, isPlayer: boolean, barWidth: number): st
     <li class="row${isPlayer ? ' row--player' : ''}">
       <span class="pos">${position}</span>
       <span class="bar" style="width:${barWidth}px"></span>
+      ${isPlayer ? `<span class="you">${COPY.youTag}</span>` : ''}
     </li>`;
 }
 
@@ -69,7 +70,7 @@ export function buildHtml({ fonts }: RenderInput): string {
 <head>
 <meta charset="utf-8">
 <style>
-  ${[TYPE.weights.bold, TYPE.weights.black].map(face).join('\n')}
+  ${[TYPE.weights.regular, TYPE.weights.bold, TYPE.weights.black].map(face).join('\n')}
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -117,7 +118,7 @@ export function buildHtml({ fonts }: RenderInput): string {
     top: 560px;
     display: flex;
     align-items: baseline;
-    gap: 26px;
+    gap: 10px;
   }
   .hero-pos {
     font-weight: ${TYPE.weights.black};
@@ -128,30 +129,48 @@ export function buildHtml({ fonts }: RenderInput): string {
   }
   .hero-of {
     font-weight: ${TYPE.weights.black};
-    font-size: 142px;
+    font-size: 170px;
     line-height: 1;
     letter-spacing: -0.02em;
     color: ${COLOR.text};
   }
 
-  .kicker {
+  /* setup — sits under the wordmark, above the void */
+  .statement {
     position: absolute;
     left: ${LEFT}px;
-    top: 952px;
-    font-weight: ${TYPE.weights.bold};
-    font-size: 29px;
-    line-height: 1.62;
-    letter-spacing: 0.13em;
-    color: ${COLOR.muted};
+    top: 300px;
+    font-size: 44px;
+    line-height: 1.28;
+    color: ${COLOR.dim};
+    font-weight: ${TYPE.weights.regular};
+    letter-spacing: 0.005em;
   }
-  .kicker b { font-weight: ${TYPE.weights.bold}; color: ${COLOR.dim}; }
+  .statement b {
+    display: block;
+    font-weight: ${TYPE.weights.black};
+    letter-spacing: -0.015em;
+    color: ${COLOR.text};
+  }
+
+  /* payoff — points down at the standings */
+  .payoff {
+    position: absolute;
+    left: ${LEFT}px;
+    top: 1668px;
+    font-weight: ${TYPE.weights.black};
+    font-size: 58px;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: ${COLOR.text};
+  }
 
   /* ───── the ground: group standings ───── */
 
   .eyebrow {
     position: absolute;
     left: ${LEFT}px;
-    top: 1120px;
+    top: 928px;
     font-weight: ${TYPE.weights.bold};
     font-size: 21px;
     line-height: 1;
@@ -162,7 +181,7 @@ export function buildHtml({ fonts }: RenderInput): string {
   .standings {
     position: absolute;
     left: ${LEFT}px;
-    top: 1176px;
+    top: 984px;
     width: ${FRAME.width - LEFT - CARD_RIGHT_GUTTER}px;
     padding: 34px 34px 34px 30px;
     border-radius: 30px;
@@ -186,6 +205,7 @@ export function buildHtml({ fonts }: RenderInput): string {
 
   .row {
     display: flex;
+    padding-right: 22px;
     align-items: center;
     height: 66px;
     padding-left: 26px;
@@ -208,7 +228,15 @@ export function buildHtml({ fonts }: RenderInput): string {
   .bar {
     height: 18px;
     border-radius: 9px;
-    background: ${COLOR.redaction};
+    background: ${COLOR.ghost};
+  }
+
+  .you {
+    margin-left: auto;
+    font-weight: ${TYPE.weights.bold};
+    font-size: 22px;
+    letter-spacing: 0.18em;
+    color: ${COLOR.text};
   }
 
   /* position 2 — the player. lit, not coloured. */
@@ -234,14 +262,14 @@ export function buildHtml({ fonts }: RenderInput): string {
       <span class="hero-of">${RANK_IN_GROUP.ofLabel}</span>
     </div>
 
-    <div class="kicker">
-      <b>${COPY.kicker[0]}</b><br>${COPY.kicker[1]}
-    </div>
+    <div class="statement">${COPY.statement[0]}<b>${COPY.statement[1]}</b></div>
 
     <div class="eyebrow">${COPY.groupEyebrow}</div>
 
     <ul class="standings">${rows}
     </ul>
+
+    <div class="payoff">${COPY.payoff}</div>
 
   </div>
 </body>

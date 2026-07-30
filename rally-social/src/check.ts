@@ -18,7 +18,10 @@ import { ACID_REGIONS, COLOR, FORBIDDEN_COLORS, FRAME } from '../canon.ts';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const repoRoot = resolve(here, '../..');
-const TARGET = resolve(repoRoot, 'out/social/rally-2nd-of-8-1080x1920.png');
+/** Defaults to the canonical export; pass a path to audit any other frame. */
+const TARGET = process.argv[2]
+  ? resolve(process.cwd(), process.argv[2])
+  : resolve(repoRoot, 'out/social/rally-2nd-of-8-1080x1920.png');
 
 interface Report {
   width: number;

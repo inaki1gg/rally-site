@@ -102,9 +102,22 @@ export const ROSTER = {
 
 // ─────────────────────────── copy ───────────────────────────
 
+/**
+ * Spanish-primary, per the proof lane: this post is a receipt, and a Madrid
+ * leaderboard is Spanish by nature. Neutral-tú throughout — no vosotros, no
+ * ustedes. Statements close on the verified full stop.
+ *
+ * Deliberately absent: any line naming the redaction. The bars already say it,
+ * and captioning them would narrate the image.
+ */
 export const COPY = {
-  groupEyebrow: 'YOUR GROUP',
-  kicker: ['NOT A GLOBAL RANK.', 'THE EIGHT YOU ACTUALLY PLAY.'],
+  /** setup, top of frame — line 1 recedes, line 2 lands */
+  statement: ['UN RANKING GLOBAL', 'NO SIGNIFICA NADA.'],
+  groupEyebrow: 'TU GRUPO',
+  /** row tag at the player's position — a pronoun, never a name */
+  youTag: 'TÚ',
+  /** payoff, pointing down at the standings */
+  payoff: 'ESTO SÍ.',
 } as const;
 
 // ─────────────────────────── acid budget ───────────────────────────
