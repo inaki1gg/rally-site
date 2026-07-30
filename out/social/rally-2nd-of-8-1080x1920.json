@@ -1,0 +1,49 @@
+{
+  "file": "out/social/rally-2nd-of-8-1080x1920.png",
+  "width": 1080,
+  "height": 1920,
+  "elements": [
+    {
+      "label": "wordmark",
+      "x": 96,
+      "y": 96,
+      "w": 164,
+      "h": 46
+    },
+    {
+      "label": "hero-pos",
+      "x": 96,
+      "y": 560,
+      "w": 662,
+      "h": 301
+    },
+    {
+      "label": "hero-of",
+      "x": 784,
+      "y": 715,
+      "w": 149,
+      "h": 142
+    },
+    {
+      "label": "kicker",
+      "x": 96,
+      "y": 952,
+      "w": 600,
+      "h": 94
+    },
+    {
+      "label": "eyebrow",
+      "x": 96,
+      "y": 1120,
+      "w": 214,
+      "h": 21
+    },
+    {
+      "label": "standings",
+      "x": 96,
+      "y": 1176,
+      "w": 832,
+      "h": 598
+    }
+  ]
+}
