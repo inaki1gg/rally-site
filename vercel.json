@@ -2,6 +2,7 @@
   "rewrites": [
     { "source": "/privacy", "destination": "/privacy.html" },
     { "source": "/apply", "destination": "/apply.html" },
+    { "source": "/reset-password", "destination": "/auth/reset-password.html" },
     { "source": "/:username", "destination": "/profile.html" }
   ]
 }
