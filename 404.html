@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex" />
+<title>Page not found — RALLY</title>
+
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+<style>
+  /* self-hosted Montserrat — matches apply.html / privacy.html, no external CDN */
+  @font-face{font-family:'Montserrat';font-style:normal;font-weight:400;font-display:swap;src:url('/fonts/montserrat-latin-400-normal.woff2') format('woff2');}
+  @font-face{font-family:'Montserrat';font-style:normal;font-weight:700;font-display:swap;src:url('/fonts/montserrat-latin-700-normal.woff2') format('woff2');}
+  @font-face{font-family:'Montserrat';font-style:normal;font-weight:900;font-display:swap;src:url('/fonts/montserrat-latin-900-normal.woff2') format('woff2');}
+
+  /* tokens — mirrored from index.html / apply.html */
+  :root{
+    --bg:#0D0D0D;--text:#F2F2F0;--dim:#888888;--acid:#CCFF00;
+    --font:'Montserrat',-apple-system,BlinkMacSystemFont,'Helvetica Neue',sans-serif;
+    --gutter:clamp(20px,4vw,48px);
+  }
+
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+  body{
+    background:var(--bg);color:var(--text);font-family:var(--font);
+    -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+    min-height:100vh;overflow-x:hidden;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    padding:var(--gutter);text-align:center;
+  }
+
+  .wordmark{
+    font-weight:900;font-size:20px;letter-spacing:-.02em;color:var(--text);
+    text-decoration:none;user-select:none;margin-bottom:56px;
+  }
+  .wordmark span{color:var(--acid)}
+
+  h1{
+    font-weight:900;font-size:clamp(38px,9vw,64px);letter-spacing:-.03em;
+    line-height:1;color:var(--text);margin-bottom:16px;
+  }
+
+  .sub{
+    font-weight:400;font-size:16px;line-height:1.6;color:var(--dim);
+    max-width:34ch;margin-bottom:40px;
+  }
+
+  .cta{
+    display:inline-flex;align-items:center;justify-content:center;
+    background:var(--acid);color:var(--bg);text-decoration:none;
+    padding:15px 32px;border-radius:999px;
+    font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+    transition:opacity .2s;
+  }
+  .cta:hover{opacity:.85}
+</style>
+</head>
+<body>
+
+  <a href="https://rallyrating.app" class="wordmark" aria-label="RALLY home">RALL<span>Y.</span></a>
+
+  <h1>PAGE NOT FOUND</h1>
+  <p class="sub">This page doesn't exist, or it moved.</p>
+
+  <a href="https://rallyrating.app" class="cta">Back to Rally</a>
+
+</body>
+</html>
