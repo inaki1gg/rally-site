@@ -13,16 +13,16 @@ panorama, so the cord lines up edge-to-edge on every swipe.
 | # | Content | Final JPEG (1080×1350) |
 |---|---------|------------------------|
 | 1 | Suit-glove hand shooting the cord from its palm, lockup, SWIPE | https://d2ol7oe51mr4n9.cloudfront.net/user_3FwcSFk4XJLeeaMb70sVr46BWA5/c4558940-033d-459f-92a2-fbaec1e9b83a.jpg |
-| 2 | Taut cord across black | https://d2ol7oe51mr4n9.cloudfront.net/user_3FwcSFk4XJLeeaMb70sVr46BWA5/23a9bfe7-cd67-4658-9c08-760e6b25b41c.jpg |
+| 2 | Taut cord across black | https://d2ol7oe51mr4n9.cloudfront.net/user_3FwcSFk4XJLeeaMb70sVr46BWA5/db975ab6-31b8-4eb2-adb7-1f628fa27b6e.jpg |
 | 3 | Cord frays into net | https://d2ol7oe51mr4n9.cloudfront.net/user_3FwcSFk4XJLeeaMb70sVr46BWA5/f641c4f1-5ba5-44f9-90ec-7c6b3026c518.jpg |
 | 4 | Net catches the phone (RALLY home) | https://d2ol7oe51mr4n9.cloudfront.net/user_3FwcSFk4XJLeeaMb70sVr46BWA5/96d4007b-4148-4cee-98d2-5f69e363d1f3.jpg |
-| 5 | BRAND NEW GAME. + Founding 100 CTA | https://d2ol7oe51mr4n9.cloudfront.net/user_3FwcSFk4XJLeeaMb70sVr46BWA5/f710b332-18c7-45f1-a36b-395c2bad02be.jpg |
+| 5 | BRAND NEW GAME. + Founding 100 CTA | https://d2ol7oe51mr4n9.cloudfront.net/user_3FwcSFk4XJLeeaMb70sVr46BWA5/ee7fb76c-7189-4c65-a6de-d40388515334.jpg |
 
 Full panorama (5400×1350):
-https://d2ol7oe51mr4n9.cloudfront.net/user_3FwcSFk4XJLeeaMb70sVr46BWA5/bf0a08c7-715f-429c-8f50-31cd59d1ce50.jpg
+https://d2ol7oe51mr4n9.cloudfront.net/user_3FwcSFk4XJLeeaMb70sVr46BWA5/eb851e4f-45fa-4eb7-b583-2b0a979eaa03.jpg
 
 Contact sheet:
-https://d2ol7oe51mr4n9.cloudfront.net/user_3FwcSFk4XJLeeaMb70sVr46BWA5/def63f64-e72f-45a5-a09b-71e05fd6b7c1.jpg
+https://d2ol7oe51mr4n9.cloudfront.net/user_3FwcSFk4XJLeeaMb70sVr46BWA5/530d702e-3814-476e-b682-cd5c424358dd.jpg
 
 ![carousel preview](./carousel_preview.jpg)
 
@@ -59,6 +59,11 @@ No hashtags, no emojis. Post order: slides 1→5, 4:5 portrait.
 
 Seam QA (brightest-row y / thickness, left vs right of each cut):
 seam 1|2: 617/12 vs 616/13 · seam 2|3: 616/45 vs 617/46.
+
+Slide QA: slide 2 carries 0.05% bright pixels outside the cord band (the
+strip picker rejected candidate windows scoring up to 57% — those clipped
+the fingertips and used to tile ghost shapes across the slide). Slide 5's
+type sits 242px from the left edge and 236px from the right.
 
 Slide 1 uses the suit-glove hand generation (`aa438821…`) refined by an
 inpaint pass (`e0843e59…`) that removes the cord left of the hand and makes

@@ -144,9 +144,42 @@ report['screen_refine_dxdy'] = (dx, dy)
 pan.paste(scr_crop, (2160 + dx, 0 + dy), scr_crop)
 
 # --------------------------------------------------------- S2: cord tiling
-strip_x0, strip_x1 = 720, 1056
-band = 240
-strip = s1.crop((strip_x0, CORD_Y - band, strip_x1, CORD_Y + band))
+# The strip that gets tiled across slide 2 must contain the cord and NOTHING
+# else. Sampling a fixed window is fragile: depending on the hand generation,
+# a fingertip can fall inside it and then tiles across the whole slide as
+# ghost blobs. So score candidate windows by how much bright pixel area sits
+# OUTSIDE the cord band, and take the cleanest.
+SW, BAND = 182, 30
+
+
+def junk_score(img, x0, x1, cy, half=140, thresh=42):
+    """(fraction of bright pixels outside the cord band, peak cord brightness)."""
+    c = img.crop((x0, cy - half, x1, cy + half)).convert('L')
+    px = c.load()
+    w, h = c.size
+    mid = h // 2
+    junk = cord = 0
+    for y in range(h):
+        for x in range(w):
+            v = px[x, y]
+            if abs(y - mid) <= BAND:
+                cord = max(cord, v)
+            elif v > thresh:
+                junk += 1
+    return junk / (w * h), cord
+
+
+cands = []
+for x0 in range(560, W - SW + 1, 14):        # candidates from slide 1
+    cands.append(junk_score(s1, x0, x0 + SW, CORD_Y) + ('s1', x0))
+for x0 in range(2260, 3000, 20):             # and from the straight run in ge
+    cands.append(junk_score(pan, x0, x0 + SW, CORD_Y) + ('pan', x0))
+usable = sorted((c for c in cands if c[1] > 150), key=lambda c: c[0])
+best = usable[0]
+report['strip'] = {'src': best[2], 'x0': best[3], 'junk': round(best[0], 5)}
+strip = (s1 if best[2] == 's1' else pan).crop(
+    (best[3], CORD_Y - 140, best[3] + SW, CORD_Y + 140))
+
 th_left = max(6, report['s1_cord_exit'][1])
 th_right = max(th_left, report['s3_cord_entry'][1] if report['s3_cord_entry'][0] else th_left)
 grow = min(6.0, th_right / th_left)
@@ -219,9 +252,22 @@ if os.path.exists(f'{ROOT}/overlay_s1.png'):
     pan.paste(ov1, (0, 0), ov1)
 if os.path.exists(f'{ROOT}/overlay_s5.png'):
     ov5 = add_grain(Image.open(f'{ROOT}/overlay_s5.png').convert('RGB'), sigma * 0.7)
-    feather_paste(pan, ov5, (4 * W - 90, 0), feather=200, edges=('left',))
-    tail = add_grain(Image.new('RGB', (90, H), BG), sigma * 0.7)
-    pan.paste(tail, (PAN_W - 90, 0))
+    # The CTA must be pasted at the EXACT slide boundary, otherwise its whole
+    # layout sits off-centre inside slide 5. Any glow spilling off the right
+    # edge of the net/phone image is handled by fading slide 4's tail to black
+    # instead of by shifting the overlay.
+    tail_w = 150
+    tail = pan.crop((4 * W - tail_w, 0, 4 * W, H))
+    ramp = Image.new('L', (tail_w, H))
+    rp = ramp.load()
+    for xx in range(tail_w):
+        a = int(255 * (xx / (tail_w - 1)) ** 1.6)
+        for yy in range(H):
+            rp[xx, yy] = a
+    tail.paste(add_grain(Image.new('RGB', (tail_w, H), BG), sigma), (0, 0), ramp)
+    pan.paste(tail, (4 * W - tail_w, 0))
+
+    feather_paste(pan, ov5, (4 * W, 0), feather=120, edges=('left',))
 
 # ------------------------------------------------------------ seam metrics
 for name, sx in [('seam12', W), ('seam23', 2 * W), ('seam34', 3 * W), ('seam45', 4 * W)]:
