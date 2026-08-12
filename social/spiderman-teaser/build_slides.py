@@ -219,7 +219,9 @@ if os.path.exists(f'{ROOT}/overlay_s1.png'):
     pan.paste(ov1, (0, 0), ov1)
 if os.path.exists(f'{ROOT}/overlay_s5.png'):
     ov5 = add_grain(Image.open(f'{ROOT}/overlay_s5.png').convert('RGB'), sigma * 0.7)
-    feather_paste(pan, ov5, (4 * W, 0), feather=140, edges=('left',))
+    feather_paste(pan, ov5, (4 * W - 90, 0), feather=200, edges=('left',))
+    tail = add_grain(Image.new('RGB', (90, H), BG), sigma * 0.7)
+    pan.paste(tail, (PAN_W - 90, 0))
 
 # ------------------------------------------------------------ seam metrics
 for name, sx in [('seam12', W), ('seam23', 2 * W), ('seam34', 3 * W), ('seam45', 4 * W)]:
