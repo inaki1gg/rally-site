@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8">
+<title>RALLY phone</title>
+<style>
+@font-face{font-family:'Montserrat';font-style:normal;font-weight:400;src:url("file:///home/user/rally-site/fonts/montserrat-latin-400-normal.woff2") format('woff2')}
+@font-face{font-family:'Montserrat';font-style:normal;font-weight:700;src:url("file:///home/user/rally-site/fonts/montserrat-latin-700-normal.woff2") format('woff2')}
+@font-face{font-family:'Montserrat';font-style:normal;font-weight:900;src:url("file:///home/user/rally-site/fonts/montserrat-latin-900-normal.woff2") format('woff2')}
+:root{
+  --acid:#CCFF00; --bg:#0D0D0D; --card:#141414; --card2:#181818;
+  --line:#242424; --ink:#F5F5F5; --mut:#8F8F8F; --dim:#5C5C5C;
+  --font:'Montserrat',-apple-system,sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:transparent;font-family:var(--font);-webkit-font-smoothing:antialiased}
+#stage{position:relative;width:427px;height:886px}
+
+/* ---------- chassis ---------- */
+.phone{position:absolute;left:3px;top:3px;width:421px;height:880px}
+.chassis{
+  position:absolute;inset:0;border-radius:64px;
+  background:linear-gradient(155deg,#3d3f42 0%,#17181a 22%,#0a0a0b 50%,#1b1c1e 78%,#333538 100%);
+  box-shadow:0 40px 90px rgba(0,0,0,.75), inset 0 0 0 1px rgba(255,255,255,.14);
+}
+.bezel{position:absolute;inset:4px;border-radius:60px;background:#000;}
+.screen{
+  position:absolute;left:14px;top:14px;width:393px;height:852px;border-radius:50px;
+  background:var(--bg);overflow:hidden;
+  display:flex;flex-direction:column;
+}
+.sidebtn{position:absolute;background:linear-gradient(90deg,#26272a,#101113);border-radius:3px}
+.sb-l{left:-2.5px;width:3.5px}
+.sb-r{right:-2.5px;width:3.5px}
+.action{top:196px;height:30px}
+.vol1{top:252px;height:56px}
+.vol2{top:322px;height:56px}
+.power{top:278px;height:90px}
+.island{
+  position:absolute;top:12px;left:50%;transform:translateX(-50%);
+  width:122px;height:35px;border-radius:20px;background:#000;z-index:40;
+}
+.island::after{content:'';position:absolute;right:13px;top:50%;transform:translateY(-50%);
+  width:11px;height:11px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#1e2733,#05070a 65%)}
+
+/* ---------- status bar ---------- */
+.status{display:flex;justify-content:space-between;align-items:center;
+  padding:16px 34px 0 40px;height:52px;flex:none;position:relative;z-index:50}
+.time{font-weight:700;font-size:16.5px;letter-spacing:.2px;color:var(--ink)}
+.sicons{display:flex;align-items:center;gap:7px}
+.sicons svg{display:block}
+
+/* ---------- header ---------- */
+.hdr{display:flex;justify-content:space-between;align-items:center;padding:14px 22px 0;flex:none}
+.wordmark{font-weight:900;font-size:29px;letter-spacing:1.5px;color:var(--ink)}
+.wordmark b{color:var(--acid);font-weight:900}
+.hright{display:flex;align-items:center;gap:12px}
+.bell{position:relative;width:38px;height:38px;border-radius:50%;background:#151515;
+  display:flex;align-items:center;justify-content:center;border:1px solid #1f1f1f}
+.bell .dot{position:absolute;top:6px;right:7px;width:7px;height:7px;border-radius:50%;
+  background:var(--acid);box-shadow:0 0 6px var(--acid)}
+.avatar{width:38px;height:38px;border-radius:50%;background:#1d1d1d;border:1px solid #2a2a2a;
+  display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;color:#cfcfcf;letter-spacing:.5px}
+.dateline{padding:10px 24px 2px;text-align:right;flex:none;
+  font-size:10.5px;font-weight:700;letter-spacing:2.6px;color:var(--dim)}
+
+/* ---------- hero card ---------- */
+.hero{
+  margin:12px 18px 0;border-radius:26px;padding:22px 22px 24px;flex:none;
+  background:linear-gradient(180deg,#121307 0%,#101010 40%,#0f0f0f 100%);
+  border:1.5px solid var(--acid);
+  box-shadow:0 0 26px rgba(204,255,0,.16), inset 0 0 44px rgba(204,255,0,.045);
+}
+.hrow{display:flex;justify-content:space-between;align-items:center}
+.hlabel{font-size:12px;font-weight:700;letter-spacing:3.4px;color:var(--mut)}
+.pill{display:flex;align-items:center;gap:7px;background:#1a1c0c;border:1px solid rgba(204,255,0,.35);
+  border-radius:999px;padding:6px 13px;font-size:11.5px;font-weight:700;letter-spacing:1.6px;color:var(--acid)}
+.pill .pd{width:6px;height:6px;border-radius:50%;background:var(--acid);box-shadow:0 0 6px var(--acid)}
+.rating{margin-top:10px;font-weight:900;font-size:88px;line-height:1.02;letter-spacing:-1px;
+  color:var(--acid);text-shadow:0 0 34px rgba(204,255,0,.35)}
+.sub{display:flex;align-items:center;gap:8px;margin-top:8px;font-size:12.5px;white-space:nowrap}
+.sub .up{color:var(--acid);font-weight:900}
+.sub .g{color:var(--mut);font-weight:400}
+.sub .sep{color:#3a3a3a}
+.verif{display:inline-flex;align-items:center;gap:5px;margin-left:2px;
+  border:1px solid rgba(204,255,0,.4);border-radius:5px;padding:2.5px 7px;
+  font-size:9px;font-weight:900;letter-spacing:1.8px;color:var(--acid)}
+.track{position:relative;margin-top:24px;height:4px;border-radius:2px;background:#232323}
+.track .fill{position:absolute;left:0;top:0;bottom:0;width:46%;border-radius:2px;
+  background:linear-gradient(90deg,#5d7500,var(--acid))}
+.track .tick{position:absolute;top:-3px;width:1.5px;height:10px;background:#333}
+.track .knob{position:absolute;left:46%;top:50%;transform:translate(-50%,-50%);
+  width:17px;height:17px;border-radius:50%;background:var(--acid);
+  box-shadow:0 0 0 5px rgba(204,255,0,.15),0 0 16px rgba(204,255,0,.75)}
+.tlabels{display:flex;margin-top:12px;font-size:11.5px;letter-spacing:.6px;color:var(--dim);font-weight:700}
+.tlabels span{width:25%}
+.tlabels .on{color:var(--ink)}
+.hfoot{margin-top:12px;font-size:11.5px;color:var(--mut);font-weight:700;letter-spacing:.8px}
+.hfoot b{color:var(--acid)}
+
+/* ---------- stat cards ---------- */
+.cards{display:flex;gap:12px;margin:14px 18px 0;flex:none}
+.card{flex:1;background:var(--card);border:1px solid var(--line);border-radius:22px;padding:17px 18px 15px}
+.clabel{font-size:10.5px;font-weight:700;letter-spacing:2.8px;color:var(--mut);display:flex;justify-content:space-between;align-items:center}
+.mini{background:#1a1c0c;border:1px solid rgba(204,255,0,.3);color:var(--acid);
+  border-radius:999px;padding:2.5px 9px;font-size:10px;font-weight:900;letter-spacing:.5px}
+.big{margin-top:8px;font-weight:900;font-size:42px;line-height:1;color:var(--ink);letter-spacing:-.5px}
+.big small{font-size:20px;font-weight:900;color:#d9d9d9}
+.big .dash{color:#4a4a4a;font-weight:700}
+.cfoot{margin-top:8px;font-size:11px;font-weight:700;letter-spacing:1.6px;color:var(--dim)}
+.boxes{display:flex;gap:7px;margin-top:10px}
+.bx{width:21px;height:21px;border-radius:6px;background:#0e0e0e;border:1px solid #262626}
+.bx.w{background:var(--acid);border-color:var(--acid);display:flex;align-items:center;justify-content:center}
+
+/* ---------- recent ---------- */
+.seclabel{margin:20px 24px 0;font-size:11px;font-weight:700;letter-spacing:3.2px;color:var(--dim);flex:none}
+.recent{margin:10px 18px 0;flex:none;display:flex;flex-direction:column;gap:9px}
+.match{display:flex;align-items:center;gap:13px;background:var(--card);
+  border:1px solid var(--line);border-radius:20px;padding:15px 17px}
+.wbadge{width:30px;height:30px;border-radius:9px;background:var(--acid);flex:none;
+  display:flex;align-items:center;justify-content:center;font-size:13.5px;font-weight:900;color:#0D0D0D}
+.minfo{flex:1;min-width:0}
+.mname{font-size:14.5px;font-weight:700;color:var(--ink);white-space:nowrap;overflow:hidden}
+.mname i{font-style:normal;color:var(--dim);font-weight:400;margin-right:5px;font-size:12.5px}
+.mago{margin-top:3px;font-size:9.5px;font-weight:700;letter-spacing:2.2px;color:var(--dim)}
+.mscore{font-size:14.5px;font-weight:900;color:var(--ink);letter-spacing:.5px;display:flex;gap:11px}
+
+/* ---------- tab bar ---------- */
+.tabwrap{margin-top:auto;flex:none;padding:0 20px 18px}
+.tabbar{height:64px;border-radius:999px;background:rgba(22,22,22,.92);border:1px solid #232323;
+  display:flex;align-items:center;justify-content:space-between;padding:0 12px;
+  box-shadow:0 -10px 30px rgba(0,0,0,.5)}
+.tab{width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.tab.active{background:#262626}
+.fab{width:52px;height:52px;border-radius:50%;background:var(--acid);
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 0 22px rgba(204,255,0,.45)}
+.homedot{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);
+  width:120px;height:4.5px;border-radius:3px;background:#3a3a3a;z-index:60}
+</style></head>
+<body>
+<div id="stage">
+  <div class="phone">
+    <div class="sidebtn sb-l action"></div>
+    <div class="sidebtn sb-l vol1"></div>
+    <div class="sidebtn sb-l vol2"></div>
+    <div class="sidebtn sb-r power"></div>
+    <div class="chassis"><div class="bezel"></div>
+      <div class="screen">
+        <div class="island"></div>
+        <div class="status">
+          <span class="time">21:07</span>
+          <span class="sicons">
+            <svg width="19" height="12" viewBox="0 0 19 12"><g fill="#F5F5F5"><rect x="0" y="7" width="3" height="5" rx="1"/><rect x="5" y="5" width="3" height="7" rx="1"/><rect x="10" y="2.5" width="3" height="9.5" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1" fill="#3c3c3c"/></g></svg>
+            <svg width="17" height="12" viewBox="0 0 17 12" fill="none"><path d="M8.5 10.9c.7 0 2.1-1.5 1.6-2-.4-.4-.9-.6-1.6-.6s-1.2.2-1.6.6c-.5.5.9 2 1.6 2Z" fill="#F5F5F5"/><path d="M2.6 5.4c1.6-1.5 3.6-2.3 5.9-2.3s4.3.8 5.9 2.3" stroke="#F5F5F5" stroke-width="1.7" stroke-linecap="round"/><path d="M5.4 8.1c.9-.8 1.9-1.2 3.1-1.2s2.2.4 3.1 1.2" stroke="#F5F5F5" stroke-width="1.7" stroke-linecap="round"/></svg>
+            <svg width="27" height="13" viewBox="0 0 27 13"><rect x=".5" y=".5" width="23" height="12" rx="3.5" stroke="#5a5a5a" fill="none"/><rect x="2" y="2" width="17" height="9" rx="2" fill="#F5F5F5"/><path d="M25.2 4.5v4c1-.3 1.6-1.1 1.6-2s-.6-1.7-1.6-2Z" fill="#5a5a5a"/></svg>
+          </span>
+        </div>
+        <div class="hdr">
+          <div class="wordmark">RALL<b>Y</b></div>
+          <div class="hright">
+            <div class="bell"><span class="dot"></span>
+              <svg width="17" height="18" viewBox="0 0 17 18" fill="none"><path d="M8.5 1.8c-3 0-4.9 2.3-4.9 5v3.1c0 .7-.9 2.1-1.5 2.8-.4.5 0 1.1.6 1.1h11.6c.6 0 1-.6.6-1.1-.6-.7-1.5-2.1-1.5-2.8V6.8c0-2.7-1.9-5-4.9-5Z" stroke="#cfcfcf" stroke-width="1.5" stroke-linejoin="round"/><path d="M6.7 15.6c.3.8 1 1.3 1.8 1.3s1.5-.5 1.8-1.3" stroke="#cfcfcf" stroke-width="1.5" stroke-linecap="round"/></svg>
+            </div>
+            <div class="avatar">IG</div>
+          </div>
+        </div>
+        <div class="dateline">WED · AUG 12 · MADRID</div>
+
+        <div class="hero">
+          <div class="hrow">
+            <span class="hlabel">RALLY RATING</span>
+            <span class="pill"><span class="pd"></span>#2 · CLUB</span>
+          </div>
+          <div class="rating">1,370</div>
+          <div class="sub">
+            <span class="up">+14</span><span class="g">this week</span>
+            <span class="sep">·</span><span class="g">46 matches</span>
+            <span class="sep">·</span>
+            <span class="verif"><svg width="9" height="9" viewBox="0 0 10 10"><path d="M1.5 5.4 4 7.8 8.6 2.4" stroke="#CCFF00" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>VERIFIED</span>
+          </div>
+          <div class="track">
+            <span class="tick" style="left:25%"></span>
+            <span class="tick" style="left:50%"></span>
+            <span class="tick" style="left:75%"></span>
+            <span class="fill"></span><span class="knob"></span>
+          </div>
+          <div class="tlabels"><span>Beg.</span><span class="on">Int.</span><span>Adv.</span><span style="text-align:right">Elite</span></div>
+          <div class="hfoot"><b>80 pts</b> → Adv.</div>
+        </div>
+
+        <div class="cards">
+          <div class="card">
+            <div class="clabel">WIN RATE</div>
+            <div class="big">72<small>%</small></div>
+            <div class="cfoot">33 W · 13 L</div>
+          </div>
+          <div class="card">
+            <div class="clabel">LAST 5 <span class="mini">+42</span></div>
+            <div class="big">4<span class="dash">–</span>1</div>
+            <div class="boxes">
+              <span class="bx w"><svg width="11" height="11" viewBox="0 0 10 10"><path d="M1.5 5.4 4 7.8 8.6 2.4" stroke="#0D0D0D" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <span class="bx w"><svg width="11" height="11" viewBox="0 0 10 10"><path d="M1.5 5.4 4 7.8 8.6 2.4" stroke="#0D0D0D" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <span class="bx"></span>
+              <span class="bx w"><svg width="11" height="11" viewBox="0 0 10 10"><path d="M1.5 5.4 4 7.8 8.6 2.4" stroke="#0D0D0D" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <span class="bx w"><svg width="11" height="11" viewBox="0 0 10 10"><path d="M1.5 5.4 4 7.8 8.6 2.4" stroke="#0D0D0D" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="seclabel">RECENT</div>
+        <div class="recent">
+          <div class="match">
+            <div class="wbadge">W</div>
+            <div class="minfo"><div class="mname"><i>vs</i>Iñaki &amp; Paula</div><div class="mago">5D AGO · VERIFIED</div></div>
+            <div class="mscore"><span>6-4</span><span>7-6</span></div>
+          </div>
+          <div class="match">
+            <div class="wbadge">W</div>
+            <div class="minfo"><div class="mname"><i>vs</i>Marco &amp; Leo</div><div class="mago">8D AGO · VERIFIED</div></div>
+            <div class="mscore"><span>6-2</span><span>6-4</span></div>
+          </div>
+        </div>
+
+        <div class="tabwrap">
+          <div class="tabbar">
+            <div class="tab active"><svg width="21" height="21" viewBox="0 0 22 22" fill="none"><path d="M3.5 9.6 11 3l7.5 6.6V18a1.4 1.4 0 0 1-1.4 1.4H4.9A1.4 1.4 0 0 1 3.5 18V9.6Z" stroke="#F5F5F5" stroke-width="1.7" stroke-linejoin="round"/></svg></div>
+            <div class="tab"><svg width="23" height="21" viewBox="0 0 24 22" fill="none"><circle cx="9" cy="8" r="3.4" stroke="#6f6f6f" stroke-width="1.7"/><path d="M2.8 18.5c.8-3 3.3-4.6 6.2-4.6s5.4 1.6 6.2 4.6" stroke="#6f6f6f" stroke-width="1.7" stroke-linecap="round"/><circle cx="17.5" cy="8.6" r="2.7" stroke="#6f6f6f" stroke-width="1.6"/><path d="M18.8 13.9c1.6.5 2.9 1.7 3.4 3.6" stroke="#6f6f6f" stroke-width="1.6" stroke-linecap="round"/></svg></div>
+            <div class="fab"><svg width="22" height="22" viewBox="0 0 22 22"><path d="M11 4v14M4 11h14" stroke="#0D0D0D" stroke-width="2.6" stroke-linecap="round"/></svg></div>
+            <div class="tab"><svg width="20" height="21" viewBox="0 0 20 21" fill="none"><path d="M5 2.5v16M15 2.5v16" stroke="#6f6f6f" stroke-width="1.7" stroke-linecap="round"/><path d="M5 6h10M5 10.5h10M5 15h10" stroke="#6f6f6f" stroke-width="1.7" stroke-linecap="round"/></svg></div>
+            <div class="tab"><svg width="20" height="21" viewBox="0 0 20 21" fill="none"><circle cx="10" cy="7" r="3.6" stroke="#6f6f6f" stroke-width="1.7"/><path d="M2.8 18.6c1-3.4 3.9-5.2 7.2-5.2s6.2 1.8 7.2 5.2" stroke="#6f6f6f" stroke-width="1.7" stroke-linecap="round"/></svg></div>
+          </div>
+        </div>
+        <div class="homedot"></div>
+      </div>
+    </div>
+  </div>
+</div>
+</body></html>
