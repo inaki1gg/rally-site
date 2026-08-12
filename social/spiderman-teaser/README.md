@@ -36,7 +36,43 @@ Alt (net wordplay):
 > Todo lo que cae en la red queda registrado.
 > Whatever lands in the net gets recorded.
 
-No hashtags, no emojis. Post order: slides 1→5, 4:5 portrait.
+No emojis. Post order: slides 1→5, 4:5 portrait.
+
+## Hashtags + discovery
+
+Instagram capped hashtags at **5 per post** (announced Dec 2025), and Mosseri
+has repeatedly said tags don't drive reach — they label the post so it can be
+matched to searches. Put all five in the caption, not the first comment: it is
+unpublished whether comment tags count against the cap, so don't split them.
+
+```
+#padel #padelmadrid #padelespaña #padeleros #rallyrating
+```
+
+Verify each in-app before posting (search it; if it returns nothing or a
+warning, it's restricted). Swap pool for later posts so the set isn't
+identical every time: `#padelamateur`, `#ligaspadelmadrid`, `#nivelpadel`,
+`#torneopadel`, `#padelclub`.
+
+Avoid: `#worldpadeltour` (tour absorbed into Premier Padel, tag is a relic),
+the generic filler every hashtag tool outputs (`#padeltime`, `#padelmania`,
+`#instapadel`, `#padeladdict`), `#paddle` (collides with paddleboarding and
+pickleball), and `#tenis`/`#tennis` (wrong sport — miscategorises the post).
+
+Accents: Instagram does NOT merge `#padel` and `#pádel` — they are separate
+tags. Use the unaccented `#padel` as the tag (matches what people type and
+carries the international volume), but always write `pádel` **with the tilde
+in caption prose** — a Madrid reader reads a missing tilde as a badly
+localised foreign app, which is the opposite of the brand position.
+
+Higher-leverage than any of the above:
+- Keyword-rich Spanish first line carrying pádel + Madrid + nivel/rating.
+- Manual alt text on all 5 slides, in Spanish (Advanced Settings → alt text
+  per image). Instagram's auto-generated alt text is vague junk; this is free
+  indexed text almost nobody writes.
+- Madrid location tag — separate from hashtags, doesn't count against the 5.
+- Optimise for sends: sends-per-reach is the heaviest signal for reaching
+  non-followers, which is the whole game for a launch account.
 
 ## Pipeline (reproducible)
 
