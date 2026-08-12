@@ -9,8 +9,18 @@ Runs in the Higgsfield sandbox at /home/user with:
 Produces a seamless 5400x1350 panorama sliced into five 1080x1350 slides:
   s1 hand+cord | s2 cord | s3 cord->net | s4 net holds phone | s5 CTA
 """
-import json, os, subprocess, sys, hashlib
+import json, os, subprocess, sys, hashlib, urllib.request
 from PIL import Image, ImageChops, ImageFilter
+
+GEN_BASE = 'https://d8j0ntlcm91z4.cloudfront.net/user_3FwcSFk4XJLeeaMb70sVr46BWA5'
+INPUTS = {
+    'g0.png': f'{GEN_BASE}/hf_20260812_161318_a8567112-c400-4d9c-886d-695f5ddcfc8b.png',
+    'ge.png': f'{GEN_BASE}/hf_20260812_163905_42cc0b1a-bc86-4806-b8c8-b4a119441739.png',
+}
+for name, url in INPUTS.items():
+    p = f'/home/user/{name}'
+    if not os.path.exists(p) or os.path.getsize(p) == 0:
+        urllib.request.urlretrieve(url, p)
 
 W, H = 1080, 1350
 PAN_W = 5 * W
