@@ -139,7 +139,7 @@ band = 240
 strip = s1.crop((strip_x0, CORD_Y - band, strip_x1, CORD_Y + band))
 th_left = max(6, report['s1_cord_exit'][1])
 th_right = max(th_left, report['s3_cord_entry'][1] if report['s3_cord_entry'][0] else th_left)
-grow = min(3.2, th_right / th_left)
+grow = min(6.0, th_right / th_left)
 report['cord_grow'] = round(grow, 2)
 
 x = W - 60                      # start overlapping S1's right edge
@@ -162,10 +162,27 @@ bridge = strip.copy()
 feather_paste(pan, bridge, (W - bridge.width // 2, CORD_Y - bridge.height // 2), feather=60)
 
 # --------------------------------------------------------------- overlays
-render_js = f'''
-const path = require('path');
-let pw;
-try {{ pw = require('playwright'); }} catch (e) {{ pw = require('playwright-core'); }}
+render_py = f'''
+from playwright.sync_api import sync_playwright
+with sync_playwright() as p:
+    browser = p.chromium.launch()
+    page = browser.new_page(viewport={{'width': 1080, 'height': 1350}})
+    for name in ['overlay_s1', 'overlay_s5']:
+        page.goto('file://{REPO}/' + name + '.html')
+        page.wait_for_timeout(400)
+        page.locator('#stage').screenshot(
+            path='{ROOT}/' + name + '.png',
+            omit_background=(name == 'overlay_s1'))
+    browser.close()
+print('overlays ok')
+'''
+open(f'{ROOT}/render_overlays.py', 'w').write(render_py)
+r = subprocess.run([sys.executable, f'{ROOT}/render_overlays.py'],
+                   capture_output=True, text=True, cwd=ROOT)
+if r.returncode != 0:
+    npm_root = subprocess.run(['npm', 'root', '-g'], capture_output=True, text=True).stdout.strip()
+    render_js = f'''
+let pw; try {{ pw = require('playwright'); }} catch (e) {{ pw = require('playwright-core'); }}
 (async () => {{
   const browser = await pw.chromium.launch();
   const page = await browser.newPage({{ viewport: {{ width: 1080, height: 1350 }} }});
@@ -181,8 +198,10 @@ try {{ pw = require('playwright'); }} catch (e) {{ pw = require('playwright-core
   console.log('overlays ok');
 }})().catch(e => {{ console.error('OVERLAY_FAIL', e.message); process.exit(1); }});
 '''
-open(f'{ROOT}/render_overlays.js', 'w').write(render_js)
-r = subprocess.run(['node', f'{ROOT}/render_overlays.js'], capture_output=True, text=True, cwd=ROOT)
+    open(f'{ROOT}/render_overlays.js', 'w').write(render_js)
+    env = dict(os.environ, NODE_PATH=npm_root)
+    r = subprocess.run(['node', f'{ROOT}/render_overlays.js'],
+                       capture_output=True, text=True, cwd=ROOT, env=env)
 report['overlays'] = (r.returncode, r.stdout.strip()[-120:], r.stderr.strip()[-200:])
 
 if os.path.exists(f'{ROOT}/overlay_s1.png'):
@@ -190,7 +209,7 @@ if os.path.exists(f'{ROOT}/overlay_s1.png'):
     pan.paste(ov1, (0, 0), ov1)
 if os.path.exists(f'{ROOT}/overlay_s5.png'):
     ov5 = add_grain(Image.open(f'{ROOT}/overlay_s5.png').convert('RGB'), sigma * 0.7)
-    feather_paste(pan, ov5, (4 * W, 0), feather=50, edges=('left',))
+    feather_paste(pan, ov5, (4 * W, 0), feather=140, edges=('left',))
 
 # ------------------------------------------------------------ seam metrics
 for name, sx in [('seam12', W), ('seam23', 2 * W), ('seam34', 3 * W), ('seam45', 4 * W)]:
