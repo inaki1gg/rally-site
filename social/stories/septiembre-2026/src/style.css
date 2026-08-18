@@ -1,0 +1,172 @@
+/* RALLY story frames — 1080x1920 IG story canvas.
+   Brand tokens mirror the site: ink #0D0D0D, paper #F2F2F0, lime #CCFF00. */
+
+@font-face { font-family: 'Montserrat'; font-weight: 400; font-style: normal;
+  src: url('montserrat-latin-400-normal.woff2') format('woff2'); }
+@font-face { font-family: 'Montserrat'; font-weight: 700; font-style: normal;
+  src: url('montserrat-latin-700-normal.woff2') format('woff2'); }
+@font-face { font-family: 'Montserrat'; font-weight: 900; font-style: normal;
+  src: url('montserrat-latin-900-normal.woff2') format('woff2'); }
+
+:root {
+  --ink: #0D0D0D;
+  --paper: #F2F2F0;
+  --lime: #CCFF00;
+  --muted: #6E6E6A;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body { width: 1080px; height: 1920px; overflow: hidden; }
+
+body {
+  background: var(--ink);
+  color: var(--paper);
+  font-family: 'Montserrat', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Ambient lime bloom, same trick the app uses behind the rating card. */
+.frame {
+  position: relative;
+  width: 1080px;
+  height: 1920px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background:
+    radial-gradient(120% 60% at 50% 42%, rgba(204,255,0,.10) 0%, rgba(204,255,0,0) 62%),
+    var(--ink);
+}
+
+/* Story-safe: IG chrome eats ~250px top and ~250px bottom. */
+.safe {
+  flex: 1;
+  width: 100%;
+  padding: 260px 96px 380px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.headline {
+  font-weight: 900;
+  font-size: 84px;
+  line-height: .98;
+  letter-spacing: -3px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.headline .lime { color: var(--lime); }
+
+.kicker {
+  font-weight: 900;
+  font-size: 62px;
+  line-height: 1;
+  letter-spacing: -1.5px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+/* Verdict = the app's own tier vocabulary, used as a punchline. */
+.verdict {
+  font-weight: 900;
+  font-size: 260px;
+  line-height: .84;
+  letter-spacing: -12px;
+  color: var(--lime);
+  text-shadow: 0 0 90px rgba(204,255,0,.42);
+}
+
+.label {
+  font-weight: 700;
+  font-size: 26px;
+  letter-spacing: 7px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.sub {
+  font-weight: 400;
+  font-size: 40px;
+  letter-spacing: -.5px;
+  color: #9A9A96;
+  text-align: center;
+}
+
+/* Tier bar — Beg. / Int. / Adv. / Elite, lifted from the rating card. */
+.tier { width: 640px; }
+
+.tier-track {
+  position: relative;
+  height: 6px;
+  border-radius: 3px;
+  background: #2A2A28;
+}
+
+.tier-fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  height: 6px;
+  border-radius: 3px;
+  background: var(--lime);
+}
+
+.tier-dot {
+  position: absolute;
+  top: 50%;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--lime);
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 34px rgba(204,255,0,.9);
+}
+
+.tier-scale {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 26px;
+  font-weight: 700;
+  font-size: 28px;
+  letter-spacing: 1px;
+  color: #55554F;
+}
+
+.tier-scale .on { color: var(--paper); }
+
+.phone { width: 620px; display: block; filter: drop-shadow(0 60px 120px rgba(0,0,0,.85)); }
+
+/* Story link sticker, styled the way IG renders one. */
+.sticker {
+  display: inline-flex;
+  align-items: center;
+  gap: 18px;
+  padding: 26px 44px;
+  border-radius: 20px;
+  background: rgba(242,242,240,.10);
+  border: 2px solid rgba(242,242,240,.20);
+  font-weight: 700;
+  font-size: 42px;
+  letter-spacing: -.5px;
+  color: var(--paper);
+}
+
+.sticker svg { width: 40px; height: 40px; flex: none; }
+
+.wordmark {
+  position: absolute;
+  bottom: 178px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-weight: 900;
+  font-size: 62px;
+  letter-spacing: -2px;
+  color: var(--paper);
+}
+
+.wordmark .y { color: var(--lime); }
+
+.spacer { flex: 1; }
