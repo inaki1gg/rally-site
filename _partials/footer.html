@@ -1,0 +1,53 @@
+<!--
+  RALLY — footer, human source of truth.
+
+  This file is NOT served (see .vercelignore) and is NEVER injected at
+  runtime. The markup below is pasted literally into each page so that
+  Apple's reviewer, crawlers, and anyone with JavaScript blocked all see
+  real anchor tags. If you change a link here, change it in every page.
+
+  Pages carrying the ENGLISH footer:
+    /index.html            (homepage — has its own footer styling, links
+                            merged into the existing .links row)
+    /apply.html            (same — existing footer, links merged)
+    /en/legal.html
+    /en/terms.html
+    /en/privacy.html
+    /en/support.html
+
+  Pages carrying the SPANISH footer:
+    /privacy.html
+    /support.html
+
+  Spanish /terms and /legal are deliberately absent. There is no approved
+  Spanish source for the Terms or the Legal Notice in this repo, those
+  routes are not built, and the Spanish footer must not link to a URL that
+  does not resolve. Add both links here and in both Spanish pages the day
+  the Spanish text lands.
+
+  Year is hardcoded. No JS anywhere on these pages, including for a date.
+-->
+
+
+<!-- ============================ ENGLISH ============================== -->
+
+<footer class="site">
+  <div class="links">
+    <a href="/en/privacy">Privacy Policy</a>
+    <a href="/en/terms">Terms and Conditions</a>
+    <a href="/en/legal">Legal Notice</a>
+    <a href="/en/support">Support</a>
+  </div>
+  <div>Rally Rating S.L. · Madrid · 2026</div>
+</footer>
+
+
+<!-- ============================ SPANISH ============================== -->
+
+<footer class="site">
+  <div class="links">
+    <a href="/privacy">Política de Privacidad</a>
+    <a href="/support">Soporte</a>
+  </div>
+  <div>Rally Rating S.L. · Madrid · 2026</div>
+</footer>

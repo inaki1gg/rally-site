@@ -1,0 +1,8 @@
+# Internal source of truth — never served.
+# _source/legal-en.md carries front matter and notes addressed to counsel
+# that must not reach a public URL under any circumstances.
+_source/
+
+# Footer markup is authored here and pasted literally into each page.
+# The partial itself is not a page.
+_partials/
