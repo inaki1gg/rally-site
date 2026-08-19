@@ -84,37 +84,58 @@ body {
 /* Ladder — group A/B/C with promotion up, relegation down. */
 .ladder { width: 100%; display: flex; flex-direction: column; gap: 18px; }
 
+.group-label {
+  align-self: flex-start;
+  margin-bottom: 22px;
+  font-weight: 700;
+  font-size: 26px;
+  letter-spacing: 7px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
 .rung {
-  position: relative;
   display: flex;
   align-items: center;
-  justify-content: center;
-  height: 122px;
+  gap: 28px;
+  height: 118px;
+  padding: 0 34px;
   border: 2px solid var(--line);
   border-radius: 18px;
   background: #141412;
-  font-weight: 900;
-  font-size: 46px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
 }
 
-.rung.top { border-color: rgba(204,255,0,.55); }
+.rung.up { border-color: rgba(204,255,0,.55); }
 
-.arrow {
-  position: absolute;
+.rung .rank {
+  width: 34px;
+  font-weight: 900;
+  font-size: 34px;
+  color: var(--muted);
+}
+
+.rung.up .rank { color: var(--lime); }
+
+.rung .pair {
+  font-weight: 900;
+  font-size: 42px;
+  letter-spacing: -1px;
+}
+
+.move {
+  margin-left: auto;
   display: flex;
   align-items: center;
   gap: 10px;
   font-weight: 700;
   font-size: 26px;
-  letter-spacing: 2px;
+  letter-spacing: 3px;
 }
 
-.arrow.up { left: 34px; color: var(--lime); }
-.arrow.down { right: 34px; color: #55554F; }
+.move.up { color: var(--lime); }
+.move.down { color: #55554F; }
 
-.arrow svg { width: 28px; height: 28px; }
+.move svg { width: 26px; height: 26px; }
 
 /* Product screenshot, framed as a card on the story ground. */
 .shot {
@@ -123,6 +144,15 @@ body {
   border: 2px solid var(--line);
   display: block;
 }
+
+.panel {
+  width: 850px;
+  padding: 30px 26px;
+  border-radius: 28px;
+  background: #141414;
+}
+
+.panel img { width: 100%; display: block; }
 
 .wordmark {
   position: absolute;

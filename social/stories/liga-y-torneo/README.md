@@ -13,10 +13,10 @@ then close.
 |---|---|---|
 | 1 | `out/01-por-que-grupo-b.png` | ¿Por qué estoy en el **grupo B**? — "La pregunta de cada temporada." |
 | 2 | `out/02-no-es-un-sorteo.png` | No es un sorteo. **Es un orden.** — "Mismos jugadores. Mismos ratings. Mismo cuadro. Siempre." |
-| 3 | `out/03-liga.png` | LIGA · Cinco semanas. Una noche por semana. + la escalera A/B/C |
+| 3 | `out/03-liga.png` | LIGA · Cinco semanas. Una noche por semana. + la escalera del Grupo B |
 | 4 | `out/04-tu-grupo.png` | Ves tu grupo y tu movimiento. — "Nadie ve «8º de 8»." |
 | 5 | `out/05-torneo.png` | TORNEO · Un día. + cuadro con cabezas de serie repartidas |
-| 6 | `out/06-lo-que-ves.png` | Tu sitio. Tu distancia. Tu historial. — "Todo partido cuenta para el rating." |
+| 6 | `out/06-lo-que-ves.png` | Tu sitio. Tu distancia. — "Todo partido cuenta para el rating." |
 | 7 | `out/07-nos-vemos-en-septiembre.png` | Liga y torneo **cargando...** + "Nos vemos en Septiembre" |
 
 `out/07b-nos-vemos-sin-sticker.png` is frame 7 with the sticker removed — use it
@@ -34,15 +34,19 @@ Both come from the Drive album `App Pics`, cropped to the card so no phone
 chrome or empty-state scaffolding comes along:
 
 - Frame 4 — the group standings table from `Cups / Competition is empty`.
-- Frame 6 — the "who is best / how far off / who you beat" card from
-  `Groups / Empty Groups page`.
+- Frame 6 — the expanded "You" row from `Groups / Screenshot 2026-08-05 at
+  22.22.55.png`: rank 3, rating 1305, `3RD OF 4`, with `55 TO CLIMB` above and
+  `65 CUSHION` below. A live screen with real data.
 
 Two things to know about them:
 
-- **They are empty-state screens.** The table is labelled `EXAMPLE` in the
-  product, and that label is visible in frame 4. There is no populated league
-  table, ladder, or seeded bracket anywhere in Drive — if you want frames 4 and
-  6 to show real data, those captures need to be taken.
+- **Frame 6 is cropped tight on purpose.** The full screen it comes from is
+  titled `TEST GROUP A` and lists `Apple Test` and `Apple test 2` as opponents.
+  The crop takes only the "You" row and its two gap rails, so no test-account
+  name reaches the story. If you want a frame showing the whole table, capture
+  one with real players first.
+- **Frame 4 is still an empty state** — the table carries the product's own
+  `EXAMPLE` label, and it is visible. No populated bracket exists in Drive.
 - **The app UI is in English, the story copy is Spanish.** Normal for the launch
   phase, but frames 4 and 6 are where the seam shows.
 
