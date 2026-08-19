@@ -2,6 +2,11 @@
   "rewrites": [
     { "source": "/privacy", "destination": "/privacy.html" },
     { "source": "/apply", "destination": "/apply.html" },
-    { "source": "/reset-password", "destination": "/auth/reset-password.html" }
+    { "source": "/reset-password", "destination": "/auth/reset-password.html" },
+    { "source": "/support", "destination": "/support.html" },
+    { "source": "/en/privacy", "destination": "/en/privacy.html" },
+    { "source": "/en/terms", "destination": "/en/terms.html" },
+    { "source": "/en/legal", "destination": "/en/legal.html" },
+    { "source": "/en/support", "destination": "/en/support.html" }
   ]
 }
