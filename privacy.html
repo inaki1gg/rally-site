@@ -5,157 +5,47 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="robots" content="index,follow" />
 <title>Política de Privacidad — RALLY</title>
+<meta name="description" content="Cómo RALLY RATING, S.L. trata los datos personales a través del sitio web rallyrating.app y de la aplicación RALLY, conforme al RGPD y a la LOPDGDD." />
 <link rel="canonical" href="https://www.rallyrating.app/privacy" />
 <link rel="alternate" hreflang="es" href="https://www.rallyrating.app/privacy" />
 <link rel="alternate" hreflang="en" href="https://www.rallyrating.app/en/privacy" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<link rel="stylesheet" href="/assets/rally.css" />
 <!--
-  RALLY · Política de Privacidad
-  Texto íntegro y literal de la versión enviada por María Pardavila (L&A), actualizada a 8 de junio de 2026.
-  NOTA TÉCNICA: esta página NO carga Google Fonts desde la CDN (evita exponer la IP del usuario — el punto que María marcó en el LISTADO DE PROVEEDORES).
-  Montserrat va auto-alojada: los .woff2 viven en /fonts y se cargan vía @font-face. Sin conexión a servidores de Google en tiempo de ejecución.
+  Política de Privacidad — RALLY
+
+  Transcribed verbatim from the approved v3 source, 19 de agosto de 2026. Tracked changes
+  accepted. Internal drafting notes carried in the source are not reproduced.
+
+  Emphasis on the named rights in section 8, the legal-basis labels in
+  section 4 and the data categories in section 2 follows the convention of
+  the previous published version; the source file itself carries no usable
+  bold.
 -->
-<style>
-  @font-face{
-    font-family:'Montserrat';
-    font-style:normal;
-    font-weight:400;
-    font-display:swap;
-    src:url('/fonts/montserrat-latin-400-normal.woff2') format('woff2');
-  }
-  @font-face{
-    font-family:'Montserrat';
-    font-style:normal;
-    font-weight:700;
-    font-display:swap;
-    src:url('/fonts/montserrat-latin-700-normal.woff2') format('woff2');
-  }
-  @font-face{
-    font-family:'Montserrat';
-    font-style:normal;
-    font-weight:900;
-    font-display:swap;
-    src:url('/fonts/montserrat-latin-900-normal.woff2') format('woff2');
-  }
-  :root{
-    --black:#0D0D0D;
-    --white:#F2F2F0;
-    --acid:#CCFF00;
-    --muted:#A8A8A4;
-    --line:#262626;
-  }
-  *{box-sizing:border-box;}
-  html{-webkit-text-size-adjust:100%;}
-  body{
-    margin:0;
-    background:var(--black);
-    color:var(--white);
-    font-family:'Montserrat',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
-    font-size:16px;
-    line-height:1.75;
-    -webkit-font-smoothing:antialiased;
-  }
-  .wrap{max-width:760px;margin:0 auto;padding:56px 24px 96px;}
-  .wordmark{
-    font-weight:900;
-    font-size:26px;
-    letter-spacing:.02em;
-    text-transform:uppercase;
-    margin:0 0 40px;
-  }
-  .wordmark .y,.wordmark .dot{color:var(--acid);}
-  .topbar{
-    display:flex;
-    align-items:baseline;
-    justify-content:space-between;
-    gap:24px;
-  }
-  .topbar .wordmark{margin:0;}
-  .lang{
-    font-size:14px;
-    font-weight:700;
-    letter-spacing:.04em;
-    white-space:nowrap;
-  }
-  .footlinks{
-    display:flex;
-    flex-wrap:wrap;
-    gap:10px 22px;
-    margin:0 0 14px;
-  }
-  .footlinks a{color:var(--white);}
-  .footlinks a:hover{color:var(--acid);}
-  h1{
-    font-weight:900;
-    font-size:28px;
-    line-height:1.25;
-    margin:0 0 8px;
-    letter-spacing:.01em;
-  }
-  .updated{
-    color:var(--muted);
-    font-size:13px;
-    letter-spacing:.04em;
-    text-transform:uppercase;
-    margin:0 0 36px;
-  }
-  h2{
-    font-weight:700;
-    font-size:18px;
-    line-height:1.3;
-    margin:44px 0 14px;
-    padding-top:24px;
-    border-top:1px solid var(--line);
-  }
-  h2 .num{color:var(--acid);margin-right:8px;}
-  p{margin:0 0 16px;color:#E7E7E4;}
-  .lead{color:var(--white);}
-  ul{margin:0 0 16px;padding-left:22px;}
-  li{margin:0 0 8px;color:#E7E7E4;}
-  strong{color:var(--white);font-weight:700;}
-  a{color:var(--acid);text-decoration:none;}
-  a:hover{text-decoration:underline;}
-  .callout{
-    color:var(--white);
-    border-left:3px solid var(--acid);
-    padding:2px 0 2px 16px;
-    margin:0 0 16px;
-  }
-  .id-block p{margin:0 0 4px;}
-  footer{
-    margin-top:64px;
-    padding-top:24px;
-    border-top:1px solid var(--line);
-    color:var(--muted);
-    font-size:13px;
-    line-height:1.6;
-  }
-</style>
 </head>
 <body>
-<main class="wrap">
 
-  <div class="topbar" style="margin:0 0 40px;">
-    <div class="wordmark">RALL<span class="y">Y</span><span class="dot">.</span></div>
+<main class="shell">
+
+  <div class="topbar">
+    <a href="/" class="wordmark">RALL<span>Y.</span></a>
     <a class="lang" href="/en/privacy" hreflang="en" lang="en">English</a>
   </div>
 
   <h1>Política de Privacidad del Sitio Web y la Aplicación</h1>
-  <p class="updated">Actualizada a 8 de junio de 2026</p>
+  <p class="updated">Versión 3 · Actualizada a 19 de agosto de 2026</p>
 
-  <p class="lead">La presente Política de Privacidad regula el tratamiento de datos personales realizado por RALLY RATING, S.L. (en adelante, el &ldquo;Responsable del Tratamiento&rdquo;) a través del sitio web rallyrating.app (en adelante, el &ldquo;Sitio Web&rdquo;) y de la aplicación móvil RALLY (en adelante, la &ldquo;Aplicación&rdquo; o la &ldquo;App&rdquo;), conjuntamente denominados la &ldquo;Plataforma&rdquo;.</p>
-
-  <p>El Responsable del Tratamiento está comprometido con la protección de los datos personales de los usuarios y garantiza su tratamiento conforme a lo dispuesto en el Reglamento (UE) 2016/679, General de Protección de Datos (&ldquo;RGPD&rdquo;), la Ley Orgánica 3/2018 de Protección de Datos y Garantía de Derechos Digitales (&ldquo;LOPDGDD&rdquo;) y demás normativa aplicable.</p>
-
-  <h2><span class="num">1.</span>¿Quién es el responsable del tratamiento?</h2>
-  <div class="id-block">
-    <p><strong>Responsable del tratamiento:</strong> RALLY RATING, S.L.</p>
-    <p><strong>NIF:</strong> B88743380</p>
-    <p><strong>Domicilio social:</strong> Calle del Príncipe de Vergara 86, 1ª, 28006 Madrid</p>
-    <p><strong>Correo electrónico de contacto:</strong> <a href="mailto:support@rallyrating.app">support@rallyrating.app</a></p>
-    <p><strong>Correo electrónico de privacidad:</strong> <a href="mailto:hello@rallyrating.app">hello@rallyrating.app</a></p>
-  </div>
-
-  <h2><span class="num">2.</span>¿Qué datos personales recopilamos?</h2>
+  <p>La presente Política de Privacidad regula el tratamiento de datos personales realizado por RALLY RATING, S.L. (en adelante, el "Responsable del Tratamiento") a través del sitio web rallyrating.app (en adelante, el "Sitio Web") y de la aplicación móvil RALLY (en adelante, la "Aplicación" o la "App"), conjuntamente denominados la "Plataforma".</p>
+  <p>El Responsable del Tratamiento está comprometido con la protección de los datos personales de los usuarios y garantiza su tratamiento conforme a lo dispuesto en el Reglamento (UE) 2016/679, General de Protección de Datos ("RGPD"), la Ley Orgánica 3/2018 de Protección de Datos y Garantía de Derechos Digitales ("LOPDGDD") y demás normativa aplicable.</p>
+  <h2 id="s1"><span class="num">1.-</span>¿QUIÉN ES EL RESPONSABLE DEL TRATAMIENTO?</h2>
+  <p>Responsable del tratamiento: RALLY RATING, S.L.</p>
+  <p>NIF: B88743380</p>
+  <p>Domicilio social: Calle del Príncipe de Vergara 86, 1ª, 28006 Madrid</p>
+  <p>Correo electrónico de contacto: <a href="mailto:support@rallyrating.app">support@rallyrating.app</a></p>
+  <p>Correo electrónico de privacidad: <a href="mailto:hello@rallyrating.app">hello@rallyrating.app</a></p>
+  <h2 id="s2"><span class="num">2.-</span>¿QUÉ DATOS PERSONALES RECOPILAMOS?</h2>
   <p>El Responsable del Tratamiento recopila datos personales directamente facilitados por el usuario durante:</p>
   <ul>
     <li>el registro</li>
@@ -164,10 +54,12 @@
     <li>la utilización de funcionalidades deportivas y estadísticas</li>
   </ul>
   <p>Asimismo, determinados datos técnicos podrán recopilarse automáticamente a través del funcionamiento del Sitio Web y de la Aplicación.</p>
-  <p class="lead"><strong>Tipos de datos que tratamos:</strong></p>
+  <p><strong>Tipos de Datos que tratamos:</strong></p>
   <p><strong>Datos identificativos y de contacto:</strong> nombre y apellidos, correo electrónico y nombre de usuario. La imagen de perfil se genera automáticamente a partir de las iniciales del usuario; no se recogen fotografías.</p>
   <p><strong>Datos de perfil y deportivos:</strong> fecha de nacimiento, género, provincia y ciudad de residencia, deporte practicado (tenis o padel), historial de partidos, rivales y resultados, superficie de juego, historial de ranking y rating, estadísticas métricas deportivas y análisis de rendimiento deportivo.</p>
-  <p class="callout">La Plataforma no utiliza los datos deportivos para inferir información relativa al estado de salud de los usuarios. La Plataforma no trata categorías especiales de datos conforme al artículo 9 del RGPD.</p>
+  <p>La Plataforma no utiliza los datos deportivos para inferir información relativa al estado de salud de los usuarios.</p>
+  <p>La Plataforma no trata categorías especiales de datos conforme al artículo 9 del RGPD.</p>
+  <p><strong>Datos de moderación y seguridad:</strong> denuncias presentadas por el usuario o recibidas en relación con él, motivo y detalle facilitado en la denuncia, y bloqueos realizados entre usuarios, así como la fecha de cada uno de estos registros.</p>
   <p><strong>Datos técnicos:</strong> Dirección IP, ID del Dispositivo, Sistema Operativo, Tipo de navegador, fecha y hora de acceso, logs técnicos, token de notificaciones push (recogido únicamente tras conceder el usuario el permiso correspondiente) e información de uso del Sitio Web y/o Aplicación. Actualmente la Plataforma no utiliza herramientas de analítica, publicidad ni seguimiento de terceros.</p>
   <p><strong>ID de usuario:</strong> El Responsable del Tratamiento asignará un identificador único interno al usuario para gestionar su actividad dentro de la Plataforma y garantizar el correcto funcionamiento de rankings y estadísticas.</p>
   <p>La Plataforma está dirigida exclusivamente a personas mayores de 18 años. El Responsable del Tratamiento no recopila conscientemente datos de menores de edad.</p>
@@ -178,8 +70,7 @@
     <li>solicitar documentación acreditativa de edad</li>
   </ul>
   <p>Asimismo, el Responsable del Tratamiento podrá implementar mecanismos adicionales de verificación de edad conforme a futuras obligaciones regulatorias.</p>
-
-  <h2><span class="num">3.</span>¿Con qué finalidades utilizamos tus datos?</h2>
+  <h2 id="s3"><span class="num">3.-</span>¿CON QUÉ FINALIDADES UTILIZAMOS TUS DATOS?</h2>
   <p>Los datos personales podrán tratarse para las siguientes finalidades:</p>
   <ul>
     <li>Gestionar el registro y la cuenta del usuario.</li>
@@ -187,10 +78,12 @@
     <li>Generar rankings, ratings y estadísticas deportivas.</li>
     <li>Gestionar resultados de partidos e historiales deportivos.</li>
     <li>Garantizar la seguridad de la Plataforma y prevenir actividades fraudulentas.</li>
+    <li>Gestionar las denuncias y los bloqueos entre usuarios, moderar los contenidos y conductas contrarios a las Condiciones Generales de Uso y adoptar las medidas que correspondan sobre las cuentas infractoras.</li>
     <li>Atender consultas, incidencias o solicitudes.</li>
     <li>Mejorar el funcionamiento y experiencia de usuario.</li>
     <li>Cumplir obligaciones legales aplicables.</li>
     <li>Enviar comunicaciones relacionadas con el servicio.</li>
+    <li>Compartir datos agregados, desidentificados o anonimizados con terceros para fines analíticos, de investigación o comerciales, sujeto a la normativa aplicable y al consentimiento del usuario cuando sea necesario.</li>
   </ul>
   <p>Adicionalmente, y únicamente cuando exista consentimiento previo del usuario:</p>
   <ul>
@@ -198,17 +91,13 @@
     <li>Realizar análisis estadísticos y analítica avanzada no esencial.</li>
   </ul>
   <p><strong>Perfilado.</strong> Cuando el usuario lo consienta, el Responsable del Tratamiento elaborará perfiles a partir de los datos facilitados en el registro y de la actividad deportiva del usuario en la Plataforma, con la finalidad de personalizar la experiencia y dirigir comunicaciones y recomendaciones adaptadas a su perfil deportivo. Este perfilado no se basa exclusivamente en medios automatizados con efectos jurídicos o significativos para el usuario en el sentido del artículo 22 del RGPD. El usuario puede oponerse a este tratamiento o retirar su consentimiento en cualquier momento.</p>
-
-  <h2><span class="num">4.</span>¿Cuál es la base de legitimación para el tratamiento de sus datos?</h2>
+  <h2 id="s4"><span class="num">4.-</span>¿CUÁL ES LA BASE DE LEGITIMACIÓN PARA EL TRATAMIENTO DE SUS DATOS?</h2>
   <p>Las bases jurídicas que legitiman el tratamiento de datos son:</p>
-  <ul>
-    <li><strong>Ejecución de la relación contractual:</strong> Art. 6.1.b RGPD para crear y gestionar tu cuenta, prestar los servicios ofrecidos, generar rankings y estadísticas, y permitir el uso de la plataforma.</li>
-    <li><strong>Cumplimiento de obligaciones legales:</strong> Art. 6.1.c RGPD. Para tratamientos necesarios conforme a la normativa aplicable.</li>
-    <li><strong>Interés legítimo:</strong> Art. 6.1.f RGPD. Prevención del fraude, seguridad de la Plataforma, detección de abusos, moderación y mejora técnica del servicio.</li>
-    <li><strong>Consentimiento:</strong> Art. 6.1.a RGPD. Para la remisión de comunicaciones comerciales, o tecnologías analíticas no esenciales y funcionalidades opcionales. El usuario podrá retirar su consentimiento en cualquier momento.</li>
-  </ul>
-
-  <h2><span class="num">5.</span>¿Con quién compartimos tus datos?</h2>
+  <p><strong>Ejecución de la relación contractual:</strong> Art. 6.1.b RGPD para crear y gestionar tu cuenta, prestar los servicios ofrecidos, generar rankings y estadísticas, y permitir el uso de la plataforma.</p>
+  <p><strong>Cumplimiento de obligaciones legales:</strong> Art. 6.1.c RGPD. Para tratamientos necesarios conforme a la normativa aplicable.</p>
+  <p><strong>Interés legítimo:</strong> Art. 6.1.f RGPD. Prevención del fraude, seguridad de la Plataforma, detección de abusos, gestión de denuncias y bloqueos, moderación de contenidos y conductas, y mejora técnica del servicio.</p>
+  <p><strong>Consentimiento:</strong> Art. 6.1.a RGPD. Para la remisión de comunicaciones comerciales, o tecnologías analíticas no esenciales y funcionalidades opcionales. El usuario podrá retirar su consentimiento en cualquier momento.</p>
+  <h2 id="s5"><span class="num">5.-</span>¿CON QUIÉN COMPARTIMOS TUS DATOS?</h2>
   <p>El Responsable del Tratamiento podrá compartir datos con proveedores que prestan servicios necesarios para el funcionamiento de la Plataforma, incluyendo:</p>
   <ul>
     <li>alojamiento cloud</li>
@@ -227,18 +116,16 @@
     <li>rating</li>
     <li>estadísticas deportivas</li>
   </ul>
-
-  <h2><span class="num">6.</span>Transferencias internacionales de datos</h2>
+  <p>Las denuncias entre usuarios se tratan de forma confidencial. La identidad del usuario denunciante no se comunica al usuario denunciado.</p>
+  <p>Rally podrá compartir datos agregados, desidentificados o anonimizados con terceros colaboradores para fines comerciales, analíticos o de investigación. Asimismo, podrá compartir datos personales con terceros para fines comerciales cuando cuente con el consentimiento expreso del usuario o cuando lo permita la normativa aplicable, incluida la CCPA/CPRA. Los usuarios serán informados de cualquier cambio material mediante las actualizaciones de la presente Política de Privacidad.</p>
+  <h2 id="s6"><span class="num">6.</span>TRANSFERENCIAS INTERNACIONALES DE DATOS</h2>
   <p>Algunos de los proveedores tecnológicos que prestan servicios al Responsable del Tratamiento (alojamiento cloud, autenticación, soporte técnico, comunicaciones y demás servicios necesarios para el funcionamiento de la Plataforma) pueden estar ubicados fuera del Espacio Económico Europeo (EEE) o tratar datos desde terceros países. En tales casos, el Responsable del Tratamiento podrá transferir datos personales a dichos terceros países.</p>
   <p>Estas transferencias internacionales se realizarán únicamente cuando concurra alguna de las garantías adecuadas previstas en el Capítulo V del RGPD, en particular:</p>
-  <ul>
-    <li><strong>Decisiones de adecuación:</strong> cuando la Comisión Europea haya declarado que el país tercero, territorio o sector garantiza un nivel de protección adecuado (artículo 45 del RGPD).</li>
-    <li><strong>Cláusulas contractuales tipo (CCT):</strong> la suscripción con el proveedor de las cláusulas contractuales tipo adoptadas por la Comisión Europea, complementadas, cuando resulte necesario, con medidas adicionales de carácter técnico, organizativo y contractual (artículo 46.2 del RGPD).</li>
-    <li><strong>Otros mecanismos legalmente reconocidos:</strong> cualquier otra garantía adecuada admitida por la normativa aplicable, tales como normas corporativas vinculantes o, en su defecto, las excepciones para situaciones específicas previstas en el artículo 49 del RGPD.</li>
-  </ul>
+  <p><strong>Decisiones de adecuación:</strong> cuando la Comisión Europea haya declarado que el país tercero, territorio o sector garantiza un nivel de protección adecuado (artículo 45 del RGPD).</p>
+  <p><strong>Cláusulas contractuales tipo (CCT):</strong> la suscripción con el proveedor de las cláusulas contractuales tipo adoptadas por la Comisión Europea, complementadas, cuando resulte necesario, con medidas adicionales de carácter técnico, organizativo y contractual (artículo 46.2 del RGPD).</p>
+  <p><strong>Otros mecanismos legalmente reconocidos:</strong> cualquier otra garantía adecuada admitida por la normativa aplicable, tales como normas corporativas vinculantes o, en su defecto, las excepciones para situaciones específicas previstas en el artículo 49 del RGPD.</p>
   <p>El usuario podrá obtener información adicional sobre las garantías aplicadas a estas transferencias, así como una copia de los mecanismos adoptados, dirigiéndose a: <a href="mailto:hello@rallyrating.app">hello@rallyrating.app</a>.</p>
-
-  <h2><span class="num">7.</span>¿Durante cuánto tiempo conservamos sus datos?</h2>
+  <h2 id="s7"><span class="num">7.</span>¿DURANTE CUÁNTO TIEMPO CONSERVAMOS SUS DATOS?</h2>
   <p>Los datos personales se conservarán:</p>
   <ul>
     <li>mientras el usuario mantenga su cuenta activa</li>
@@ -246,39 +133,51 @@
     <li>durante los plazos legalmente exigidos</li>
   </ul>
   <p>Cuando los datos dejen de ser necesarios, serán eliminados o podrán conservarse bloqueados conforme a la normativa aplicable.</p>
+  <p>Las denuncias y los registros de moderación se conservarán durante el tiempo necesario para gestionar la incidencia, adoptar las medidas que correspondan y acreditar el cumplimiento de nuestras obligaciones, y en todo caso durante los plazos legalmente exigidos.</p>
   <p>Los datos estadísticos o anonimizados podrán conservarse sin limitación temporal cuando no permitan identificar al usuario.</p>
-
-  <h2><span class="num">8.</span>¿Qué derechos tiene el usuario?</h2>
+  <h2 id="s8"><span class="num">8.</span>¿QUÉ DERECHOS TIENE EL USUARIO?</h2>
   <p>En la medida en que sean aplicables, el usuario podrá ejercitar ante el Responsable del Tratamiento de forma gratuita, los siguientes derechos:</p>
-  <ul>
-    <li>Derecho a solicitar el acceso a los datos personales y conocer por tanto cómo estamos tratando sus datos y cuáles son estos datos.</li>
-    <li>Derecho a solicitar la rectificación de sus datos en caso de que estos sean inexactos, incompletos o estén desactualizados.</li>
-    <li>Derecho a solicitar la supresión de sus datos (derecho al olvido) cuando, entre otros supuestos, ya no sean necesarios para los fines para los que fueron recabados, retire su consentimiento o se oponga al tratamiento, sin perjuicio de los plazos de conservación legalmente exigidos.</li>
-    <li>Derecho a solicitar la limitación del tratamiento en determinadas circunstancias, lo que supondrá que podremos limitar temporalmente su tratamiento o conservarlos más allá del tiempo necesario.</li>
-    <li>Derecho a oponerse al tratamiento de sus datos, entre otros casos, cuando el tratamiento esté basado en el interés legítimo del Responsable del Tratamiento.</li>
-    <li>Derecho a revocar el consentimiento otorgado para aquellas finalidades basadas en el mismo, en cualquier momento.</li>
-    <li>Derecho a solicitar la portabilidad de tus datos para aquellos tratamientos basados en la ejecución de un contrato o el consentimiento.</li>
-  </ul>
+  <p>Derecho a solicitar el <strong>acceso</strong> a los datos personales y conocer por tanto cómo estamos tratando sus datos y cuáles son estos datos.</p>
+  <p>Derecho a solicitar la <strong>rectificación</strong> de sus datos en caso de que estos sean inexactos, incompletos o estén desactualizados.</p>
+  <p>Derecho a solicitar la <strong>supresión</strong> de sus datos (derecho al olvido) cuando, entre otros supuestos, ya no sean necesarios para los fines para los que fueron recabados, retire su consentimiento o se oponga al tratamiento, sin perjuicio de los plazos de conservación legalmente exigidos.</p>
+  <p>Derecho a solicitar la <strong>limitación</strong> del tratamiento en determinadas circunstancias, lo que supondrá que podremos limitar temporalmente su tratamiento o conservarlos más allá del tiempo necesario.</p>
+  <p>Derecho a <strong>oponerse</strong> al tratamiento de sus datos, entre otros casos, cuando el tratamiento esté basado en el interés legítimo del Responsable del Tratamiento.</p>
+  <p>Derecho a <strong>revocar</strong> el consentimiento otorgado para aquellas finalidades basadas en el mismo, en cualquier momento.</p>
+  <p>Derecho a solicitar la <strong>portabilidad</strong> de tus datos para aquellos tratamientos basados en la ejecución de un contrato o el consentimiento.</p>
   <p>Los derechos indicados se podrán ejercer remitiendo una comunicación escrita a la dirección postal de Calle del Príncipe de Vergara 86, 1ª, 28006 Madrid o a través del correo electrónico <a href="mailto:hello@rallyrating.app">hello@rallyrating.app</a> indicándonos el derecho que desea ejercitar.</p>
-  <p>Por último, te indicamos que tienes derecho a interponer una reclamación ante la autoridad de protección de datos que corresponda, que en el caso de España es la Agencia Española de Protección de Datos, <a href="https://www.aepd.es" target="_blank" rel="noopener">www.aepd.es</a>.</p>
-
-  <h2><span class="num">9.</span>Medidas de seguridad</h2>
+  <p>Rally responderá a las solicitudes de ejercicio de derechos sin dilación indebida y en el plazo máximo de un mes desde su recepción. El plazo podrá prorrogarse hasta dos meses adicionales en caso de solicitudes complejas o numerosas, informando al usuario de la ampliación y sus motivos dentro del mes inicial, conforme al artículo 12.3 del RGPD.</p>
+  <p>Retirada del consentimiento. El usuario podrá retirar su consentimiento en cualquier momento a través de los ajustes de privacidad de la Aplicación o enviando un correo electrónico a <a href="mailto:hello@rallyrating.app">hello@rallyrating.app</a>. La retirada del consentimiento será tan fácil como otorgarlo, de conformidad con el artículo 7.3 del RGPD, y no afectará a la licitud del tratamiento basado en el consentimiento realizado antes de dicha retirada.</p>
+  <p>El usuario puede además eliminar su cuenta en cualquier momento desde la propia Aplicación, en el apartado de ajustes.</p>
+  <p>Por último, te indicamos que tienes derecho a interponer una reclamación ante la autoridad de protección de datos que corresponda, que en el caso de España es la Agencia Española de Protección de Datos, <a href="https://www.aepd.es" target="_blank" rel="noopener">www.aepd.es</a></p>
+  <h2 id="s9"><span class="num">9.</span>MEDIDAS DE SEGURIDAD</h2>
   <p>El Responsable del Tratamiento ha adoptado las medidas técnicas y organizativas necesarias para salvaguardar la seguridad, integridad, disponibilidad y confidencialidad de sus datos. Esto incluye la realización de procesos de revisión y verificación interna de las medidas aplicadas para garantizar la seguridad del tratamiento.</p>
-
-  <h2><span class="num">10.</span>Modificaciones de la Política de Privacidad</h2>
+  <h2 id="s10"><span class="num">10.</span>MODIFICACIONES DE LA POLÍTICA DE PRIVACIDAD</h2>
   <p>El Responsable del Tratamiento podrá modificar la Política de Privacidad para adaptarla a las modificaciones que se pudieran producir en la Aplicación, cambios legislativos o cualquier otro. El Responsable del Tratamiento podrá publicar dichas modificaciones en la Aplicación por lo que te recomendamos que revises esta Política de Privacidad con periodicidad.</p>
+  <h2 id="s11"><span class="num">11.</span>DERECHOS DE PRIVACIDAD EN CALIFORNIA (CCPA/CPRA)</h2>
+  <p>Esta sección se aplica a los residentes de California en la medida en que resulten aplicables la California Consumer Privacy Act, en su versión modificada por la California Privacy Rights Act (conjuntamente, la “CCPA/CPRA”), y demás normativa aplicable.</p>
+  <p>Las categorías de datos personales que recopilamos se describen en el apartado 2 de esta Política de Privacidad e incluyen datos identificativos y de contacto, datos de perfil y deportivos, datos de moderación y seguridad, datos técnicos e identificador de usuario.</p>
+  <p>Rally no vende actualmente información personal. No obstante, se reserva el derecho a compartir en el futuro datos agregados, desidentificados o anonimizados con terceros para fines comerciales, siempre de conformidad con la normativa aplicable.</p>
+  <p>En la medida en que resulte aplicable la CCPA/CPRA, los residentes de California podrán ejercer los siguientes derechos: (i) derecho a conocer las categorías y los elementos específicos de información personal recopilada, las fuentes de las que procede, las finalidades de su recopilación y las categorías de terceros con los que se comparte; (ii) derecho a solicitar la eliminación de su información personal; (iii) derecho a optar por no participar en la venta o el intercambio de su información personal; y (iv) derecho a no recibir un trato discriminatorio por ejercer sus derechos.</p>
+  <p>Para ejercer estos derechos, los residentes de California podrán enviar una solicitud a <a href="mailto:hello@rallyrating.app">hello@rallyrating.app</a>.</p>
+  <p><strong>No rastrear (Do Not Track).</strong> La Plataforma no responde actualmente a las señales “Do Not Track” (DNT).</p>
+  <h2 id="s12"><span class="num">12.</span>PRIVACIDAD INFANTIL (COPPA)</h2>
+  <p>La Plataforma no está dirigida a menores de 13 años. De conformidad con la Children’s Online Privacy Protection Act (COPPA), Rally no recopila conscientemente datos personales de menores de 13 años. Si descubrimos que hemos recopilado datos de un menor de 13 años, los eliminaremos sin dilación indebida. Los padres o tutores legales pueden ponerse en contacto con Rally en <a href="mailto:hello@rallyrating.app">hello@rallyrating.app</a>.</p>
+  <h2 id="s13"><span class="num">13.</span>NOTIFICACIÓN DE BRECHAS DE SEGURIDAD</h2>
+  <p>En caso de producirse una brecha de seguridad que afecte a datos personales, Rally notificará la brecha a la autoridad de control competente sin dilación indebida y, cuando sea posible, en un plazo máximo de 72 horas desde que tenga constancia de ella, de conformidad con el artículo 33 del RGPD, salvo que sea improbable que la brecha entrañe un riesgo para los derechos y libertades de las personas físicas.</p>
+  <p>Cuando la brecha pueda entrañar un alto riesgo para los derechos y libertades de las personas afectadas, Rally notificará la brecha a dichas personas sin dilación indebida, de conformidad con el artículo 34 del RGPD. Asimismo, Rally cumplirá las leyes aplicables de los estados de Estados Unidos en materia de notificación de brechas de seguridad.</p>
+  <p class="updated" style="margin:36px 0 0">Actualizada a 19 de agosto de 2026.</p>
 
-  <footer>
-    <div class="footlinks">
+  <footer class="site">
+    <div class="links">
       <a href="/privacy">Política de Privacidad</a>
       <a href="/terms">Términos y Condiciones</a>
       <a href="/legal">Aviso Legal</a>
       <a href="/support">Soporte</a>
     </div>
-    RALLY RATING, S.L. · NIF B88743380 · Calle del Príncipe de Vergara 86, 1ª, 28006 Madrid · rallyrating.app<br />
-    Actualizada a 8 de junio de 2026.
+    <div>Rally Rating S.L. · Madrid · 2026</div>
   </footer>
 
 </main>
+
 </body>
 </html>
