@@ -55,9 +55,11 @@
           Helvetica, Arial, sans-serif;
 
   /* --- measure ----------------------------------------------------------
-     These pages are read, not admired. 70ch sits inside the 65-75
-     character target at the 18px body size below.                        */
-  --measure: 70ch;
+     These pages are read, not admired. Target is 65-75 characters per
+     line. Note that 1ch is the width of "0", which in Montserrat is wider
+     than the average lowercase letter, so a 70ch column actually renders
+     ~81 characters. Measured on the rendered page: 64ch gives ~70.      */
+  --measure: 64ch;
   --gutter: clamp(20px, 5vw, 32px);
 }
 
