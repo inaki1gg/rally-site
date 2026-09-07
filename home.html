@@ -15,13 +15,26 @@
   CONSTANTS — one edit each, then search the file for the value.
   APP_STORE_URL   = https://apps.apple.com/app/id6780019919
                     (DECISIONS.md 7 Sep 14:20; curl gate 7 Sep: 301 -> /us/app/rally-rating/id6780019919, final 200.
-                     Appears in exactly two hrefs: the header link and the pill.)
-  GOOGLE_PLAY_URL = #GOOGLE_PLAY_URL   (UNVERIFIED — Play 404 at 14:22; the hidden store row below the footer stays hidden)
-  FILM_MP4        = /film/rally-reveal-2026-09-07.mp4   (RALLY_reveal_reel_1080x1920_60_SOUND.mp4, H.264 yuv420p BT.709)
+                     Appears in exactly two live hrefs — the header link and the pill — plus once inside the
+                     commented-out store row after the footer. If the curl gate fails, flip all three.)
+  GOOGLE_PLAY_URL = none   (UNVERIFIED — Play 404 at 14:22. The store row after the footer is an HTML comment, not DOM:
+                    nothing is fetched, no href, no alt. Enable it only with a resolving Play URL AND a monochrome
+                    white-on-field badge pair — the supplied appstore.svg carries a blue gradient, a second colour.)
+  FILM_MP4        = /film/rally-reveal-2026-09-07.mp4   (RALLY_reveal_reel_1080x1920_60_SOUND.mp4, H.264 yuv420p BT.709,
+                    60 fps, 35.5 s — present in build/film and in the repo, byte-identical, checked 7 Sep 18:05)
   FILM_POSTER     = /film/poster.jpg                    (real frame at 1.5 s, 1080x1920)
   APPLY_LINK      = /apply   (live apply.html checked 7 Sep: no Anton, self-hosted Montserrat — anchor enabled)
+  FONTS           = /fonts/montserrat-latin-{400,700,900}-normal.woff2
+                    (ls ~/Desktop/RALLY/fonts confirmed 7 Sep 18:05: all three static files present, ~18 KB each;
+                     the *-variable.woff2 files are the old page's and are not referenced here)
+  SOURCE OF TRUTH = ~/Desktop/RALLY/home.html (the Vercel repo). scratchpad/site/build/home.html is a mirror kept
+                    byte-identical; verify with diff before deploy. Never ship two versions.
+  WORDMARK        = typeset live in Montserrat Black 900 (RALL white, Y and period acid, -0.02em, no effect).
+                    /assets/rally-wordmark.svg was rejected: it is a 287x91 raster inside an opaque #000 rect and prints
+                    a black box on the field. 900 follows Brand §04 pending the §09 C2 700-vs-900 wordmark lock.
+  GATE NOTE       = the font grep is grep -i "font-family[^;]*\(inter\|anton\|system\-ui\)" — a bare grep for the
+                    four letters i-n-t-e-r hits IntersectionObserver in the script and is a false positive.
 -->
-<script>document.documentElement.classList.add('js')</script>
 <style>
 /* ── fonts ─────────────────────────────────────────────────────────────── */
 @font-face{font-family:'Montserrat';font-style:normal;font-weight:400;font-display:swap;src:url("/fonts/montserrat-latin-400-normal.woff2") format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
@@ -52,11 +65,12 @@
   --inset:20px;
   --hair-w:1px;
   --tap:44px;
+  --sr:1px; /* the visually-hidden box */
 
   /* type */
   --font:'Montserrat','Helvetica Neue',Arial,sans-serif;
   --numeral-size:clamp(112px, 29vw, 520px);
-  --tier-1:clamp(40px, 7vw, 104px);
+  --tier-1:clamp(min(40px, 10vw), 7vw, 104px); /* min shrinks below 400px wide: 'SE CONFIRMA.' + its 32px indent is 290px at 38px and 274px at 36px in the 288px column at 360 */
   --tier-2:clamp(24px, 4.2vw, 60px);
   --stroke-w:clamp(1.25px, 0.15vw, 2px);
   --body:17px;
@@ -87,7 +101,7 @@
   /* layout */
   --header-h:64px;
   --band:calc(var(--numeral-size) * var(--lh-display) + var(--s-4));
-  --lines-h:100px;
+  --lines-h:100px; /* brief said 72px; the lines block is 45px tall over a 48px bottom, so 72 puts the band into it — 100 clears it */
   --ind-a:var(--s-5);
   --ind-b:var(--s-6);
   --radius-pill:9999px;
@@ -124,8 +138,12 @@
 }
 @supports (height:1svh){
   :root{
-    --numeral-size:clamp(112px, min(29vw, 36svh), 520px);
-    --tier-1:clamp(40px, min(7vw, 9svh), 104px);
+    --numeral-size:clamp(112px, min(29vw, 42svh), 520px); /* brief value, restored 7 Sep review: the numeral is the protected object */
+    /* DEVIATION, on purpose: the statement tiers carry svh caps the brief does not have. With the numeral at 42svh the
+       band + lines block take 450px of a 768px viewport at 1366x768, leaving 270px for a statement; at the brief's
+       7vw / 4.2vw the 02 statement is ~346px and enters the band. Capping tier 1 at 9svh (69px at 768) and tier 2 at
+       5.5svh keeps every statement above the band at 1366x768 and 1440x900 without touching the numeral. */
+    --tier-1:clamp(min(40px, 10vw), min(7vw, 9svh), 104px);
     --tier-2:clamp(24px, min(4.2vw, 5.5svh), 60px);
     --film-h:min(80svh, 760px);
   }
@@ -133,6 +151,7 @@
 @media (min-width:1024px){
   :root{
     --inset:64px;
+    --header-h:68px; /* clear space = R height: a 28px wordmark needs ~20px above and below; 64 gave 18 */
     --lines-h:88px;
     --wm-size:28px;
     --hero-line:28px;
@@ -141,7 +160,7 @@
     --ind-a:var(--s-7);
     --ind-b:var(--s-9);
     --measure:44ch;
-    --measure-en:44ch;
+    --measure-en:50ch; /* two lines for every EN paragraph at 15px; at 44ch the 02/03 lines ran to three and pushed the statement into the band at 1366x768 */
   }
 }
 
@@ -149,10 +168,11 @@
 *,*::before,*::after{box-sizing:border-box}
 html{background:var(--field);-webkit-text-size-adjust:100%}
 body{
+  position:relative;z-index:0; /* stacking context so the lift layer sits above the field and under the content */
   margin:0;
   min-height:100vh;
   min-height:100svh;
-  background:var(--lift), var(--field);
+  background:var(--field);
   color:var(--white-soft);
   font-family:var(--font);
   font-weight:400;
@@ -161,7 +181,10 @@ body{
   -webkit-font-smoothing:antialiased;
   -moz-osx-font-smoothing:grayscale;
 }
+/* the field-lift: one viewport-sized layer, frame-centred on every surface — not a page-length wash */
+body::before{content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;background:var(--lift)}
 h1,h2,p,figure{margin:0}
+.sr{position:absolute;width:var(--sr);height:var(--sr);overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 a{color:inherit}
 img,video{display:block;max-width:100%}
 .kicker{
@@ -190,12 +213,13 @@ img,video{display:block;max-width:100%}
 .top-link{
   font-family:var(--font);font-weight:700;font-size:var(--link);line-height:var(--lh-kicker);
   letter-spacing:var(--track-kicker);text-transform:uppercase;color:var(--white-soft);
-  text-decoration:none;padding-block:var(--s-2);border-bottom:var(--hair-w) solid transparent;
+  display:inline-flex;align-items:center;min-height:var(--tap);
+  text-decoration:underline;text-decoration-color:transparent;text-decoration-thickness:var(--hair-w);text-underline-offset:var(--s-1);
 }
-.top-link:hover,.top-link:focus-visible{border-color:var(--hairline)}
+.top-link:hover,.top-link:focus-visible{text-decoration-color:var(--hairline)}
 
 /* ── the chapter: sticky numeral + 01–05 ───────────────────────────────── */
-.chapter{position:relative;overflow-x:clip;padding-bottom:var(--band)} /* clip, never hidden: hidden would make the chapter a scroll container and break the sticky numeral */
+.chapter{position:relative;overflow-x:clip;padding-bottom:var(--band)} /* clip, never hidden: hidden would make the chapter a scroll container and break the sticky numeral. padding-bottom = the numeral's own band, so its negative margin never overhangs section 06 */
 .numeral{
   position:sticky;
   top:calc(100vh - var(--band) - var(--lines-h));
@@ -243,10 +267,15 @@ img,video{display:block;max-width:100%}
   color:var(--pure-white);text-transform:uppercase;overflow-wrap:break-word;
 }
 .tier{display:block}
+.r{transform-origin:0 50%} /* the resolve scales about the left edge: left-aligned text settles in place instead of sliding in */
 .tier + .tier{margin-top:var(--s-2)}
 .t1{font-size:var(--tier-1)}
 .t2{font-size:var(--tier-2)}
 .outline{color:var(--field);-webkit-text-stroke:calc(var(--stroke-w) * 2) var(--pure-white);paint-order:stroke fill}
+/* .outline fill is the field, not transparent, on purpose: Montserrat Black is built from overlapping contours and a
+   transparent fill shows every internal stroke inside N, P, E, R. The field fill hides the inner half of the doubled
+   stroke and the overlaps. Consequence, accepted: while an outline tier scrolls across the numeral in transit, the
+   letter interiors occlude it. At rest the statements never enter the band. */
 @supports not (-webkit-text-stroke:1px){.outline{color:var(--white-soft)}}
 .ind-a{margin-left:var(--ind-a)}
 .ind-b{margin-left:var(--ind-b)}
@@ -260,20 +289,25 @@ img,video{display:block;max-width:100%}
   color:var(--white-soft);max-width:var(--measure-en);margin-top:var(--s-2);
 }
 .tiers + .en{margin-top:var(--s-5)}
+.fact .en{line-height:var(--lh-en)} /* as the hero EN line: at 1366x768 the 1.6 body leading put #se-mueve 2px over the viewport */
 .pp.acid{color:var(--acid)}
 
 /* short viewports */
-@media (min-width:1024px) and (max-height:800px){.fact{padding-top:var(--s-6)}}
+/* desktop fit above the band, measured 7 Sep: 1440x900 leaves 352px for a statement with --s-6 on top (03 is 303px);
+   1366x768 leaves 286px with --s-5 (03 is 279px). With the brief's --s-8 top, 03 was 19px over at 1440x900. */
+@media (min-width:1024px) and (max-height:960px){.fact{padding-top:var(--s-6)}}
+@media (min-width:1024px) and (max-height:800px){.fact{padding-top:var(--s-5)}}
 @media (max-height:600px){
+  .chapter{padding-bottom:0}
   .numeral{position:static;height:auto;margin:var(--s-5) 0 0}
   .hero{min-height:0;padding-bottom:var(--s-8)}
-  .hero .kicker{bottom:auto;top:calc(-1 * (var(--band) + var(--s-3)))}
+  .hero .kicker{position:static;margin-top:var(--s-3)} /* normal flow: the label sits under the numeral (the countdown-unit form) */
   .hero .lines{position:static;margin-top:var(--s-4)}
   .fact{min-height:0;padding-bottom:var(--s-8)}
 }
 
 /* ── 06 la app — the artifact ───────────────────────────────────────────── */
-.app{padding:var(--s-8) var(--inset) var(--s-9);overflow-x:hidden;overflow-x:clip;position:relative;z-index:2}
+.app{padding:var(--s-8) var(--inset) var(--s-9);overflow-x:hidden;overflow-x:clip;overflow-clip-margin:var(--s-7);position:relative;z-index:2} /* z above the chapter so nothing sticky paints over it; clip-margin lets the slab's contact shadow breathe past the flush-left edge */
 .headline{
   font-family:var(--font);font-weight:700;font-size:var(--headline);line-height:var(--lh-tight);
   letter-spacing:var(--track-tight);color:var(--pure-white);max-width:var(--measure-headline);margin-top:var(--s-3);
@@ -333,18 +367,17 @@ img,video{display:block;max-width:100%}
 /* ── 09 footer band + literal footer ────────────────────────────────────── */
 .band{border-top:var(--hair-w) solid var(--hairline);padding:var(--s-6) var(--inset)}
 .l1{font-family:var(--font);font-weight:400;font-size:var(--body-en);line-height:var(--lh-body);color:var(--white-soft)}
-.l1 a{text-decoration:none;border-bottom:var(--hair-w) solid var(--hairline)}
-.l1 a:hover,.l1 a:focus-visible{color:var(--pure-white)}
+.l1 a{text-decoration:underline;text-decoration-color:var(--hairline);text-decoration-thickness:var(--hair-w);text-underline-offset:var(--s-1)}
+.l1 a:hover,.l1 a:focus-visible{text-decoration-color:var(--white-soft)} /* the hover lives on the hairline; link text stays --white-soft (pure white is display type only) */
+.l1 a,.l2 a{display:inline-block;padding-block:var(--tap-pad);margin-block:calc(-1 * var(--tap-pad))} /* 44px tap box without moving the line */
+.l1{--tap-pad:calc((var(--tap) - var(--body-en) * var(--lh-body)) / 2)}
+.l2{--tap-pad:calc((var(--tap) - var(--caption) * var(--lh-body)) / 2)}
 .l2{font-family:var(--font);font-weight:400;font-size:var(--caption);line-height:var(--lh-body);color:var(--mid-grey);margin-top:var(--s-2)}
 .l2 a{color:var(--white-soft);text-decoration:none}
 footer.site{padding:var(--s-5) 0 var(--s-8);font-family:var(--font);font-weight:400;font-size:var(--link);line-height:var(--lh-body);color:var(--mid-grey)}
 .site .links{display:flex;flex-wrap:wrap;gap:var(--s-2) var(--s-4)}
-.site .links a{color:var(--white-soft);text-decoration:none;padding-block:var(--s-3);border-bottom:var(--hair-w) solid var(--hairline)} /* 13px x 1.6 + 2 x 16px = 53px tap height */
+.site .links a{color:var(--white-soft);padding-block:var(--s-3);text-decoration:underline;text-decoration-color:var(--hairline);text-decoration-thickness:var(--hair-w);text-underline-offset:var(--s-1)} /* brief said padding --s-2: 13px x 1.6 + 16 = 37px tap; --s-3 gives 53px. The hairline is a text underline, not a border, so it stays at the baseline */
 .site .links + div{margin-top:var(--s-3)}
-.stores{display:flex;gap:var(--s-4);padding-bottom:var(--s-6)}
-.stores[hidden]{display:none}
-.stores a{display:inline-flex}
-.stores img{height:var(--s-4);width:auto}
 
 /* ── motion — Register A only; nothing here runs under reduced motion ──── */
 @media (prefers-reduced-motion:no-preference){
@@ -393,13 +426,13 @@ footer.site{padding:var(--s-5) 0 var(--s-8);font-family:var(--font);font-weight:
 
 <main>
 <div class="chapter">
-  <p class="numeral"><span class="numeral-in">1.370</span></p>
+  <p class="numeral" aria-hidden="true"><span class="numeral-in">1.370</span></p>
 
   <!-- 01 · the numeral -->
   <section class="hero" aria-labelledby="h-hero">
-    <p class="kicker r d1">RATING · PÁDEL</p>
+    <p class="kicker r d1">RATING · PÁDEL<span class="sr"> 1.370</span></p> <!-- the value is read once, after its label; the visual numeral is aria-hidden -->
     <div class="lines">
-      <h1 id="h-hero" class="r d1">El número que confirma tu rival<span class="pp d2">.</span></h1>
+      <h1 id="h-hero" class="r d1">El número que confirma tu rival<span class="pp d3">.</span></h1>
       <p class="hero-en r d1" lang="en">The number your opponent confirms.</p>
     </div>
   </section>
@@ -446,7 +479,7 @@ footer.site{padding:var(--s-5) 0 var(--s-8);font-family:var(--font);font-weight:
     <p class="kicker">LA APP</p>
     <h2 id="h-06" class="headline">Registra el partido. Tu rival lo confirma.</h2>
     <p class="body">RALLY es el rating de pádel de Madrid. Rival, compañero y sets. Cuando alguien de la otra pareja confirma, el rating de cada jugador se mueve.</p>
-    <p class="en" lang="en">Log the match. Your opponent confirms it. RALLY is the padel rating for Madrid. Opponents, partner, sets. When someone on the other pair confirms, every player's rating moves.</p>
+    <p class="en" lang="en">Log the match. Your opponent confirms it. RALLY is the padel rating for Madrid. Opponent, partner, sets. When someone on the other pair confirms, every player's rating moves.</p>
   </div>
   <div class="stage">
     <figure class="slab">
@@ -469,8 +502,8 @@ footer.site{padding:var(--s-5) 0 var(--s-8);font-family:var(--font);font-weight:
 
 <!-- 08 · close + cta -->
 <section class="close reveal" aria-labelledby="h-08">
-  <h2 id="h-08" class="tiers r"><span class="tier">CADA PARTIDO,</span><span class="tier ind-a">CONFIRMADO<span class="pp d1">.</span></span></h2>
-  <p class="cta"><a class="pill" href="https://apps.apple.com/app/id6780019919" rel="noopener" aria-label="Download on the App Store">Descargar en el App Store</a></p>
+  <h2 id="h-08" class="tiers r"><span class="tier">CADA PARTIDO,</span><span class="tier ind-a">CONFIRMADO<span class="pp d2">.</span></span></h2>
+  <p class="cta"><a class="pill" href="https://apps.apple.com/app/id6780019919" rel="noopener">Descargar en el App Store</a></p>
   <p class="caption pill-cap">Primero en iOS. · iOS first.</p>
 </section>
 </main>
@@ -481,8 +514,12 @@ footer.site{padding:var(--s-5) 0 var(--s-8);font-family:var(--font);font-weight:
   <p class="l1">Founding 100 · #001–#100 · <a href="/apply">Solicitar plaza</a></p>
   <p class="l2"><a href="mailto:hello@rallyrating.app">hello@rallyrating.app</a> · NIF B88743380</p>
   <footer class="site"><div class="links"><a href="/en/privacy">Privacy Policy</a><a href="/en/terms">Terms and Conditions</a><a href="/en/legal">Legal Notice</a><a href="/en/support">Support</a></div><div>Rally Rating S.L. · Madrid · 2026</div></footer>
-  <!-- Android UNVERIFIED (Play 404 at 14:22). Enable only with a resolving Play URL. -->
-  <div class="stores" hidden><a href="https://apps.apple.com/app/id6780019919" rel="noopener"><img src="/assets/launch/appstore.svg" width="24" height="24" alt="App Store"></a><a href="#GOOGLE_PLAY_URL"><img src="/assets/launch/googleplay_2022.svg" height="24" alt="Google Play"></a></div>
+  <!-- STORE ROW — kept as a comment, not hidden DOM: nothing is fetched, no href, no alt on the page.
+       Play UNVERIFIED (404 at 14:22). Enable only with a resolving Play URL AND monochrome white-on-field badges:
+       the supplied appstore.svg fill is a blue gradient (a second colour) and cannot ship on the field as-is.
+       .stores{display:flex;gap:var(--s-4);padding-bottom:var(--s-6)} .stores a{display:inline-flex} .stores img{height:var(--s-4);width:auto}
+       <div class="stores"><a href="https://apps.apple.com/app/id6780019919" rel="noopener"><img src="/assets/launch/appstore.svg" width="24" height="24" alt="App Store"></a><a href="GOOGLE_PLAY_URL"><img src="/assets/launch/googleplay_2022.svg" height="24" alt="Google Play"></a></div>
+  -->
 </div>
 
 <script>
@@ -493,10 +530,13 @@ document.documentElement.classList.add('js');
   var numeral = d.querySelector('.numeral');
   var armed = false;
 
-  /* hero: beat 0 after fonts are ready, 800 ms at most */
+  /* hero: beat 0 once the 900 and 700 faces are in, 800 ms at most (fonts.ready can resolve before they are requested) */
   function arm() { if (armed) return; armed = true; chapter.classList.add('ready'); }
   var wait = w.setTimeout(arm, 800);
-  if (d.fonts && d.fonts.ready) { d.fonts.ready.then(function () { w.clearTimeout(wait); arm(); }); }
+  if (d.fonts && d.fonts.load) {
+    Promise.all([d.fonts.load('900 1em Montserrat'), d.fonts.load('700 1em Montserrat')])
+      .then(function () { w.clearTimeout(wait); arm(); }, function () { w.clearTimeout(wait); arm(); });
+  }
 
   /* settle: once an element has resolved or the slab has entered, its filter leaves */
   d.addEventListener('animationend', function (e) {
@@ -504,29 +544,40 @@ document.documentElement.classList.add('js');
     if (n === 'resolve' || n === 'slab-enter') { e.target.classList.add('settled'); }
   });
 
-  /* observe once, then unobserve; tall sections lower their threshold so they still arrive */
-  function once(el, threshold, fn) {
+  /* observe once, then disconnect */
+  function once(el, opts, fn) {
     if (!el) { return; }
-    if (!('IntersectionObserver' in w)) { fn(el); return; }
-    var h = el.offsetHeight || 1;
-    threshold = Math.min(threshold, (w.innerHeight * 0.6) / h);
+    if (!('IntersectionObserver' in w)) { fn(); return; }
     var io = new IntersectionObserver(function (entries) {
       for (var i = 0; i < entries.length; i++) {
-        if (entries[i].isIntersecting) { io.unobserve(el); io.disconnect(); fn(el); return; }
+        if (entries[i].isIntersecting) { io.disconnect(); fn(); return; }
       }
-    }, { threshold: threshold });
+    }, opts);
     io.observe(el);
   }
+  function tall(el, threshold) {
+    var h = el ? (el.offsetHeight || 1) : 1;
+    return { threshold: Math.min(threshold, (w.innerHeight * 0.6) / h) };
+  }
 
+  /* statements resolve the moment their top clears the numeral band, not when 40% of a 100svh section is in view */
+  var sticky = w.getComputedStyle(numeral).position === 'sticky';
+  var linesH = parseFloat(w.getComputedStyle(d.documentElement).getPropertyValue('--lines-h')) || 0;
+  var exclude = sticky ? Math.round(numeral.offsetHeight + linesH) : 0;
+  var aboveBand = { threshold: 0, rootMargin: '0px 0px -' + exclude + 'px 0px' };
   var reveals = d.querySelectorAll('.reveal');
   for (var i = 0; i < reveals.length; i++) {
-    once(reveals[i], 0.4, function (el) { el.classList.add('in'); });
+    (function (sec) {
+      once(sec.querySelector('.stmt, .label, .tiers') || sec, aboveBand, function () { sec.classList.add('in'); });
+    })(reveals[i]);
   }
   /* 05: the numeral becomes yours — a hard colour step, no transition */
-  once(d.getElementById('es-tuyo'), 0.6, function () { numeral.classList.add('is-yours'); });
+  var tuyo = d.getElementById('es-tuyo');
+  once(tuyo, tall(tuyo, 0.6), function () { numeral.classList.add('is-yours'); });
   /* 06: the slab enters once */
-  once(d.getElementById('la-app'), 0.3, function (el) {
-    var slab = el.querySelector('.slab');
+  var app = d.getElementById('la-app');
+  once(app, tall(app, 0.3), function () {
+    var slab = app.querySelector('.slab');
     if (slab) { slab.classList.add('in'); }
   });
 })();
