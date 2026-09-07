@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>RALLY — share cover source (1200×630)</title>
+<!--
+  THE SHARE COVER — source of truth for /assets/og/rally-cover.png
+
+  This file is never served (_source/ is in .vercelignore). It is the design
+  source; the PNG in /assets/og is the artifact. Re-render with:
+
+      node _source/render-cover.mjs
+
+  CONSTRUCTION — copied from the film poster (/film/poster.jpg), which is the
+  brand's own answer to "one frame, no scroll": two tiers, an acid full stop,
+  the wordmark bottom-right, nothing else. No numeral: the numeral is the
+  homepage's protected object and it does not survive a 300px-wide feed preview.
+
+  COPY — lifted verbatim from home.html §02 and the countdown line. Nothing here
+  is newly written, so nothing here needs a voice review:
+      NO SE PONE. / SE CONFIRMA.        home.html:443
+      A rating is not set. It is confirmed.   index.html (countdown line)
+
+  DELIBERATELY UNDATED. og:image is cached by every scraper that has ever seen
+  the URL and cannot be reliably busted, so "7 SEP · 21:00" would outlive the
+  reveal by weeks. The dated line lives in og:description instead, where it is a
+  one-word edit. See index.html / home.html.
+
+  SIZE — 1200x630 (1.91:1), the size every scraper crops to. Rendered at
+  deviceScaleFactor 1 so the declared og:image:width matches the real pixels.
+-->
+<style>
+/* Montserrat, self-hosted — the same three static faces the site ships.
+   Absolute paths: this page is rendered over http from the repo root. */
+@font-face{font-family:'Montserrat';font-style:normal;font-weight:400;
+  src:url("/fonts/montserrat-latin-400-normal.woff2") format("woff2")}
+@font-face{font-family:'Montserrat';font-style:normal;font-weight:700;
+  src:url("/fonts/montserrat-latin-700-normal.woff2") format("woff2")}
+@font-face{font-family:'Montserrat';font-style:normal;font-weight:900;
+  src:url("/fonts/montserrat-latin-900-normal.woff2") format("woff2")}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  /* colour — the four brand values, unchanged from home.html */
+  --field:#0D0D0D;
+  --acid:#CCFF00;
+  --pure-white:#FFFFFF;
+  --white-soft:#F2F2F0;
+  --mid-grey:#6B6B6B;
+  --lift:radial-gradient(ellipse 60% 45% at 50% 48%, rgba(255,255,255,0.028), rgba(255,255,255,0) 70%);
+
+  /* type — the card is a fixed 1200x630, so these are absolute, not clamped.
+     --tier is the site's --tier-1 desktop ceiling (104px) opened up to 124px:
+     the card has no viewport to defend and the statement is the whole frame, as
+     it is on the film poster. 124 is the measured ceiling — at 130px the longer
+     tier ('SE CONFIRMA.', 871px wide at 112) crosses the 64px right inset. The
+     render script gates this, so raising it is safe to try. */
+  --font:'Montserrat','Helvetica Neue',Arial,sans-serif;
+  --tier:124px;
+  --stroke-w:2px;              /* doubled to 4px on the outline, as .outline does */
+  --en:21px;
+  --wm-size:40px;
+
+  --track-display:-0.025em;
+  --track-tight:-0.02em;
+  --lh-display:0.92;
+
+  --inset:64px;
+  --s-2:8px;
+  --s-5:32px;
+  --ind-a:64px;                /* the site's desktop --s-7 indent on the second tier */
+}
+
+html,body{width:1200px;height:630px}
+body{
+  background:var(--field);
+  font-family:var(--font);
+  position:relative;
+  overflow:hidden;
+  /* the field: the same faint radial lift the film, the countdown and the homepage carry */
+  background-image:var(--lift);
+}
+
+/* the statement block sits optically centred — measured, not centred by flexbox:
+   the wordmark owns the bottom-right corner and the block must not crowd it. */
+.stage{
+  position:absolute;
+  left:var(--inset);
+  right:var(--inset);
+  top:50%;
+  transform:translateY(-52%);   /* -52%: the EN line below adds visual weight low, so the block lifts 2% to sit optically centred */
+}
+
+.tiers{
+  font-family:var(--font);font-weight:900;
+  line-height:var(--lh-display);letter-spacing:var(--track-display);
+  color:var(--pure-white);text-transform:uppercase;
+}
+.tier{display:block;font-size:var(--tier);white-space:nowrap}
+.tier + .tier{margin-top:var(--s-2)}
+
+/* .outline — filled with the field, not transparent, exactly as home.html does:
+   Montserrat Black is built from overlapping contours and a transparent fill
+   shows every internal stroke inside N, P, E and R. */
+.outline{
+  color:var(--field);
+  -webkit-text-stroke:calc(var(--stroke-w) * 2) var(--pure-white);
+  paint-order:stroke fill;
+}
+.ind-a{margin-left:var(--ind-a)}
+
+/* the verified full stop — the single acid role in the frame */
+.pp{color:var(--acid)}
+
+.en{
+  font-family:var(--font);font-weight:400;font-size:var(--en);
+  line-height:1.45;color:var(--mid-grey);
+  margin-top:var(--s-5);margin-left:var(--ind-a);
+}
+
+/* the wordmark, bottom-right — the film poster's lock-up */
+.wm{
+  position:absolute;right:var(--inset);bottom:var(--inset);
+  font-family:var(--font);font-weight:900;font-size:var(--wm-size);line-height:1;
+  letter-spacing:var(--track-tight);color:var(--pure-white);
+}
+.wm-acid{color:var(--acid)}
+</style>
+</head>
+<body>
+
+<div class="stage">
+  <div class="tiers">
+    <span class="tier outline">NO SE PONE.</span>
+    <span class="tier ind-a">SE CONFIRMA<span class="pp">.</span></span>
+  </div>
+  <p class="en" lang="en">A rating is not set. It is confirmed.</p>
+</div>
+
+<div class="wm">RALL<span class="wm-acid">Y.</span></div>
+
+</body>
+</html>
