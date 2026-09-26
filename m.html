@@ -9,7 +9,6 @@
 <meta name="description" content="A match you played was logged on RALLY. Claim it." />
 <meta property="og:title" content="Your match on RALLY" />
 <meta property="og:description" content="A match you played was logged on RALLY. Tap to claim it." />
-<meta name="apple-itunes-app" content="app-id=6780019919" />
 <!--
   RALLY · Match link (/m/CODE, rewritten here by vercel.json)
 
@@ -23,11 +22,11 @@
   score and state only; an outsider sees "Luis G.", never a full name, and only
   while the match is open or recently counted).
 
-  Getting the app: tapping the store button leaves a short-lived note so the
-  match is waiting when Rally first opens (note_invite_tap, migration 066): a
-  scrambled network hash plus screen size and time zone, deleted after two
-  hours. Android also carries the code through the Play Store itself
-  (referrer=rally_invite=CODE). Nothing is noted until the button is tapped.
+  Getting the app: tapping the store button copies the code, and Rally's first
+  screen offers Paste to open the match (on iPhone, Apple's own Paste button).
+  Android also carries the code through the Play Store itself
+  (referrer=rally_invite=CODE). Nothing about the phone or its connection is
+  read or stored (the old network-and-screen note was dropped, migration 069).
 -->
 <style>
   @font-face{font-family:'Montserrat';font-style:normal;font-weight:400;font-display:swap;src:url('/fonts/montserrat-latin-400-normal.woff2') format('woff2');}
@@ -121,7 +120,7 @@
     open: 'Abrir en Rally', getIos: 'Descargar en App Store', getAndroid: 'Descargar en Google Play', get: 'Descargar Rally',
     code: 'TU CÓDIGO', copy: 'Copiar', copied: 'Copiado',
     note: 'Si el enlace no abre la app después de instalarla, toca «¿Tienes un enlace o código de partido?» y pega este código.',
-    keep: 'Al tocar, guardamos tu partido 2 horas para que te espere al abrir Rally. Solo usamos una nota cifrada de tu conexión y tu pantalla, y luego se borra.',
+    keep: 'Al tocar, copiamos tu código. Abre Rally y toca Pegar en la primera pantalla.',
     counted: 'Este partido ya cuenta', countedLede: 'Abre Rally para verlo en tu historial.',
     lapsed: 'Este partido ha caducado', lapsedLede: 'Nadie del otro equipo lo confirmó en 14 días.',
     cancelled: 'Este partido se retiró', cancelledLede: 'No se movió ningún rating.',
@@ -134,7 +133,7 @@
     open: 'Open in Rally', getIos: 'Get it on the App Store', getAndroid: 'Get it on Google Play', get: 'Get Rally',
     code: 'YOUR CODE', copy: 'Copy', copied: 'Copied',
     note: 'If the link doesn’t open the app after installing, tap “Got a match link or code?” and paste this code.',
-    keep: 'Tapping keeps your match ready for 2 hours, so it’s waiting when Rally opens. We only use a scrambled note of your connection and screen, then delete it.',
+    keep: 'Tapping copies your code. Open Rally and tap Paste on the first screen.',
     counted: 'This match counts', countedLede: 'Open Rally to see it in your history.',
     lapsed: 'This match lapsed', lapsedLede: 'Nobody on the other team confirmed it within 14 days.',
     cancelled: 'This match was withdrawn', cancelledLede: 'Nobody’s rating moved.',
@@ -150,21 +149,12 @@
   var code = m ? m[1].toUpperCase() : null;
 
   function $(id) { return document.getElementById(id); }
-  // Written exactly as the app writes it (lib/invites.ts, phoneTraits).
-  function phoneTraits() {
-    var w = Math.round(Math.min(screen.width, screen.height));
-    var h = Math.round(Math.max(screen.width, screen.height));
-    var dpr = Math.round((window.devicePixelRatio || 1) * 100) / 100;
-    var tz = '';
-    try { tz = Intl.DateTimeFormat().resolvedOptions().timeZone || ''; } catch (e) {}
-    return w + 'x' + h + '@' + dpr + '|' + tz;
-  }
-  function rpc(name, body, extra) {
-    return fetch(SUPABASE_URL + '/rest/v1/rpc/' + name, Object.assign({
+  function rpc(name, body) {
+    return fetch(SUPABASE_URL + '/rest/v1/rpc/' + name, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', apikey: KEY, Authorization: 'Bearer ' + KEY },
       body: JSON.stringify(body)
-    }, extra || {}));
+    });
   }
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]; }); }
 
@@ -182,19 +172,23 @@
     $('openBtn').href = appLink;
     $('storeBtn').textContent = isIos ? T.getIos : isAndroid ? T.getAndroid : T.get;
     $('storeBtn').href = store;
-    // Getting the app: copy the code on the way out (the paste box is the
-    // backup), and leave the note that lets Rally open this match on its
-    // first launch. The store waits for the note, never longer than 0.9s.
+    // Getting the app: copy the code on the way out. Rally's first screen
+    // offers Paste. The store waits for the copy, never longer than 0.6s.
     $('storeBtn').addEventListener('click', function (e) {
-      try { navigator.clipboard && navigator.clipboard.writeText(code); } catch (x) {}
-      if (!claimable || !(isIos || isAndroid)) return;
+      if (!claimable || !code || !navigator.clipboard) return;
       e.preventDefault();
       var gone = false;
       var go = function () { if (!gone) { gone = true; location.href = store; } };
-      setTimeout(go, 900);
-      rpc('note_invite_tap', { p_code: code, p_platform: isIos ? 'ios' : 'android', p_traits: phoneTraits() }, { keepalive: true })
-        .then(go, go);
+      setTimeout(go, 600);
+      try { navigator.clipboard.writeText(code).then(go, go); } catch (x) { go(); }
     });
+    // iPhone: this page only shows when Rally isn't installed (with it, the
+    // link opens the app), so getting the app is the main button there.
+    if (isIos) {
+      $('storeBtn').className = 'btn primary';
+      $('openBtn').className = 'btn quiet';
+      $('storeBtn').parentNode.insertBefore($('storeBtn'), $('openBtn'));
+    }
     if (claimable && (isIos || isAndroid)) { $('keepNote').textContent = T.keep; $('keepNote').hidden = false; }
 
     if (state === 'notfound') {
@@ -220,7 +214,7 @@
     else {
       $('title').textContent = T.logged(data.logger);
       var open = (data.seats || []).filter(function (s) { return s.guest && !s.claimed; }).map(function (s) { return s.name; });
-      $('lede').textContent = T.lede + (open.length > 1 ? ' ' + T.whichOne + open.slice(0, -1).join(', ') + T.or + open[open.length - 1] + '.' : '');
+      $('lede').textContent = T.lede + (open.length > 1 ? ' ' + T.whichOne + open.slice(0, -1).join(', ') + T.or + open[open.length - 1].replace(/\.$/, '') + '.' : '');
     }
     renderCard(data);
   }
