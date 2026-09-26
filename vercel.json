@@ -17,6 +17,10 @@
       "destination": "/auth/reset-password.html"
     },
     {
+      "source": "/auth/reset-password",
+      "destination": "/auth/reset-password.html"
+    },
+    {
       "source": "/terms",
       "destination": "/terms.html"
     },
