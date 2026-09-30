@@ -59,6 +59,10 @@
     {
       "source": "/m/:code",
       "destination": "/m.html"
+    },
+    {
+      "source": "/g/:code",
+      "destination": "/g.html"
     }
   ],
   "headers": [
@@ -68,6 +72,19 @@
         {
           "key": "Content-Type",
           "value": "application/json"
+        }
+      ]
+    },
+    {
+      "source": "/g/:code",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "no-referrer"
         }
       ]
     },

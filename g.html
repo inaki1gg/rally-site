@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="robots" content="noindex, nofollow" />
+<meta name="referrer" content="no-referrer" />
+<title>Join my group on RALLY</title>
+<meta name="description" content="You're invited to a group on RALLY. One table and one chat for everyone in it." />
+<meta property="og:title" content="Join my group on RALLY" />
+<meta property="og:description" content="One table and one chat for everyone in it. Tap to join." />
+<!--
+  RALLY · Group link (/g/CODE, rewritten here by vercel.json)
+
+  Sent from the app's Share button on a group. When Rally is installed, the
+  phone opens the app directly (universal link, apple-app-site-association /
+  Android app link) and the app shows the group with a Join button.
+
+  WITHOUT RALLY, STRAIGHT TO THE STORE (Sascha, 29 Sep 2026). An iPhone that
+  reaches this page does not have the app (with it, the link would have opened
+  the app), so it goes to the App Store at once. Android can land here even
+  with the app installed (the app link is not verified yet), so it goes through
+  an intent: Rally opens if it is there, Google Play if it isn't. Anything else
+  — a computer — sees the group and the code, which is what the rest of this
+  page is for, and it is also the fallback if a browser refuses the redirect.
+
+  Reads the group through the public group_link_preview() function: the name,
+  its colour and how many are in it. Never who is in it, never ratings.
+-->
+<style>
+  @font-face{font-family:'Montserrat';font-style:normal;font-weight:400;font-display:swap;src:url('/fonts/montserrat-latin-400-normal.woff2') format('woff2');}
+  @font-face{font-family:'Montserrat';font-style:normal;font-weight:700;font-display:swap;src:url('/fonts/montserrat-latin-700-normal.woff2') format('woff2');}
+  @font-face{font-family:'Montserrat';font-style:normal;font-weight:900;font-display:swap;src:url('/fonts/montserrat-latin-900-normal.woff2') format('woff2');}
+  :root{
+    --bg:#080808;--surf:#141414;--surf-2:#1A1A1A;--line-2:#2A2A2A;
+    --text:#F2F2F0;--dim:#888888;--muted:#555555;--acid:#CCFF00;
+    --band:#D9D9D4;--ink:#0D0D0D;
+    --font:'Montserrat',-apple-system,BlinkMacSystemFont,'Helvetica Neue',sans-serif;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--bg);color:var(--text);font-family:var(--font);-webkit-font-smoothing:antialiased}
+  body{min-height:100vh;display:flex;justify-content:center}
+  a{color:inherit;text-decoration:none}
+  main{width:100%;max-width:460px;padding:calc(env(safe-area-inset-top,0px) + 28px) 20px calc(env(safe-area-inset-bottom,0px) + 28px);display:flex;flex-direction:column;gap:22px}
+  .mark{font-weight:900;font-size:20px;letter-spacing:.18em}
+  .eyebrow{font-weight:700;font-size:11px;letter-spacing:.16em;color:var(--muted);text-transform:uppercase}
+  h1{font-weight:900;font-size:30px;line-height:1.08;letter-spacing:-.03em;text-wrap:balance}
+  p.lede{font-size:15px;line-height:1.5;color:var(--dim)}
+  .group{border-radius:22px;overflow:hidden;background:var(--surf);border:.5px solid var(--line-2)}
+  .band{background:var(--band);color:var(--ink);padding:20px 20px 26px}
+  .band small{display:block;font-weight:700;font-size:11px;letter-spacing:.14em;opacity:.72}
+  .band b{display:block;margin-top:6px;font-weight:900;font-size:32px;line-height:1.08;letter-spacing:-.035em;overflow-wrap:anywhere}
+  .group p{padding:16px 20px;font-size:14px;line-height:1.5;color:var(--dim)}
+  .btn{display:flex;align-items:center;justify-content:center;min-height:54px;border-radius:999px;font-weight:900;font-size:15px;letter-spacing:-.01em;border:0;cursor:pointer;width:100%;text-align:center}
+  .btn.primary{background:var(--acid);color:#080808}
+  .btn.quiet{background:transparent;color:var(--text);border:1px solid rgba(255,255,255,.14);font-weight:700;font-size:14px}
+  .btn:focus-visible{outline:2px solid var(--text);outline-offset:3px}
+  .actions{display:flex;flex-direction:column;gap:10px;margin-top:4px}
+  .code{display:flex;align-items:center;justify-content:space-between;background:var(--surf);border:.5px solid var(--line-2);border-radius:14px;padding:14px 16px}
+  .code b{display:block;font-weight:900;font-size:26px;letter-spacing:.22em;margin-top:4px;user-select:all}
+  .code button{background:none;border:0;color:var(--dim);font:700 13px var(--font);cursor:pointer;padding:8px}
+  .note{font-size:13px;line-height:1.5;color:var(--muted);text-align:center}
+  .skeleton{background:var(--surf);border-radius:12px;animation:pulse 1.4s ease-in-out infinite}
+  @keyframes pulse{50%{opacity:.5}}
+  @media (prefers-reduced-motion:reduce){.skeleton{animation:none}}
+  [hidden]{display:none!important}
+</style>
+</head>
+<body>
+<main>
+  <div class="mark">RALLY</div>
+
+  <section id="loading" aria-busy="true" style="display:flex;flex-direction:column;gap:14px">
+    <div class="skeleton" style="height:12px;width:90px"></div>
+    <div class="skeleton" style="height:180px;width:100%;border-radius:22px"></div>
+  </section>
+
+  <section id="content" hidden style="display:flex;flex-direction:column;gap:22px">
+    <div class="eyebrow" id="eyebrow"></div>
+    <div class="group" id="card" hidden>
+      <div class="band" id="band"><small id="players"></small><b id="name"></b></div>
+      <p id="what"></p>
+    </div>
+    <div id="missing" hidden style="display:flex;flex-direction:column;gap:10px">
+      <h1 id="title"></h1>
+      <p class="lede" id="lede"></p>
+    </div>
+    <div class="code" id="codeBox" hidden>
+      <div><div class="eyebrow" id="codeLabel"></div><b id="codeText"></b></div>
+      <button type="button" id="copyBtn"></button>
+    </div>
+    <div class="actions" id="actions">
+      <a class="btn primary" id="storeBtn" href="#"></a>
+      <a class="btn quiet" id="openBtn" href="#"></a>
+      <p class="note" id="note"></p>
+    </div>
+  </section>
+</main>
+
+<script>
+(function () {
+  var SUPABASE_URL = 'https://sbosbkbrkicpyktrzgjo.supabase.co';
+  var KEY = 'sb_publishable_XLcXQNlCkK6xgNUkcn1wZQ_Lfp_rq5F';
+  var APP_STORE = 'https://apps.apple.com/app/id6780019919';
+  var PLAY_STORE = 'https://play.google.com/store/apps/details?id=app.rallyrating';
+  // The app's group colours (lib/groups.ts GROUP_COLOURS), same order.
+  var COLOURS = [
+    { key: 'clay', fill: '#D9774B', ink: '#0D0D0D' },
+    { key: 'court', fill: '#3D7BE0', ink: '#FFFFFF' },
+    { key: 'teal', fill: '#2FB3A2', ink: '#0D0D0D' },
+    { key: 'sky', fill: '#6CC4F0', ink: '#0D0D0D' },
+    { key: 'violet', fill: '#8D6DF2', ink: '#FFFFFF' },
+    { key: 'pink', fill: '#E86FA6', ink: '#0D0D0D' },
+    { key: 'sand', fill: '#D6BC82', ink: '#0D0D0D' },
+    { key: 'chalk', fill: '#D9D9D4', ink: '#0D0D0D' }
+  ];
+
+  var es = /^es\b/i.test(navigator.language || '');
+  document.documentElement.lang = es ? 'es' : 'en';
+  var T = es ? {
+    invited: 'Te han invitado a unirte', what: 'Una tabla y un chat para todos los que están dentro.',
+    players: function (n) { return n === 1 ? '1 JUGADOR' : n + ' JUGADORES'; },
+    full: 'Este grupo está lleno.',
+    open: 'Abrir en Rally', getIos: 'Descargar en App Store', getAndroid: 'Descargar en Google Play', get: 'Descargar Rally',
+    code: 'CÓDIGO DEL GRUPO', copy: 'Copiar', copied: 'Copiado',
+    note: 'Con Rally instalado, vuelve a tocar el enlace y entras al grupo. O en Grupos, «Ya tengo un código».',
+    notFound: 'Ningún grupo con este enlace', notFoundLede: 'Revisa el enlace o pide que te lo vuelvan a enviar.'
+  } : {
+    invited: 'You’re invited to join', what: 'One table and one chat for everyone in it.',
+    players: function (n) { return n === 1 ? '1 PLAYER' : n + ' PLAYERS'; },
+    full: 'This group is full.',
+    open: 'Open in Rally', getIos: 'Get it on the App Store', getAndroid: 'Get it on Google Play', get: 'Get Rally',
+    code: 'GROUP CODE', copy: 'Copy', copied: 'Copied',
+    note: 'With Rally installed, tap the link again and you’re in the group. Or in Groups, “I already have a code”.',
+    notFound: 'No group at this link', notFoundLede: 'Check the link, or ask for it to be sent again.'
+  };
+
+  var ua = navigator.userAgent || '';
+  var isAndroid = /Android/i.test(ua);
+  var isIos = /iPhone|iPad|iPod/i.test(ua);
+  var m = /\/g\/([A-Za-z0-9]{6})/.exec(location.pathname) || /[?&]c=([A-Za-z0-9]{6})/.exec(location.search);
+  var code = m ? m[1].toUpperCase() : null;
+
+  function $(id) { return document.getElementById(id); }
+  function rpc(name, body) {
+    return fetch(SUPABASE_URL + '/rest/v1/rpc/' + name, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', apikey: KEY, Authorization: 'Bearer ' + KEY },
+      body: JSON.stringify(body)
+    });
+  }
+  // An untouched group's colour comes from its id, exactly as in the app.
+  function colourOf(g) {
+    for (var i = 0; i < COLOURS.length; i++) if (COLOURS[i].key === g.colour) return COLOURS[i];
+    var h = 0, id = String(g.id || '');
+    for (var j = 0; j < id.length; j++) h = (Math.imul(h, 31) + id.charCodeAt(j)) >>> 0;
+    return COLOURS[h % COLOURS.length];
+  }
+
+  function show(g) {
+    $('loading').hidden = true;
+    $('content').hidden = false;
+    var store = isAndroid ? PLAY_STORE : APP_STORE;
+    $('storeBtn').textContent = isIos ? T.getIos : isAndroid ? T.getAndroid : T.get;
+    $('storeBtn').href = store;
+    $('openBtn').textContent = T.open;
+    $('openBtn').href = isAndroid
+      ? 'intent://g/' + code + '#Intent;scheme=rally;package=app.rallyrating;S.browser_fallback_url=' + encodeURIComponent(PLAY_STORE) + ';end'
+      : 'rally://g/' + code;
+
+    if (!g) {
+      $('missing').hidden = false;
+      $('title').textContent = T.notFound;
+      $('lede').textContent = T.notFoundLede;
+      $('openBtn').hidden = true;
+      $('note').hidden = true;
+      return;
+    }
+    var c = colourOf(g);
+    $('eyebrow').textContent = T.invited;
+    $('band').style.background = c.fill;
+    $('band').style.color = c.ink;
+    $('players').textContent = T.players(g.players);
+    $('name').textContent = g.name;
+    $('what').textContent = g.full ? T.full : T.what;
+    $('card').hidden = false;
+    if (g.full) { $('actions').hidden = true; return; }
+
+    $('codeBox').hidden = false;
+    $('codeLabel').textContent = T.code;
+    $('codeText').textContent = code;
+    $('copyBtn').textContent = T.copy;
+    $('copyBtn').addEventListener('click', function () {
+      var done = function () { $('copyBtn').textContent = T.copied; setTimeout(function () { $('copyBtn').textContent = T.copy; }, 1800); };
+      try { navigator.clipboard.writeText(code).then(done, function () {}); } catch (e) {}
+    });
+    $('note').textContent = T.note;
+  }
+
+  if (code && isIos) { location.replace(APP_STORE); }
+  else if (code && isAndroid) {
+    location.replace('intent://g/' + code + '#Intent;scheme=rally;package=app.rallyrating;S.browser_fallback_url=' + encodeURIComponent(PLAY_STORE) + ';end');
+  }
+
+  if (!code) { show(null); return; }
+  rpc('group_link_preview', { p_code: code }).then(function (r) { return r.ok ? r.json() : null; })
+    .then(function (g) { show(g || null); })
+    .catch(function () { show(null); });
+})();
+</script>
+</body>
+</html>
