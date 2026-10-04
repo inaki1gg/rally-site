@@ -63,6 +63,10 @@
     {
       "source": "/g/:code",
       "destination": "/g.html"
+    },
+    {
+      "source": "/f/:code",
+      "destination": "/f.html"
     }
   ],
   "headers": [
@@ -90,6 +94,19 @@
     },
     {
       "source": "/m/:code",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "no-referrer"
+        }
+      ]
+    },
+    {
+      "source": "/f/:code",
       "headers": [
         {
           "key": "X-Robots-Tag",

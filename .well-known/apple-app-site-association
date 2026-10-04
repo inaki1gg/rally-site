@@ -5,7 +5,8 @@
         "appIDs": ["K5P2CMP69M.app.rallyrating"],
         "components": [
           { "/": "/m/*", "comment": "A match logged with someone who isn't on Rally yet" },
-          { "/": "/g/*", "comment": "A group someone was invited to" }
+          { "/": "/g/*", "comment": "A group someone was invited to" },
+          { "/": "/f/*", "comment": "A friend's link from Share your link" }
         ]
       }
     ]
