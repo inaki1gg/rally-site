@@ -22,3 +22,7 @@ This site's apply form and the app itself write to the same database. The same t
 
 - Whether pushes from Sascha's own account actually go live yet, or whether the site still only deploys from Iñaki's old commits.
 - The Spanish privacy page was out of date against the English one, and the sign-up form's consent checkbox linked to that outdated page.
+
+## The homepage (since 6 October 2026)
+
+`index.html` is the homepage; the old `/home` forwards to `/`. It loads nothing from other companies' servers: the font comes from `/fonts`, the QR code is a static file, app screens and logos live in `assets/home` and `assets/brand`. The "On Android? Tell us" box writes to the shared database through `join_android_waitlist()` (migration 113 in the app repo); visitors can add an email and nothing else. `/get` sends iPhones to the App Store and Android phones to the homepage's download section.

@@ -1,9 +1,29 @@
 {
-  "rewrites": [
+  "redirects": [
     {
       "source": "/home",
-      "destination": "/home.html"
+      "destination": "/",
+      "permanent": true
     },
+    {
+      "source": "/get",
+      "has": [
+        {
+          "type": "header",
+          "key": "user-agent",
+          "value": "(?i).*android.*"
+        }
+      ],
+      "destination": "/#get",
+      "permanent": false
+    },
+    {
+      "source": "/get",
+      "destination": "https://apps.apple.com/app/id6780019919",
+      "permanent": false
+    }
+  ],
+  "rewrites": [
     {
       "source": "/privacy",
       "destination": "/privacy.html"

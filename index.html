@@ -1,148 +1,1033 @@
 <!DOCTYPE html>
-<html lang="es"><head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RALLY — Know your game</title>
-<meta name="description" content="RALLY. El lunes 7 de septiembre a las 21:00.">
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#050505">
+<title>RALLY. Your real padel level.</title>
+<meta name="description" content="The padel rating for Madrid. Every match confirmed by the other pair. Rally's first league: three weeks, two sides, the best get invited to play the Cup.">
+<link rel="canonical" href="https://www.rallyrating.app/">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<meta property="og:title" content="RALLY — Know your game">
-<meta property="og:description" content="El lunes 7 de septiembre a las 21:00.">
-<meta property="og:url" content="https://www.rallyrating.app/">
+<meta property="og:type" content="website">
 <meta property="og:site_name" content="Rally">
-
+<meta property="og:url" content="https://www.rallyrating.app/">
+<meta property="og:title" content="RALLY. Your real padel level.">
+<meta property="og:description" content="Every match confirmed by the other pair. Rally's first league opens 10 October.">
+<meta property="og:image" content="https://www.rallyrating.app/assets/home/share.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="apple-itunes-app" content="app-id=6780019919">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/montserrat-latin-variable.woff2">
+<link rel="preload" as="image" href="/assets/home/s1.jpg">
 <style>
-/* Montserrat, self-hosted. Latin only — this page carries no other script.
-   Same files the full homepage uses; see /home.html for the complete face set. */
-@font-face{font-family:'Montserrat';font-style:normal;font-weight:400;font-display:swap;
-  src:url("/fonts/montserrat-latin-400-normal.woff2") format('woff2');
-  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
-@font-face{font-family:'Montserrat';font-style:normal;font-weight:700;font-display:swap;
-  src:url("/fonts/montserrat-latin-700-normal.woff2") format('woff2');
-  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
-@font-face{font-family:'Montserrat';font-style:normal;font-weight:900;font-display:swap;
-  src:url("/fonts/montserrat-latin-900-normal.woff2") format('woff2');
-  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+/* Montserrat, self-hosted: nothing on this page loads from another company's servers */
+@font-face{font-family:'Montserrat';font-style:normal;font-weight:100 900;font-display:swap;src:url("/fonts/montserrat-latin-variable.woff2") format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'Montserrat';font-style:normal;font-weight:100 900;font-display:swap;src:url("/fonts/montserrat-latin-ext-variable.woff2") format("woff2");unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
 
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{--field:#0D0D0D;--acid:#CCFF00;--white:#FFFFFF;--soft:#F2F2F0;--dim:#6B6B6B}
-html{-webkit-text-size-adjust:100%}
-body{
-  background:var(--field);color:var(--white);
-  font-family:'Montserrat',system-ui,sans-serif;
-  min-height:100svh;display:flex;flex-direction:column;justify-content:space-between;
-  padding:clamp(28px,5vw,56px) clamp(24px,6vw,72px);
-  position:relative;overflow-x:hidden;
+/* Layout: one dark page in Apple product-page rhythm. Pinned scroll scenes alternate with open sections; the number is always the biggest thing. */
+:root{
+  --bg:#050505; --bg2:#0C0C0C; --card:#141414; --card2:#1B1B1B; --line:#232323; --line2:#333331;
+  --white:#FFFFFF; --ink:#F2F2F0; --soft:#C4C4BF; --mute:#86868B; --dim:#56564F;
+  --acid:#CCFF00; --loss:#FF453A; --eu:#3546E6; --la:#E3348F;
+  --font:'Montserrat','Helvetica Neue',Arial,sans-serif;
+  --ease:cubic-bezier(.2,.9,.25,1);
+  --ease-out:cubic-bezier(.16,1,.3,1);
+  color-scheme:dark;
 }
-/* the field: one faint radial lift — the same ellipse the film and the reels carry */
-body::before{content:"";position:absolute;inset:0;pointer-events:none;
-  background:radial-gradient(ellipse 60% 45% at 50% 48%,rgba(255,255,255,.028),rgba(255,255,255,0) 70%)}
-body>*{position:relative}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;background:var(--bg)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:clip}
+h1,h2,h3,p,figure{margin:0}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+:focus-visible{outline:2px solid var(--acid);outline-offset:3px;border-radius:8px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.in{max-width:1200px;margin:0 auto;padding-inline:clamp(20px,5vw,56px)}
+.acid{color:var(--acid)}
+.eyebrow{font-weight:700;font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--mute)}
+.display{font-weight:900;letter-spacing:-.045em;line-height:.92;color:var(--white);text-wrap:balance}
+.lead{font-weight:600;font-size:clamp(19px,1.9vw,24px);line-height:1.38;color:var(--soft);letter-spacing:-.01em}
+.lead b{color:var(--white);font-weight:700}
 
-.mark{font-weight:900;font-size:clamp(20px,2.6vw,28px);letter-spacing:-.02em;line-height:1;
-  color:var(--white);text-decoration:none;display:inline-block}
-.mark span{color:var(--acid)}
+/* ── nav ─────────────────────────────────── */
+.nav{position:fixed;inset:0 0 auto;z-index:100;padding-top:env(safe-area-inset-top,0px);
+  background:rgba(5,5,5,.72);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);
+  border-bottom:1px solid rgba(255,255,255,.06);transition:background .3s}
+.nav .in{display:flex;align-items:center;gap:28px;height:52px}
+.wm{font-weight:900;font-size:20px;letter-spacing:-.02em;color:var(--white)}
+.nav-links{display:flex;gap:26px;margin-left:auto}
+.nav-links a{font-size:12.5px;font-weight:600;color:var(--soft);transition:color .2s}
+.nav-links a:hover{color:var(--white)}
+.lang{display:inline-flex;background:rgba(255,255,255,.06);border-radius:99px;padding:2px}
+.lang button{font-size:11px;font-weight:800;letter-spacing:.08em;color:var(--mute);padding:4px 9px;border-radius:99px;transition:color .2s,background .2s}
+.lang button[aria-pressed="true"]{background:rgba(255,255,255,.14);color:var(--white)}
+.nav-cta{font-size:12.5px;font-weight:700;background:var(--white);color:#000;border-radius:99px;padding:6px 14px;transition:transform .12s ease-out}
+.nav-cta:active{transform:scale(.96)}
+@media (max-width:760px){.nav-links{display:none}.lang{margin-left:auto}}
 
-main{padding:clamp(40px,7vw,80px) 0}
-.kicker{font-weight:700;font-size:clamp(11px,1.5vw,15px);letter-spacing:.12em;color:var(--dim);
-  margin-bottom:clamp(20px,3vw,34px)}
-.grid{display:grid;grid-template-columns:repeat(2,minmax(0,auto));justify-content:start;
-  column-gap:clamp(36px,7vw,96px);row-gap:clamp(20px,3.4vw,40px)}
-@media (min-width:900px){.grid{grid-template-columns:repeat(4,minmax(0,auto))}}
-.num{font-weight:900;font-size:clamp(64px,15vw,150px);line-height:.9;letter-spacing:-.025em;
-  display:flex;min-height:1em}
-.label{font-weight:700;font-size:clamp(11px,1.5vw,15px);letter-spacing:.12em;color:var(--dim);
-  margin-top:clamp(10px,1.4vw,18px)}
-/* the seconds are the live unit — acid means alive, and it is the only acid role in the frame */
-.unit-s .num{color:var(--acid)}
+/* ── buttons ─────────────────────────────── */
+.btns{display:flex;flex-wrap:wrap;gap:12px;justify-content:center}
+.btn{display:inline-flex;align-items:center;gap:10px;height:54px;padding:0 26px;border-radius:99px;font-weight:700;font-size:16px;white-space:nowrap;
+  transition:transform .12s ease-out,background .2s,box-shadow .2s}
+.btn:active{transform:scale(.97)}
+.btn svg{width:19px;height:19px;flex:none}
+.btn.w{background:var(--white);color:#000}
+.btn.w:hover{background:#E8E8E3}
+.btn.g{color:var(--white);box-shadow:inset 0 0 0 1.5px var(--line2)}
+.btn.g:hover{box-shadow:inset 0 0 0 1.5px #5A5A55}
+.link{font-weight:700;font-size:17px;color:var(--white);display:inline-flex;align-items:center;gap:6px}
+.link::after{content:"›";font-size:22px;line-height:1;transform:translateY(-1px);transition:transform .25s var(--ease)}
+.link:hover::after{transform:translate(3px,-1px)}
+.wait{display:none;justify-content:center;gap:8px;margin-top:14px;flex-wrap:wrap}
+.wait.on{display:flex}
+.wait input{width:min(280px,100%);height:50px;border-radius:99px;border:1.5px solid var(--line2);background:var(--card);color:var(--white);padding:0 20px;font:inherit;font-size:15px}
+.wait input::placeholder{color:#6E6E68}
+.wait .ok{color:var(--soft);font-size:15px;font-weight:600;padding:12px 0}
 
-/* a digit that changes drops into place. Squash, not blur: an isotropic blur on the acid
-   would read as a glow, which the brand bans on letterforms. */
-.digit{display:inline-block;transform-origin:50% 0}
-.digit.tick{animation:flip .16s cubic-bezier(.22,1,.36,1) both}
-@keyframes flip{from{transform:translateY(-.16em) scaleY(.66)}to{transform:none}}
-@media (prefers-reduced-motion:reduce){.digit.tick{animation:none}}
+/* ── the phone ───────────────────────────── */
+.phone{position:relative;width:var(--pw,320px);aspect-ratio:620/1283;border-radius:calc(var(--pw,320px)*.165);padding:calc(var(--pw,320px)*.032);
+  background:linear-gradient(145deg,#3A3A3A 0%,#1A1A1A 18%,#0E0E0E 50%,#1C1C1C 82%,#3C3C3C 100%);
+  box-shadow:0 0 0 1px rgba(255,255,255,.08) inset,0 50px 100px -20px rgba(0,0,0,.8),0 30px 60px -30px rgba(0,0,0,.9)}
+.phone::before{content:"";position:absolute;inset:calc(var(--pw,320px)*.012);border-radius:calc(var(--pw,320px)*.152);background:#000}
+.phone img{position:relative;width:100%;height:100%;object-fit:cover;object-position:top;border-radius:calc(var(--pw,320px)*.135);-webkit-user-drag:none;user-select:none}
+.phone::after{content:"";position:absolute;inset:calc(var(--pw,320px)*.032);border-radius:calc(var(--pw,320px)*.135);pointer-events:none;
+  background:linear-gradient(115deg,rgba(255,255,255,.10) 0%,rgba(255,255,255,0) 32%)}
+.phone .btn-side{position:absolute;right:-2px;top:26%;width:3px;height:12%;border-radius:2px;background:#2A2A2A}
 
-.line{margin-top:clamp(34px,5vw,64px);max-width:34ch}
-.line p{font-weight:700;font-size:clamp(17px,2.2vw,26px);line-height:1.25;letter-spacing:-.01em;color:var(--soft)}
-.line p+p{margin-top:6px;color:var(--dim);font-weight:400;font-size:clamp(14px,1.7vw,19px)}
+/* ── 01 hero ─────────────────────────────── */
+.hero{position:relative;padding-top:calc(52px + clamp(56px,9vh,110px));text-align:center;overflow:hidden;overflow:clip}
+.hero::before{content:"";position:absolute;left:50%;top:38%;width:min(1100px,140vw);aspect-ratio:1.6;transform:translate(-50%,0);pointer-events:none;
+  background:radial-gradient(closest-side,rgba(204,255,0,.10),rgba(204,255,0,.03) 55%,transparent 75%)}
+.hero .eyebrow{position:relative}
+.hero h1{position:relative;font-size:clamp(56px,10.5vw,152px);margin-top:18px}
+.line{display:block;overflow:hidden;padding-bottom:.06em;margin-bottom:-.06em}
+.line > span{display:inline-block}
+.hero .lead{position:relative;margin:26px auto 0;max-width:36ch}
+.hero .btns{position:relative;margin-top:36px}
+.hero-stage{position:relative;margin-top:clamp(56px,8vh,96px);perspective:1400px;height:clamp(420px,62vw,700px)}
+.hero-phone{--pw:clamp(260px,30vw,360px);margin:0 auto;transform-origin:50% 0;transform:rotateX(var(--rx,24deg)) translateY(var(--ty,0px));will-change:transform}
+.hero-fade{position:absolute;inset:auto 0 0;height:40%;background:linear-gradient(transparent,var(--bg));pointer-events:none}
+.js .rise{animation:rise 1.1s var(--ease-out) both;animation-delay:var(--d,0s)}
+@keyframes rise{from{transform:translateY(105%)}to{transform:none}}
+.js .fadeup{animation:fadeup 1s var(--ease-out) both;animation-delay:var(--d,0s)}
+@keyframes fadeup{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+.js .phone-in{animation:phonein 1.4s var(--ease-out) .35s both}
+@keyframes phonein{from{opacity:0;translate:0 120px}to{opacity:1;translate:0 0}}
 
-footer.site{font-size:13px;color:var(--dim);line-height:1.9}
-footer.site .links{display:flex;flex-wrap:wrap;gap:0 22px;margin-bottom:6px}
-footer.site a{color:var(--dim);text-decoration:none}
-footer.site a:hover{color:var(--soft)}
+/* ── 02 the confirmation (pinned, scrubbed) ─ */
+.conf{position:relative;height:300vh}
+.pin{position:sticky;top:0;height:100vh;height:100svh;display:grid;place-items:center;overflow:hidden}
+.conf-in{text-align:center;width:100%}
+.conf .eyebrow{transition:opacity .5s}
+.conf-msg{height:1.5em;margin-top:10px;font-weight:700;font-size:clamp(17px,1.8vw,22px);color:var(--soft);position:relative}
+.conf-msg span{position:absolute;inset:0;transition:opacity .45s,transform .6s var(--ease)}
+.conf-msg span:not(.on){opacity:0;transform:translateY(10px)}
+.big{font-weight:900;font-size:clamp(150px,31vw,460px);line-height:.86;letter-spacing:-.055em;font-variant-numeric:tabular-nums;margin:clamp(14px,3vh,34px) 0 0;
+  color:var(--bg);-webkit-text-stroke:clamp(2px,.35vw,4px) rgba(255,255,255,.34);paint-order:stroke fill;transform:scale(var(--bs,1));transition:color .01s}
+.big.on{color:var(--acid);-webkit-text-stroke:0 transparent;animation:lock .7s var(--ease) both}
+@keyframes lock{from{transform:scale(1.05)}to{transform:scale(1)}}
+.delta{height:34px;margin-top:6px;font-weight:800;font-size:clamp(20px,2vw,26px);color:var(--acid);transition:opacity .4s,transform .6s var(--ease)}
+.delta:not(.on){opacity:0;transform:translateY(8px)}
+.delta small{font-weight:600;color:var(--mute);font-size:.7em;margin-left:8px}
+.pairs{display:flex;justify-content:center;align-items:center;gap:clamp(14px,3.4vw,48px);margin-top:clamp(24px,5vh,56px)}
+.pair{display:grid;justify-items:center;gap:16px}
+.pair-l{font-size:11px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--mute);transition:color .4s}
+.pairs.waiting .them .pair-l{color:var(--white)}
+.pair-r{display:flex;gap:clamp(6px,1.6vw,20px)}
+.vsm{width:40px;height:40px;border-radius:50%;background:var(--card2);display:grid;place-items:center;font-size:11px;font-weight:800;color:var(--soft);margin-top:28px}
+.p4.mate .av::after{border:1.5px solid #3A3A38}
+.pairs.done [data-c2] .av::after{border:1.5px solid #3A3A38}
+.p4{display:grid;justify-items:center;gap:10px;width:84px}
+.av{position:relative;width:56px;height:56px;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:15px;color:#0B0B0B}
+.av::after{content:"";position:absolute;inset:-6px;border-radius:50%;border:1.5px dashed #464642;transition:border-color .3s,transform .6s var(--ease)}
+.p4.ok .av::after{border:1.5px solid var(--acid);transform:scale(1.05)}
+.tick{position:absolute;right:-5px;bottom:-5px;width:22px;height:22px;border-radius:50%;background:var(--acid);display:grid;place-items:center;transform:scale(0);transition:transform .5s var(--ease)}
+.tick svg{width:12px;height:12px}
+.p4.ok .tick{transform:scale(1)}
+.p4 b{font-size:13px;font-weight:700;color:var(--ink);line-height:1.1}
+.p4 em{font-style:normal;font-size:11.5px;color:var(--mute);margin-top:-6px}
+.score{display:inline-flex;gap:14px;align-items:center;margin-top:clamp(20px,4vh,40px);font-size:14px;font-weight:600;color:var(--mute);
+  background:var(--card);border:1px solid var(--line);border-radius:99px;padding:9px 18px}
+.score b{color:var(--white);font-weight:800;font-variant-numeric:tabular-nums}
+
+/* ── 03 story (pinned phone) ─────────────── */
+.sec{position:relative;padding-block:clamp(96px,14vh,170px)}
+.sec-head{text-align:center;max-width:900px;margin:0 auto}
+.sec-head h2{font-size:clamp(46px,7.5vw,104px);margin-top:16px}
+.sec-head .lead{margin:24px auto 0;max-width:36ch}
+.story{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:40px;margin-top:clamp(40px,8vh,90px)}
+.story-steps{display:grid}
+.step{min-height:82vh;display:flex;flex-direction:column;justify-content:center;max-width:440px;opacity:.28;transition:opacity .5s}
+.step.on{opacity:1}
+.step .n{font-weight:900;font-size:15px;letter-spacing:.1em;color:var(--mute)}
+.step h3{font-weight:900;font-size:clamp(38px,4.6vw,64px);line-height:.95;letter-spacing:-.04em;color:var(--white);margin-top:14px;text-wrap:balance}
+.step p{font-size:18px;color:var(--soft);margin-top:18px;font-weight:500;max-width:34ch}
+.step .ph-inline{display:none}
+.story-phone{position:sticky;top:calc(50vh - var(--pw)*1.035);height:max-content;justify-self:center;--pw:clamp(260px,24vw,320px)}
+.stack{position:relative}
+.stack .phone + .phone{position:absolute;inset:0}
+.stack .phone{transition:opacity .6s,transform .8s var(--ease)}
+.stack .phone:not(.on){opacity:0;transform:scale(.96) translateY(16px)}
+@media (max-width:860px){
+  .story{grid-template-columns:1fr}
+  .story-phone{display:none}
+  .step{min-height:0;opacity:1;padding-block:44px;max-width:none;align-items:center;text-align:center}
+  .step p{margin-inline:auto}
+  .step .ph-inline{display:block;--pw:min(260px,70vw);margin-top:36px}
+}
+
+/* ── 04 league (pinned collide) ──────────── */
+.league{position:relative;height:260vh}
+.lg-pin{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;display:flex}
+.half{position:relative;flex:1;display:flex;align-items:center;padding:0 clamp(20px,5vw,72px);will-change:transform}
+.half.eu{background:radial-gradient(120% 90% at 0% 30%,#4D5DFF 0%,var(--eu) 22%,#1A2080 50%,rgba(7,8,26,0) 100%);justify-content:flex-start;transform:translateX(calc(var(--lx,-100) * 1%))}
+.half.la{background:radial-gradient(120% 90% at 100% 70%,#FF5AAE 0%,var(--la) 22%,#7A1250 50%,rgba(22,6,15,0) 100%);justify-content:flex-end;text-align:right;transform:translateX(calc(var(--lx,-100) * -1%))}
+.half .nm{font-weight:900;font-size:clamp(46px,8.6vw,136px);line-height:.88;letter-spacing:-.05em;color:#fff}
+.half .pick{display:inline-flex;margin-top:28px;font-weight:800;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:#fff;background:rgba(255,255,255,.16);
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-radius:99px;padding:12px 20px;transition:background .2s,color .2s,transform .12s;opacity:var(--po,0)}
+.half .pick:hover{background:#fff;color:#000}
+.half .pick:active{transform:scale(.97)}
+.vs{position:absolute;left:50%;top:50%;z-index:3;width:clamp(64px,7vw,92px);aspect-ratio:1;border-radius:50%;background:#000;display:grid;place-items:center;
+  font-weight:900;font-size:clamp(17px,1.7vw,22px);color:#fff;transform:translate(-50%,-50%) scale(var(--vs,0));box-shadow:0 0 0 10px rgba(0,0,0,.25)}
+.lg-top{position:absolute;inset:clamp(76px,12vh,120px) 0 auto;z-index:4;text-align:center;opacity:var(--to,0);transform:translateY(calc((1 - var(--to,0)) * 20px));pointer-events:none}
+.lg-top h2{font-size:clamp(40px,6vw,84px)}
+.lg-top .eyebrow{color:rgba(255,255,255,.75)}
+@media (max-width:700px){
+  .lg-pin{flex-direction:column}
+  .half.eu{transform:translateY(calc(var(--lx,-100) * 1%));align-items:flex-end;padding-bottom:56px}
+  .half.la{transform:translateY(calc(var(--lx,-100) * -1%));align-items:flex-start;padding-top:56px}
+  .half .nm{font-size:clamp(44px,14vw,80px)}
+  .lg-top{inset:auto 0 auto;top:50%;transform:translateY(-50%)}
+  .lg-top h2{display:none}
+  .vs{display:none}
+}
+.lg-after{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) auto;gap:16px;align-items:stretch;margin-top:clamp(-120px,-10vh,-60px);position:relative;z-index:2}
+@media (max-width:980px){.lg-after{grid-template-columns:1fr}}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:28px;padding:clamp(22px,2.6vw,34px)}
+.panel .eyebrow{font-size:11.5px}
+.sides{display:flex;justify-content:space-between;align-items:flex-end;margin-top:22px}
+.sides div span{display:flex;align-items:center;gap:8px;font-size:11.5px;font-weight:800;letter-spacing:.14em;color:var(--soft)}
+.sides div span i{width:9px;height:9px;border-radius:2px}
+.sides b{display:block;font-weight:900;font-size:clamp(52px,5.4vw,76px);line-height:1;letter-spacing:-.045em;color:var(--white);margin-top:8px;font-variant-numeric:tabular-nums}
+.sides .r{text-align:right}.sides .r span{justify-content:flex-end}
+.bar{display:flex;gap:5px;height:9px;margin-top:22px}
+.bar i{border-radius:99px;transform-origin:left;transition:transform 1.2s var(--ease-out)}
+.bar .e{flex:8.1;background:var(--eu)}.bar .l{flex:10.5;background:var(--la);transform-origin:right}
+.rv.pre .bar i{transform:scaleX(0)}
+.panel p.s{font-size:14px;color:var(--mute);margin-top:14px}
+.opens{display:flex;flex-direction:column;justify-content:space-between;gap:24px}
+.opens .o{font-weight:900;font-size:clamp(44px,4.6vw,66px);line-height:.95;letter-spacing:-.045em;color:var(--white)}
+.opens p{color:var(--soft);font-weight:500}
+.lg-phone{--pw:200px;align-self:center;justify-self:center}
+@media (max-width:980px){.lg-phone{display:none}}
+
+/* ── 05 bento ────────────────────────────── */
+.bento{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));grid-auto-rows:minmax(150px,auto);gap:16px;margin-top:clamp(48px,8vh,80px)}
+.t{position:relative;background:var(--card);border:1px solid var(--line);border-radius:30px;padding:clamp(22px,2.4vw,32px);overflow:hidden;min-width:0}
+.t .eyebrow{font-size:11.5px}
+.t h3{font-weight:800;font-size:clamp(22px,2vw,28px);line-height:1.12;letter-spacing:-.025em;color:var(--white);text-wrap:balance}
+.t p{color:var(--soft);font-size:15px;margin-top:8px;font-weight:500}
+.t-rating{grid-column:span 4;grid-row:span 2;display:flex;flex-direction:column;border:1.5px solid rgba(204,255,0,.5);box-shadow:0 0 7px rgba(204,255,0,.3),inset 0 0 0 4px rgba(204,255,0,.05)}
+.t-rating .top{display:flex;justify-content:space-between;align-items:center}
+.chip{font-size:11px;font-weight:800;letter-spacing:.14em;color:var(--mute);border:1px solid var(--line2);border-radius:99px;padding:5px 11px}
+.t-rating .num{font-weight:900;font-size:clamp(110px,15vw,210px);line-height:.9;letter-spacing:-.055em;color:var(--acid);text-align:center;margin:auto 0 0;padding-top:20px;font-variant-numeric:tabular-nums}
+.t-rating .meta{text-align:center;font-weight:600;color:var(--mute);margin-top:12px}
+.t-rating .meta b{color:var(--acid);font-weight:800}
+.ladder{margin-top:30px}
+.ladder .tr{position:relative;height:5px;border-radius:99px;background:#2A2A28}
+.ladder .fill{position:absolute;inset:0 auto 0 0;width:29%;border-radius:99px;background:var(--acid);transform-origin:left;transition:transform 1.4s var(--ease-out) .2s}
+.ladder .dot{position:absolute;left:29%;top:50%;width:15px;height:15px;border-radius:50%;background:#0B0B0B;border:3px solid var(--acid);transform:translate(-50%,-50%)}
+.rv.pre .ladder .fill{transform:scaleX(0)}
+.ladder .lbl{display:flex;justify-content:space-between;font-size:13px;font-weight:600;color:var(--dim);margin-top:12px}
+.ladder .lbl b{color:var(--white)}
+.t-stat{grid-column:span 2;display:flex;flex-direction:column;justify-content:space-between}
+.t-stat .v{font-weight:900;font-size:clamp(56px,5.6vw,84px);line-height:.9;letter-spacing:-.05em;color:var(--white);font-variant-numeric:tabular-nums}
+.t-stat .v small{font-size:.42em;letter-spacing:0;margin-left:2px}
+.t-stat .v .dash{color:var(--dim)}
+.t-social{grid-column:span 3;grid-row:span 2}
+.rows{display:grid;gap:8px;margin-top:22px}
+.row{display:grid;grid-template-columns:22px 34px minmax(0,1fr) auto 64px;gap:12px;align-items:center;background:var(--card2);border-radius:16px;padding:10px 14px}
+.row .k{font-weight:800;color:var(--soft);font-size:15px}
+.row .a{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-size:11.5px;font-weight:800;color:#0B0B0B}
+.row .nm{font-weight:600;color:var(--white);font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.row .rt{font-weight:800;color:var(--white);font-variant-numeric:tabular-nums}
+.row .d{justify-self:end;font-size:12.5px;font-weight:800;border-radius:8px;padding:3px 8px;font-variant-numeric:tabular-nums}
+.d.up{color:var(--acid);background:rgba(204,255,0,.1)}
+.d.dn{color:var(--loss);background:rgba(255,69,58,.12)}
+.row.me{box-shadow:inset 0 0 0 1px var(--line2)}
+.rival{font-size:9.5px;font-weight:800;letter-spacing:.1em;border:1px solid #555;border-radius:5px;padding:1px 5px;margin-left:6px;color:var(--soft);vertical-align:2px}
+.t-four{grid-column:span 3;display:flex;flex-direction:column;justify-content:space-between;gap:22px}
+.avs{display:flex}
+.avs span{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:13px;color:#0B0B0B;border:3px solid var(--card);margin-left:-12px}
+.avs span:first-child{margin-left:0}
+.avs .vsx{width:auto;height:48px;border:0;background:none;color:var(--mute);font-size:12px;font-weight:800;margin:0 14px;letter-spacing:.08em}
+.avs .vsx + span{margin-left:0}
+.slot{display:flex;align-items:center;gap:14px;background:var(--card2);border-radius:18px;padding:12px 14px}
+.cal{width:46px;height:50px;border-radius:11px;background:#EDEDEA;color:#0B0B0B;display:grid;place-items:center;align-content:center;line-height:1}
+.cal small{font-size:10px;font-weight:800;color:#6B6B6B}
+.cal b{font-size:20px;font-weight:900}
+.slot .tm{font-weight:900;font-size:22px;color:var(--white);letter-spacing:-.02em}
+.slot .cl{font-size:13.5px;color:var(--mute);font-weight:500}
+.slot .go{margin-left:auto;font-size:13px;font-weight:700;color:#0B0B0B;background:var(--white);border-radius:99px;padding:7px 14px}
+.t-six{grid-column:span 3}
+.segs{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;margin-top:22px}
+.segs i{height:8px;border-radius:99px;background:#2A2A28;transition:background .4s}
+.segs i.f{background:var(--white)}
+.t-free{grid-column:span 6;display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap;background:linear-gradient(180deg,var(--card),#101010)}
+.t-free .v{margin:0!important;padding:0!important;font-size:clamp(64px,9vw,132px)!important}
+.t-free .fr{max-width:30ch}
+.t-free .fr p{font-size:clamp(17px,1.6vw,21px);color:var(--soft);font-weight:600;margin-top:10px}
+.t-free .v{font-weight:900;font-size:clamp(54px,5.4vw,80px);line-height:.9;letter-spacing:-.05em;color:var(--white)}
+@media (max-width:980px){
+  .bento{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .t-rating,.t-social,.t-four,.t-six,.t-free{grid-column:span 2}
+  .t-stat{grid-column:span 1}
+  .t-rating,.t-social{grid-row:auto}
+}
+@media (max-width:420px){.row{grid-template-columns:18px 30px minmax(0,1fr) auto;padding:10px 12px}.row .d{display:none}}
+
+/* ── 06 words ────────────────────────────── */
+.words{font-weight:800;font-size:clamp(34px,5vw,72px);line-height:1.08;letter-spacing:-.035em;max-width:17ch;text-wrap:pretty}
+.words .w{color:#2E2E2C;transition:color .35s}
+.words .w.lit{color:var(--white)}
+.words .w.lit.a{color:var(--acid)}
+.words-wrap{display:grid;justify-items:start}
+.words-note{margin-top:40px;color:var(--mute);font-size:15px;font-weight:500;max-width:52ch}
+
+/* ── 07 gallery ──────────────────────────── */
+.gal-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap}
+.gal-head h2{font-size:clamp(44px,6.4vw,88px)}
+.ctrl{display:flex;gap:10px}
+.arrow{width:46px;height:46px;border-radius:50%;background:rgba(255,255,255,.08);display:grid;place-items:center;transition:background .2s,transform .12s}
+.arrow:hover{background:rgba(255,255,255,.14)}
+.arrow:active{transform:scale(.93)}
+.arrow:disabled{opacity:.35;cursor:default}
+.arrow svg{width:18px;height:18px}
+.car{margin-top:48px;overflow:hidden;overflow:clip;touch-action:pan-y;cursor:grab;user-select:none;-webkit-user-select:none}
+.car.drag{cursor:grabbing}
+.track{display:flex;gap:clamp(18px,2.4vw,32px);padding-inline:max(clamp(20px,5vw,56px),calc((100vw - 1200px)/2 + 56px));will-change:transform}
+.slide{flex:none;width:clamp(280px,30vw,380px);background:var(--card);border:1px solid var(--line);border-radius:30px;padding:28px 28px 0;overflow:hidden;display:flex;flex-direction:column}
+.slide h3{font-weight:800;font-size:22px;line-height:1.15;letter-spacing:-.02em;color:var(--white)}
+.slide p{color:var(--mute);font-size:14.5px;margin-top:6px;font-weight:500;min-height:2.9em}
+.slide .phone{--pw:min(250px,62vw);margin:28px auto -110px}
+.gdots{display:flex;justify-content:center;gap:8px;margin-top:36px}
+.gdots button{width:8px;height:8px;border-radius:99px;background:#3A3A38;transition:width .45s var(--ease),background .2s}
+.gdots button[aria-current="true"]{width:26px;background:var(--white)}
+
+/* ── 08 close ────────────────────────────── */
+.close{text-align:center;position:relative;overflow:hidden;overflow:clip}
+.close::before{content:"";position:absolute;left:50%;bottom:-40%;width:min(1000px,130vw);aspect-ratio:1.4;transform:translateX(-50%);pointer-events:none;
+  background:radial-gradient(closest-side,rgba(204,255,0,.09),transparent 72%)}
+.close h2{position:relative;font-size:clamp(56px,10vw,150px)}
+.close h2 .o{color:var(--bg);-webkit-text-stroke:clamp(1.5px,.22vw,3px) var(--white);paint-order:stroke fill}
+.close .lead{position:relative;margin:26px auto 0;max-width:30ch}
+.close .btns{position:relative;margin-top:36px}
+.close-stage{position:relative;display:flex;justify-content:center;align-items:flex-end;gap:clamp(16px,3vw,40px);margin-top:clamp(56px,8vh,96px);height:clamp(300px,36vw,460px);overflow:hidden}
+.close-stage .phone{flex:none}
+.close-stage .c{--pw:clamp(240px,24vw,320px);transform:translateY(var(--cy,40px))}
+.close-stage .s{--pw:clamp(190px,19vw,250px);opacity:.55;transform:translateY(calc(var(--cy,40px) + 70px))}
+@media (max-width:640px){.close-stage .s{display:none}}
+.qr{position:relative;margin:44px auto 0;width:max-content;z-index:3;display:flex;gap:14px;align-items:center;background:rgba(20,20,20,.75);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  border:1px solid var(--line);border-radius:22px;padding:12px 18px 12px 12px;text-align:left}
+.qr #qr{width:92px;height:92px;background:#fff;border-radius:12px;padding:7px;flex:none}
+
+.qr p{font-size:13px;color:var(--soft);line-height:1.4;max-width:15ch;font-weight:500}
+.qr p b{display:block;color:var(--white);font-size:15px;margin-bottom:3px}
+@media (max-width:1100px){.qr{display:none!important}}
+
+/* ── footer ──────────────────────────────── */
+footer{border-top:1px solid var(--line);background:var(--bg2);padding-block:36px 48px;font-size:12.5px;color:var(--mute)}
+.f-top{display:flex;justify-content:space-between;flex-wrap:wrap;gap:20px;padding-bottom:22px;border-bottom:1px solid var(--line)}
+.f-top .wm{font-size:22px}
+.f-top p{max-width:44ch;line-height:1.6}
+.f-bot{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px 24px;padding-top:20px}
+.f-bot nav{display:flex;flex-wrap:wrap;gap:6px 22px}
+.f-bot a{color:var(--soft)}
+.f-bot a:hover{color:var(--white)}
+
+
+@media (max-width:600px){
+  .big{font-size:27vw}
+  .four{gap:6px}
+  .p4{width:62px}
+  .pairs{gap:8px}
+  .vsm{width:30px;height:30px;font-size:10px}
+  .pair-l{font-size:9.5px;letter-spacing:.12em}
+  .av{width:44px;height:44px;font-size:12px}
+  .t-stat .v{font-size:clamp(40px,12vw,84px);white-space:nowrap}
+}
+.lead{text-wrap:balance}
+
+/* hero league pill */
+.news{position:relative;display:inline-flex;align-items:center;gap:10px;font-size:13.5px;font-weight:600;color:var(--soft);background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.08);border-radius:99px;padding:8px 14px 8px 12px;transition:background .2s}
+.news:hover{background:rgba(255,255,255,.1)}
+.news .dot{width:8px;height:8px;border-radius:50%;background:linear-gradient(90deg,var(--eu) 50%,var(--la) 50%)}
+.news b{color:var(--white);font-weight:700}
+.news .chev{font-size:18px;line-height:1;color:var(--mute);transition:transform .25s var(--ease)}
+.news:hover .chev{transform:translateX(3px)}
+@media (max-width:420px){.news{font-size:12px;gap:7px}}
+.opens .join{margin-top:6px}
+.meta2{font-size:13px;color:var(--mute);margin-top:12px;font-weight:600}
+/* league sell */
+.lg-lead{max-width:900px;margin:clamp(96px,14vh,160px) auto 0;text-align:center}
+.lg-lead h2{font-size:clamp(40px,6vw,84px)}
+.lg-lead .lead{margin:24px auto 0;max-width:40ch}
+.pts-head{text-align:center;margin-top:clamp(64px,10vh,110px)}
+.pts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-top:24px}
+.pt{background:var(--card);border:1px solid var(--line);border-radius:28px;padding:28px 26px 26px}
+.pv{font-weight:900;font-size:clamp(64px,6.4vw,96px);line-height:.9;letter-spacing:-.05em;color:var(--white);font-variant-numeric:tabular-nums}
+.pv.neg{color:var(--loss)}
+.pt b{display:block;font-weight:800;font-size:19px;color:var(--white);margin-top:22px;letter-spacing:-.01em;line-height:1.2}
+.pt p{font-size:14.5px;color:var(--soft);margin-top:6px;font-weight:500}
+.pts-note{text-align:center;color:var(--mute);font-size:15px;font-weight:500;margin:22px auto 0;max-width:60ch}
+@media (max-width:900px){.pts{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:520px){.pts{gap:10px}.pt{padding:20px 18px;border-radius:22px}.pv{font-size:76px!important}.pt b{font-size:16.5px;margin-top:16px}.pt p{font-size:13.5px}}
+.join-steps{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.6fr);gap:40px;align-items:start;margin-top:clamp(80px,12vh,140px)}
+.js-head h3{font-size:clamp(38px,4.6vw,64px);margin-top:14px}
+.jsl{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.jsl li{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:24px}
+.jn{display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--white);color:#000;font-weight:900;font-size:15px}
+.jsl b{display:block;font-weight:800;font-size:20px;color:var(--white);margin-top:18px;letter-spacing:-.01em}
+.jsl p{font-size:15px;color:var(--soft);margin-top:6px;font-weight:500}
+@media (max-width:900px){.join-steps{grid-template-columns:1fr}}
+@media (max-width:520px){.jsl{grid-template-columns:1fr}}
+.cup{position:relative;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:32px;align-items:center;margin-top:clamp(80px,12vh,140px);
+  border-radius:36px;padding:clamp(28px,4.5vw,64px);overflow:hidden;isolation:isolate;
+  background:radial-gradient(90% 120% at 0% 0%,rgba(53,70,230,.55),transparent 60%),radial-gradient(90% 120% at 100% 100%,rgba(227,52,143,.5),transparent 60%),#0A0A0E;
+  border:1px solid rgba(255,255,255,.1)}
+.cup::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(115deg,rgba(255,255,255,.07),transparent 40%);pointer-events:none}
+.cup-t{font-weight:900;font-size:clamp(72px,10vw,150px);line-height:.84;letter-spacing:-.055em;color:var(--white);margin-top:16px}
+.cup .eyebrow{color:rgba(255,255,255,.7)}
+.cup-facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:32px}
+.cup-facts div{border-top:1px solid rgba(255,255,255,.18);padding-top:14px}
+.cup-facts b{display:block;font-weight:900;font-size:clamp(36px,3.6vw,52px);line-height:1;letter-spacing:-.04em;color:var(--white)}
+.cup-facts span{display:block;font-size:13px;color:rgba(255,255,255,.72);margin-top:6px;font-weight:600;line-height:1.35}
+.prize{display:flex;align-items:baseline;flex-wrap:wrap;gap:4px 12px;margin:30px 0 28px}
+.pz-k{font-weight:900;font-size:clamp(26px,2.6vw,36px);letter-spacing:-.03em;color:var(--white)}
+.pz-v{font-size:16px;color:rgba(255,255,255,.75);font-weight:600}
+.bracket{width:100%;max-width:380px;justify-self:center}
+.bracket path{stroke-dasharray:420;stroke-dashoffset:0;transition:stroke-dashoffset 1.6s var(--ease-out)}
+.cup.pre .bracket path{stroke-dashoffset:420}
+.trophy{transition:opacity .8s .9s,transform 1s .9s var(--ease)}
+.cup.pre .trophy{opacity:0}
+@media (max-width:900px){.cup{grid-template-columns:1fr}.bracket{max-width:300px;order:-1}}
+@media (max-width:420px){.cup-facts{grid-template-columns:1fr}}
+
+/* league chapter: its own colour world */
+.lg-world{position:relative;isolation:isolate;
+  background:linear-gradient(180deg,var(--bg) 0%,#090B20 14%,#0E0A24 45%,#170A1E 75%,#0B0610 92%,var(--bg) 100%)}
+.lg-world::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
+  background:radial-gradient(50% 30% at 10% 38%,rgba(53,70,230,.22),transparent 70%),radial-gradient(50% 30% at 90% 70%,rgba(227,52,143,.18),transparent 70%)}
+.lg-world .sec{background:transparent}
+.lg-world .panel,.lg-world .pt,.lg-world .jsl li{background:rgba(255,255,255,.045);border-color:rgba(255,255,255,.09);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+.lg-world .pt:nth-child(1){background:linear-gradient(160deg,rgba(53,70,230,.32),rgba(255,255,255,.03) 70%)}
+.lg-world .pt:nth-child(3){background:linear-gradient(160deg,rgba(227,52,143,.28),rgba(255,255,255,.03) 70%)}
+.lg-world .pt:nth-child(4){background:linear-gradient(160deg,rgba(255,69,58,.14),rgba(255,255,255,.03) 70%)}
+.lg-world .pv.acid{color:#FF7AC0}
+.lg-world .jn{background:linear-gradient(135deg,var(--eu),var(--la));color:#fff}
+.lg-world .eyebrow{color:rgba(255,255,255,.62)}
+/* timeline */
+.tl{position:relative;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px;margin-top:clamp(56px,9vh,96px)}
+.tl-line{position:absolute;left:0;right:0;top:7px;height:3px;border-radius:99px;background:rgba(255,255,255,.08);overflow:hidden}
+.tl-line i{position:absolute;inset:0;background:linear-gradient(90deg,var(--eu),#8A3FD8 55%,var(--la));transform-origin:left;transition:transform 1.6s var(--ease-out) .2s}
+.tl.pre .tl-line i{transform:scaleX(0)}
+.tl-i{position:relative;padding-top:34px}
+.tl-d{position:absolute;top:0;left:0;width:17px;height:17px;border-radius:50%;background:#0B0B12;border:3px solid #fff}
+.tl-i:nth-child(2) .tl-d{border-color:var(--eu)}
+.tl-i:nth-child(3) .tl-d{border-color:#7E58E6}
+.tl-i:nth-child(4) .tl-d{border-color:#B44CC4}
+.tl-i.cupi .tl-d{border-color:var(--la);background:var(--la)}
+.tl-k{font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.6)}
+.tl-i b{display:block;font-weight:900;font-size:clamp(24px,2.4vw,34px);line-height:1.02;letter-spacing:-.035em;color:#fff;margin-top:10px}
+.tl-i p:last-child{font-size:15px;color:var(--soft);margin-top:10px;font-weight:500;max-width:28ch}
+@media (max-width:820px){
+  .tl{grid-template-columns:1fr;gap:28px;padding-left:34px}
+  .tl-line{left:7px;right:auto;top:8px;bottom:8px;width:3px;height:auto}
+  .tl-line i{background:linear-gradient(180deg,var(--eu),#8A3FD8 55%,var(--la));transform-origin:top}
+  .tl-i{padding-top:0}
+  .tl-d{left:-34px;top:4px}
+}
+/* the confirmation now opens the app chapter */
+.conf-intro{text-align:center;padding-top:clamp(96px,14vh,170px)}
+.conf-intro h2{font-size:clamp(44px,7vw,100px);margin-top:16px}
+.conf-intro .lead{margin:22px auto 0;max-width:34ch}
+
+/* league overlaps the hero instead of leaving a black gap */
+.lg-world{margin-top:-30vh;z-index:2;background:linear-gradient(180deg,transparent 0%,#090B20 14%,#0E0A24 45%,#170A1E 75%,#0B0610 92%,var(--bg) 100%)}
+.lg-fade{display:none}
+.lg-pin{-webkit-mask-image:linear-gradient(180deg,rgba(0,0,0,calc(1 - var(--fd,1))) 0%,rgba(0,0,0,calc(1 - var(--fd,1) * .6)) 22%,#000 48%);
+  mask-image:linear-gradient(180deg,rgba(0,0,0,calc(1 - var(--fd,1))) 0%,rgba(0,0,0,calc(1 - var(--fd,1) * .6)) 22%,#000 48%)}
+.hero-stage{margin-bottom:0}
+@media (max-width:700px){
+  .lg-world{margin-top:-10vh}
+  .half.eu{background:radial-gradient(130% 100% at 30% 100%,#4D5DFF 0%,var(--eu) 25%,#1A2080 60%,rgba(7,8,26,0) 100%);transform:translateY(calc(var(--lx,-100) * .6%))}
+  .half.la{background:radial-gradient(130% 100% at 70% 0%,#FF5AAE 0%,var(--la) 25%,#7A1250 60%,rgba(22,6,15,0) 100%);transform:translateY(calc(var(--lx,-100) * -.6%))}
+}
+/* bigger points */
+.pv{font-size:clamp(96px,10.5vw,168px)!important;line-height:.82}
+.pt{padding:32px 28px 28px}
+.pt b{font-size:21px;margin-top:26px}
+/* neon numbers in the league headline */
+.lg-lead .n{color:var(--acid)}
+
+/* collide v2: colour stays put and blends in the middle; only the names travel */
+.half.eu,.half.la{transform:none!important}
+.half.eu{background:radial-gradient(120% 95% at 0% 30%,#4D5DFF 0%,var(--eu) 24%,#1E2590 52%,#1A1240 100%)!important}
+.half.la{background:radial-gradient(120% 95% at 100% 70%,#FF5AAE 0%,var(--la) 24%,#8A1658 52%,#1A1240 100%)!important}
+.half > div{opacity:var(--e,0);transform:translateX(calc((1 - var(--e,0)) * -90px));will-change:transform,opacity}
+.half.la > div{transform:translateX(calc((1 - var(--e,0)) * 90px))}
+@media (max-width:700px){
+  .half.eu{background:radial-gradient(130% 100% at 30% 100%,#4D5DFF 0%,var(--eu) 26%,#1E2590 58%,#1A1240 100%)!important}
+  .half.la{background:radial-gradient(130% 100% at 70% 0%,#FF5AAE 0%,var(--la) 26%,#8A1658 58%,#1A1240 100%)!important}
+  .half > div{transform:translateY(calc((1 - var(--e,0)) * -40px))}
+  .half.la > div{transform:translateY(calc((1 - var(--e,0)) * 40px))}
+}
+.lg-pin::after{content:"";position:absolute;top:0;bottom:0;left:50%;width:34%;transform:translateX(-50%);z-index:1;pointer-events:none;
+  background:linear-gradient(90deg,rgba(26,18,64,0) 0%,#1A1240 42%,#1A1240 58%,rgba(26,18,64,0) 100%)}
+.half{will-change:auto!important}
+.half > div{position:relative;z-index:2}
+@media (max-width:700px){.lg-pin::after{left:0;right:0;top:50%;bottom:auto;width:auto;height:30%;transform:translateY(-50%);
+  background:linear-gradient(180deg,rgba(26,18,64,0) 0%,#1A1240 42%,#1A1240 58%,rgba(26,18,64,0) 100%)}}
+
+/* logos */
+.logo-nav{height:36px;width:auto;display:block}
+.logo-foot{height:46px;width:auto;display:block}
+.logo-close{width:clamp(150px,16vw,210px);height:auto;margin:0 auto 40px;position:relative}
+.qr-box{position:relative;flex:none}
+.qr-mark{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:30px;height:30px;border-radius:8px;background:#0B0B0B;display:grid;place-items:center}
+.qr-mark img{width:24px;height:auto}
+.nav-cta{white-space:nowrap}
+@media (max-width:760px){.nav .in{gap:12px}}
+@media (max-width:420px){.logo-nav{height:28px}.nav-cta{padding:6px 12px}.lang button{padding:4px 7px}}
+.wait{max-width:520px;margin-inline:auto}
+.wmsg{flex-basis:100%;text-align:center;font-size:14px;font-weight:600;color:#FF8A80;margin:2px 0 0;min-height:0}
+.wmsg:empty{display:none}
+.consent{flex-basis:100%;text-align:center;font-size:12.5px;color:var(--mute);margin-top:4px}
+.consent a{color:var(--soft);text-decoration:underline;text-underline-offset:2px}
+.wait input[aria-invalid="true"]{border-color:#FF8A80}
+/* reveal: only things below the first screen start hidden, and only once script runs */
+.rv{transition:opacity 1s var(--ease-out),transform 1.1s var(--ease-out)}
+.rv.pre{opacity:0;transform:translateY(48px)}
+
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation:none!important;transition-duration:.01ms!important}
+  .rv.pre{opacity:1;transform:none}
+  .hero-phone{transform:none}
+}
 </style>
 </head>
 <body>
 
-<a class="mark" href="/home">RALL<span>Y.</span></a>
+<header class="nav">
+  <div class="in">
+    <a class="wm" href="#top" aria-label="Rally Rating, home"><img class="logo-nav" src="/assets/brand/rally-lockup.svg" alt="RALLY. Rating" width="3639" height="1000"></a>
+    <nav class="nav-links" aria-label="Main">
+      <a href="#league" data-es="La liga">The league</a>
+      <a href="#rating" data-es="El rating">The rating</a>
+      <a href="#how" data-es="Cómo funciona">How it works</a>
+      <a href="#screens" data-es="La app">The app</a>
+    </nav>
+    <div class="lang" role="group" aria-label="Language"><button data-lang="es" aria-pressed="false">ES</button><button data-lang="en" aria-pressed="true">EN</button></div>
+    <a class="nav-cta" href="#get" data-es="Descargar">Get the app</a>
+  </div>
+</header>
 
-<main>
-  <div class="kicker">LUNES 7 SEP · 21:00</div>
-  <div class="grid">
-    <div class="unit"><div class="num" id="d">--</div><div class="label" id="ld">DÍAS</div></div>
-    <div class="unit"><div class="num" id="h">--</div><div class="label" id="lh">HORAS</div></div>
-    <div class="unit"><div class="num" id="m">--</div><div class="label">MIN</div></div>
-    <div class="unit unit-s"><div class="num" id="s">--</div><div class="label">SEG</div></div>
+<main id="top">
+<!-- 01 HERO -->
+<section class="hero">
+  <a class="news fadeup" href="#league"><span class="dot"></span><span data-es="La primera liga de Rally">Rally's first league</span><b id="newsOpens">Opens Saturday</b><span class="chev">›</span></a>
+  <p class="eyebrow fadeup" style="--d:.05s;margin-top:26px" data-es="Rating de pádel · Madrid">Padel rating · Madrid</p>
+  <h1 class="display">
+    <span class="line"><span class="rise" style="--d:.12s" data-es="Tu nivel">Your <span class="acid">real</span></span></span>
+    <span class="line"><span class="rise" style="--d:.22s" data-es="<span class=&quot;acid&quot;>real</span> de pádel.">padel level.</span></span>
+  </h1>
+  <p class="lead fadeup" style="--d:.45s" data-es="Cada partido, confirmado por la otra pareja. El número que no se pone. Se gana.">Every match confirmed by the other pair. The number you can't set. Only earn.</p>
+  <div class="btns fadeup" style="--d:.6s">
+    <a class="btn w" href="https://apps.apple.com/app/id6780019919" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.37 12.6c-.02-2.3 1.88-3.4 1.96-3.46-1.07-1.56-2.73-1.77-3.32-1.8-1.41-.14-2.76.83-3.48.83-.72 0-1.82-.81-3-.79-1.54.02-2.96.9-3.760 2.28-1.6 2.78-.41 6.9 1.15 9.16.76 1.1 1.67 2.34 2.86 2.3 1.150-.05 1.58-.74 2.97-.74 1.38 0 1.78.74 2.99.72 1.24-.02 2.02-1.12 2.77-2.23.87-1.28 1.23-2.52 1.25-2.58-.03-.01-2.4-.92-2.42-3.65zM14.1 5.86c.63-.77 1.06-1.83.94-2.89-.91.04-2.01.61-2.66 1.37-.58.67-1.09 1.75-.96 2.79 1.02.08 2.05-.52 2.68-1.27z"/></svg>
+      <span data-es="Descargar en App Store">Download on the App Store</span></a>
+    <button class="btn g" data-android aria-expanded="false">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.6 9.48l1.84-3.18c.16-.31.04-.69-.26-.85-.29-.15-.65-.06-.83.22l-1.88 3.24a11.43 11.43 0 0 0-8.94 0L5.65 5.67c-.19-.28-.55-.37-.84-.22-.3.16-.42.54-.26.85L6.4 9.48C3.3 11.25 1.28 14.44 1 18h22c-.28-3.56-2.3-6.75-5.4-8.52zM7 15.25a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5zm10 0a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5z"/></svg>
+      <span data-es="¿Android? Avísanos">On Android? Tell us</span></button>
   </div>
-  <div class="line">
-    <p>Un rating no se pone. Se confirma.</p>
-    <p>A rating is not set. It is confirmed.</p>
+  <form class="wait" novalidate><label class="sr" for="w1">Email</label><input id="w1" type="email" placeholder="you@email.com" autocomplete="email" maxlength="254" required><button class="btn w" type="submit" style="height:50px" data-es="Avísanos">Notify me</button><p class="wmsg" aria-live="polite"></p><p class="consent" data-es="Un email cuando Rally esté en Android. Consulta nuestra <a href=&quot;/privacy&quot;>Política de Privacidad</a>.">One email when Rally is on Android. See our <a href="/en/privacy">Privacy Policy</a>.</p></form>
+  <div class="hero-stage">
+    <div class="phone hero-phone phone-in" id="heroPhone"><span class="btn-side"></span><img src="/assets/home/s1.jpg" alt="Rally home screen. Rating 1096, up 2 this week, 22 matches, 59 percent win rate, record 13 and 9." fetchpriority="high"></div>
+    <div class="hero-fade"></div>
   </div>
-  <noscript>
-    <div class="line"><p>Lunes 7 de septiembre, 21:00 CEST.</p></div>
-  </noscript>
+</section>
+
+<!-- 04 THE LEAGUE -->
+<div class="lg-world">
+<section class="league" id="league" aria-label="Rally's first league">
+  <div class="lg-pin" id="lgPin">
+    <div class="lg-fade" aria-hidden="true"></div>
+    <div class="lg-top">
+      <p class="eyebrow" data-es="La primera liga de Rally">Rally's first league</p>
+      <h2 class="display" data-es="Elige un lado.">Pick a side.</h2>
+    </div>
+    <div class="half eu"><div><div class="nm">EUROPA</div><a class="pick" href="https://apps.apple.com/app/id6780019919" target="_blank" rel="noopener" data-es="Elegir Europa">Pick Europa</a></div></div>
+    <div class="vs">VS</div>
+    <div class="half la"><div><div class="nm">LATINO<br>AMÉRICA</div><a class="pick" href="https://apps.apple.com/app/id6780019919" target="_blank" rel="noopener" data-es="Elegir Latinoamérica">Pick Latinoamérica</a></div></div>
+  </div>
+</section>
+<section class="sec" style="padding-top:0">
+  <div class="in">
+    <div class="lg-after">
+      <div class="panel rv">
+        <div class="eyebrow" style="display:flex;justify-content:space-between"><span data-es="Los lados">The sides</span><span data-es="Vista previa">Preview</span></div>
+        <div class="sides">
+          <div><span><i style="background:var(--eu)"></i>EUROPA</span><b>8.1</b></div>
+          <div class="r"><span>LATINOAMÉRICA<i style="background:var(--la)"></i></span><b>10.5</b></div>
+        </div>
+        <div class="bar"><i class="e"></i><i class="l"></i></div>
+        <p class="s" data-es="Puntos medios por jugador que ha jugado. Cada partido confirmado suma.">Average points per player who has played. Every confirmed match scores.</p>
+      </div>
+      <div class="panel opens rv">
+        <div class="eyebrow" data-es="Pretemporada · 10 al 30 de octubre">Preseason · 10 to 30 October</div>
+        <div class="o" id="opens">Opens Saturday</div>
+        <div>
+          <a class="btn w join" href="https://apps.apple.com/app/id6780019919" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.37 12.6c-.02-2.3 1.88-3.4 1.96-3.46-1.07-1.56-2.73-1.77-3.32-1.8-1.41-.14-2.76.83-3.48.83-.72 0-1.82-.81-3-.79-1.54.02-2.96.9-3.76 2.28-1.6 2.78-.41 6.9 1.15 9.16.76 1.1 1.67 2.34 2.86 2.3 1.15-.05 1.58-.74 2.97-.74 1.38 0 1.78.74 2.99.72 1.24-.02 2.02-1.12 2.77-2.23.87-1.28 1.23-2.52 1.25-2.58-.03-.01-2.4-.92-2.42-3.65zM14.1 5.86c.63-.77 1.06-1.83.94-2.89-.91.04-2.01.61-2.66 1.37-.58.67-1.09 1.75-.96 2.79 1.02.08 2.05-.52 2.68-1.27z"/></svg><span data-es="Únete a la liga">Join the league</span></a>
+          <p class="meta2" data-es="128 plazas · Gratis esta pretemporada">128 places · Free this preseason</p>
+        </div>
+      </div>
+      <div class="phone lg-phone rv"><img src="/assets/home/s2.jpg" alt="League screen, Europa against Latinoamérica" loading="lazy"></div>
+    </div>
+    <div class="lg-lead rv">
+      <h2 class="display" data-es="<span class=&quot;n&quot;>Tres</span> semanas. <span class=&quot;n&quot;>Dos</span> bandos.<br>Cada partido suma para el tuyo."><span class="n">Three</span> weeks. <span class="n">Two</span> sides.<br>Every match scores for yours.</h2>
+      <p class="lead" data-es="Los mejores reciben invitación para jugar la Copa.">The best get invited to play the Cup.</p>
+    </div>
+
+
+    <div class="tl rv">
+      <div class="tl-line" aria-hidden="true"><i></i></div>
+      <div class="tl-i"><span class="tl-d"></span><p class="tl-k" data-es="Semana 1 · 10 oct">Week 1 · 10 Oct</p><b data-es="Elige bando.">Pick a side.</b><p data-es="Europa o Latinoamérica. Desde tu primer partido confirmado, sumas.">Europa or Latinoamérica. From your first confirmed match, you score.</p></div>
+      <div class="tl-i"><span class="tl-d"></span><p class="tl-k" data-es="Semana 2">Week 2</p><b data-es="Sube en la tabla.">Climb the table.</b><p data-es="Hasta 3 partidos por semana puntúan. La media de tu bando sube contigo.">Up to 3 matches a week score. Your side's average climbs with you.</p></div>
+      <div class="tl-i"><span class="tl-d"></span><p class="tl-k" data-es="Semana 3 · hasta el 30 oct">Week 3 · to 30 Oct</p><b data-es="Asegura tu plaza.">Lock your place.</b><p data-es="Juega 5 en total para optar a la Copa. Luego la tabla se cierra.">Play 5 in total to qualify for the Cup. Then the table freezes.</p></div>
+      <div class="tl-i cupi"><span class="tl-d"></span><p class="tl-k" data-es="Después">Then</p><b data-es="La Copa.">The Cup.</b><p data-es="Los 16 mejores en puntos, por invitación. Premio en metálico.">The top 16 on points, by invitation. Cash prize.</p></div>
+    </div>
+    <div class="pts-head rv"><p class="eyebrow" data-es="Cómo se puntúa">How you score</p></div>
+    <div class="pts">
+      <div class="pt rv"><div class="pv">+3</div><b data-es="Victoria">Win</b><p data-es="Cada victoria confirmada.">Every confirmed win.</p></div>
+      <div class="pt rv"><div class="pv">+1</div><b data-es="Derrota">Loss</b><p data-es="Sumas igual por venir.">You still score for turning up.</p></div>
+      <div class="pt rv"><div class="pv acid">×2</div><b data-es="El primer partido de alguien">Someone's first match</b><p data-es="Puntos dobles para los cuatro. Trae a alguien nuevo.">Double points for all four. Bring someone new.</p></div>
+      <div class="pt rv"><div class="pv neg">−1</div><b data-es="No presentarse">No-show</b><p data-es="Y un strike. La otra pareja suma 3.">And a strike. The other pair takes 3.</p></div>
+    </div>
+    <p class="pts-note rv" data-es="Los puntos son tuyos, no de tu pareja. Cambia de pareja cada partido si quieres. Suman hasta 3 partidos por semana.">Points are yours, not your pair's. Change partner every match if you like. Up to 3 matches a week score.</p>
+
+    <div class="join-steps">
+      <div class="js-head rv"><p class="eyebrow" data-es="Cómo entrar">How to join</p><h3 class="display" data-es="Dentro en un minuto.">In within a minute.</h3></div>
+      <ol class="jsl">
+        <li class="rv"><span class="jn">1</span><b data-es="Descarga Rally">Download Rally</b><p data-es="Gratis en iPhone.">Free on iPhone.</p></li>
+        <li class="rv"><span class="jn">2</span><b data-es="Elige bando">Pick your side</b><p data-es="Europa o Latinoamérica. Te quedas en él las tres semanas.">Europa or Latinoamérica. You stay with it all three weeks.</p></li>
+        <li class="rv"><span class="jn">3</span><b data-es="Juega">Play</b><p data-es="Contra cualquiera de la liga. Publica una hora en el tablón o coge una.">Anyone in the league. Post a time on the board or claim one.</p></li>
+        <li class="rv"><span class="jn">4</span><b data-es="Que confirmen">They confirm</b><p data-es="La otra pareja confirma. Se actualizan puntos y ratings.">The other pair confirms. Points and ratings update.</p></li>
+      </ol>
+    </div>
+
+    <div class="cup rv">
+      <div class="cup-copy">
+        <p class="eyebrow" data-es="Después, la Copa · Por invitación">Then, the Cup · By invitation</p>
+        <h3 class="cup-t" data-es="LA<br>COPA">THE<br>CUP</h3>
+        <div class="cup-facts">
+          <div><b>5</b><span data-es="partidos para clasificarte">matches to qualify</span></div>
+          <div><b>16</b><span data-es="mejores en puntos pasan">top on points go through</span></div>
+          <div><b>1</b><span data-es="ronda por semana, cabezas de serie por rating">round a week, seeded by rating</span></div>
+        </div>
+        <div class="prize"><span class="pz-k" data-es="Premio en metálico">Cash prize</span><span class="pz-v" data-es="Para la pareja ganadora.">For the winning pair.</span></div>
+        <a class="btn w" href="https://apps.apple.com/app/id6780019919" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.37 12.6c-.02-2.3 1.88-3.4 1.96-3.46-1.07-1.56-2.73-1.77-3.32-1.8-1.41-.14-2.76.83-3.48.83-.72 0-1.82-.81-3-.79-1.54.02-2.96.9-3.76 2.28-1.6 2.78-.41 6.9 1.15 9.16.76 1.1 1.67 2.34 2.86 2.3 1.15-.05 1.58-.74 2.97-.74 1.38 0 1.78.74 2.99.72 1.24-.02 2.02-1.12 2.77-2.23.87-1.28 1.23-2.52 1.25-2.58-.03-.01-2.4-.92-2.42-3.65zM14.1 5.86c.63-.77 1.06-1.83.94-2.89-.91.04-2.01.61-2.66 1.37-.58.67-1.09 1.75-.96 2.79 1.02.08 2.05-.52 2.68-1.27z"/></svg><span data-es="Únete y lucha por tu plaza">Join and play for your place</span></a>
+      </div>
+      <svg class="bracket" viewBox="0 0 320 300" aria-hidden="true">
+        <g fill="none" stroke-width="2" stroke-linecap="round">
+          <g style="stroke:var(--eu)" opacity=".9">
+            <path d="M10 30h50v40H10M60 50h40"/><path d="M10 110h50v40H10M60 130h40"/><path d="M100 50v80M100 90h50"/>
+          </g>
+          <g style="stroke:var(--la)" opacity=".9">
+            <path d="M10 170h50v40H10M60 190h40"/><path d="M10 250h50v40H10M60 270h40"/><path d="M100 190v80M100 230h50"/>
+          </g>
+          <path d="M150 90v140M150 160h60" style="stroke:#fff"/>
+        </g>
+        <g class="trophy" transform="translate(222 128)">
+          <path d="M14 4h36v14c0 12-8 22-18 22S14 30 14 18z" fill="#fff"/>
+          <path d="M14 10H4c0 10 5 15 12 16M50 10h10c0 10-5 15-12 16" fill="none" stroke="#fff" stroke-width="3"/>
+          <rect x="27" y="40" width="10" height="10" fill="#fff"/><rect x="18" y="50" width="28" height="7" rx="2" fill="#fff"/>
+        </g>
+      </svg>
+    </div>
+
+  </div>
+</section>
+
+</div>
+
+<!-- 02 THE CONFIRMATION -->
+<section class="conf-intro in rv" id="rating">
+  <p class="eyebrow" data-es="Tu rating">Your rating</p>
+  <h2 class="display" data-es="Cada partido cuenta.<br>Cuando ellos lo dicen.">Every match counts.<br>When they say so.</h2>
+  <p class="lead" data-es="Liga o no, tu rating solo se mueve cuando alguien de la otra pareja confirma.">League or not, your rating only moves when someone from the other pair confirms.</p>
+</section>
+<section class="conf" id="confirm" aria-label="How a match counts">
+  <div class="pin">
+    <div class="conf-in">
+      <p class="eyebrow" data-es="Sábado · 20:00 · Cristalia Club">Saturday · 20:00 · Cristalia Club</p>
+      <div class="conf-msg" aria-live="polite">
+        <span class="on" data-es="Lo registraste. Aún no cuenta.">You logged it. It doesn't count yet.</span>
+        <span data-es="Esperando a la otra pareja. Basta con uno.">Waiting for the other pair. Either one can confirm.</span>
+        <span data-es="Rocío lo ha confirmado. Ahora cuenta.">Rocío confirmed it. Now it counts.</span>
+      </div>
+      <div class="big" id="big">1370</div>
+      <div class="delta" id="delta">+14<small data-es="este partido">this match</small></div>
+      <div class="pairs" id="pairs">
+        <div class="pair">
+          <span class="pair-l" data-es="Tu pareja">Your pair</span>
+          <div class="pair-r">
+            <div class="p4 ok"><div class="av" style="background:#CCFF00"><span data-es="TÚ">YOU</span><span class="tick"><svg viewBox="0 0 12 12" fill="none" stroke="#0B0B0B" stroke-width="2.4"><path d="M2.5 6.3 5 8.7l4.5-5"/></svg></span></div><b data-es="Tú">You</b><em data-es="registró">logged it</em></div>
+            <div class="p4 mate"><div class="av" style="background:#3FB8A8">ER</div><b>Elena R.</b><em data-es="compañera">partner</em></div>
+          </div>
+        </div>
+        <span class="vsm">VS</span>
+        <div class="pair them">
+          <span class="pair-l" data-es="La otra pareja">The other pair</span>
+          <div class="pair-r">
+            <div class="p4" data-c><div class="av" style="background:#E7639F">RD<span class="tick"><svg viewBox="0 0 12 12" fill="none" stroke="#0B0B0B" stroke-width="2.4"><path d="M2.5 6.3 5 8.7l4.5-5"/></svg></span></div><b>Rocío D.</b><em data-es="rival">rival</em></div>
+            <div class="p4" data-c2><div class="av" style="background:#7FD49B">PG</div><b>Pablo G.</b><em data-es="rival">rival</em></div>
+          </div>
+        </div>
+      </div>
+      <div class="score"><span data-es="Ganado">Won</span><b>6-4 · 6-3</b></div>
+    </div>
+  </div>
+</section>
+
+<!-- 03 HOW IT WORKS -->
+<section class="sec" id="how">
+  <div class="in">
+    <div class="sec-head rv">
+      <p class="eyebrow" data-es="Cómo funciona">How it works</p>
+      <h2 class="display" data-es="Juega. Registra.<br>Que lo <span class=&quot;acid&quot;>confirmen</span>.">Play. Log it.<br>Let them <span class="acid">confirm</span>.</h2>
+    </div>
+    <div class="story">
+      <div class="story-steps">
+        <div class="step on" data-step="0">
+          <span class="n">01</span>
+          <h3 data-es="Rally encuentra a tus rivales más justos.">Rally finds your fairest opponents.</h3>
+          <p data-es="Rivales de tu nivel, libres cuando tú lo estás. Sin cadenas de mensajes.">Opponents at your level, free when you are. No group-chat ping-pong.</p>
+          <div class="phone ph-inline"><img src="/assets/home/s4.jpg" alt="Rally's pick, a suggested match against players at your level" loading="lazy"></div>
+        </div>
+        <div class="step" data-step="1">
+          <span class="n">02</span>
+          <h3 data-es="Un toque y estás dentro.">One tap and you're in.</h3>
+          <p data-es="La hora, la pista y quién juega contra quién. Todo en un sitio.">The time, the court and who plays who. All in one place.</p>
+          <div class="phone ph-inline"><img src="/assets/home/s6.jpg" alt="A match invite with time and court" loading="lazy"></div>
+        </div>
+        <div class="step" data-step="2">
+          <span class="n">03</span>
+          <h3 data-es="Tú lo registras. Ellos lo confirman.">You log it. They confirm it.</h3>
+          <p data-es="Cuenta en cuanto alguien de la otra pareja lo confirma. Entonces se mueven los cuatro ratings.">It counts the moment someone from the other pair confirms. Then all four ratings move.</p>
+          <div class="phone ph-inline"><img src="/assets/home/s3.jpg" alt="Logging a match: partner, rivals and sets" loading="lazy"></div>
+        </div>
+      </div>
+      <div class="story-phone">
+        <div class="stack">
+          <div class="phone on"><img src="/assets/home/s4.jpg" alt="" loading="lazy"></div>
+          <div class="phone"><img src="/assets/home/s6.jpg" alt="" loading="lazy"></div>
+          <div class="phone"><img src="/assets/home/s3.jpg" alt="" loading="lazy"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 05 YOUR NUMBERS -->
+<section class="sec" id="numbers" style="padding-top:clamp(40px,8vh,100px)">
+  <div class="in">
+    <div class="sec-head rv">
+      <p class="eyebrow" data-es="Tus números">Your numbers</p>
+      <h2 class="display" data-es="Todo tu juego.<br>En una pantalla.">Your whole game.<br>One screen.</h2>
+    </div>
+    <div class="bento">
+      <div class="t t-rating rv">
+        <div class="top"><span class="eyebrow">Rally rating</span><span class="chip">MADRID</span></div>
+        <div class="num">1096</div>
+        <div class="meta"><b>+2</b> <span data-es="esta semana · 22 partidos">this week · 22 matches</span></div>
+        <div class="ladder">
+          <div class="tr"><div class="fill"></div><div class="dot"></div></div>
+          <div class="lbl"><span data-es="Inic.">Beg.</span><b>Int.</b><span data-es="Avan.">Adv.</span><span>Elite</span></div>
+        </div>
+      </div>
+      <div class="t t-stat rv"><span class="eyebrow" data-es="% de victorias">Win rate</span><div class="v">59<small>%</small></div></div>
+      <div class="t t-stat rv"><span class="eyebrow" data-es="Balance">Record</span><div class="v">13<span class="dash">-</span>9</div></div>
+      <div class="t t-social rv">
+        <span class="eyebrow" data-es="Rivales">Rivals</span>
+        <h3 data-es="Sabes a quién tienes que ganar.">You know who you have to beat.</h3>
+        <div class="rows">
+          <div class="row"><span class="k">1</span><span class="a" style="background:#3FB8A8">ER</span><span class="nm">Elena R.</span><span class="rt">1176</span><span class="d up">▲ 17</span></div>
+          <div class="row"><span class="k">2</span><span class="a" style="background:#E7639F">RD</span><span class="nm">Rocío D.<span class="rival">RIVAL</span></span><span class="rt">1171</span><span class="d up">▲ 8</span></div>
+          <div class="row"><span class="k">3</span><span class="a" style="background:#7FD49B">PG</span><span class="nm">Pablo G.</span><span class="rt">1149</span><span class="d dn">▼ 14</span></div>
+          <div class="row"><span class="k">4</span><span class="a" style="background:#F2A541">SC</span><span class="nm">Sergio C.<span class="rival">RIVAL</span></span><span class="rt">1147</span><span class="d up">▲ 16</span></div>
+          <div class="row me"><span class="k">9</span><span class="a" style="background:#CCFF00" data-es="TÚ">YOU</span><span class="nm" data-es="Tú">You</span><span class="rt">1096</span><span class="d up">▲ 2</span></div>
+        </div>
+      </div>
+      <div class="t t-four rv">
+        <div><span class="eyebrow" data-es="La elección de Rally">Rally's pick</span><h3 style="margin-top:10px" data-es="Dos rivales de tu nivel. Libres el viernes.">Two opponents at your level. Free on Friday.</h3></div>
+        <div class="avs"><span style="background:#CCFF00">TÚ</span><span style="background:#3FB8A8">ER</span><span class="vsx">vs</span><span style="background:#8B7CF6">LF</span><span style="background:#F2A541">SC</span></div>
+        <div class="slot"><div class="cal"><small data-es="VIE">FRI</small><b>9</b></div><div><div class="tm">20:00</div><div class="cl">Cristalia Club de Pádel</div></div><span class="go" data-es="Entrar">Join</span></div>
+      </div>
+      <div class="t t-six rv">
+        <span class="eyebrow" data-es="Asentado">Settled</span>
+        <h3 style="margin-top:10px" data-es="Visible desde el primer partido. Asentado a los seis.">Visible from your first match. Settled after six.</h3>
+        <div class="segs" id="segs"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      </div>
+      <div class="t t-free rv">
+        <div class="v" data-es="Gratis.">Free.</div>
+        <div class="fr"><span class="eyebrow" data-es="Tu rating">Your rating</span><p data-es="Tu rating, tu balance y tus rivales. Gratis para todos los jugadores, siempre.">Your rating, your record and your rivals. Free for every player, always.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 06 THE RULES -->
+<section class="sec">
+  <div class="in words-wrap">
+    <p class="eyebrow" style="margin-bottom:28px" data-es="Las reglas">The rules</p>
+    <p class="words" id="words"></p>
+    <p class="words-note" data-es="Gana a alguien mejor y sube más. Gana a alguien peor y apenas se mueve. Ningún rating se cambia a mano.">Beat someone better and it moves more. Beat someone weaker and it barely moves. No rating is ever changed by hand.</p>
+  </div>
+</section>
+
+<!-- 07 GALLERY -->
+<section class="sec" id="screens" style="padding-inline:0">
+  <div class="in gal-head rv">
+    <div><p class="eyebrow" data-es="La app">The app</p><h2 class="display" style="margin-top:14px" data-es="Échale un vistazo.">Take a closer look.</h2></div>
+    <div class="ctrl"><button class="arrow" id="gPrev" aria-label="Previous"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M15 5l-7 7 7 7"/></svg></button><button class="arrow" id="gNext" aria-label="Next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M9 5l7 7-7 7"/></svg></button></div>
+  </div>
+  <div class="car rv" id="car" tabindex="0" aria-roledescription="carousel" aria-label="App screens">
+    <div class="track" id="track">
+      <article class="slide"><h3 data-es="Tu nivel real.">Your real level.</h3><p data-es="Un número, confirmado partido a partido.">One number, confirmed match by match.</p><div class="phone"><img src="/assets/home/s1.jpg" alt="Home screen with your rating" draggable="false" loading="lazy"></div></article>
+      <article class="slide"><h3 data-es="Temporadas que puedes ganar.">Seasons you can win.</h3><p data-es="Tu nivel. Tu lado. Un campeón.">Your level. Your side. One champion.</p><div class="phone"><img src="/assets/home/s2.jpg" alt="League table" draggable="false" loading="lazy"></div></article>
+      <article class="slide"><h3 data-es="Regístralo en segundos.">Log it in seconds.</h3><p data-es="Cuenta cuando la otra pareja lo confirma.">It counts once the other pair confirms.</p><div class="phone"><img src="/assets/home/s3.jpg" alt="Confirmed score" draggable="false" loading="lazy"></div></article>
+      <article class="slide"><h3 data-es="Rivales justos.">Fair opponents.</h3><p data-es="Jugadores de tu nivel, libres cuando tú.">Players at your level, free when you are.</p><div class="phone"><img src="/assets/home/s4.jpg" alt="Rally's pick" draggable="false" loading="lazy"></div></article>
+      <article class="slide"><h3 data-es="Tus rivales, en una tabla.">Your rivals, ranked.</h3><p data-es="Quién ha subido esta semana, y cuánto.">Who climbed this week, and by how much.</p><div class="phone"><img src="/assets/home/s5.jpg" alt="Friends ranked by rating" draggable="false" loading="lazy"></div></article>
+      <article class="slide"><h3 data-es="Un toque y estás dentro.">One tap and you're in.</h3><p data-es="Invitaciones, horas y pistas.">Invites, times and courts.</p><div class="phone"><img src="/assets/home/s6.jpg" alt="Match invite" draggable="false" loading="lazy"></div></article>
+    </div>
+  </div>
+  <div class="gdots" id="gdots"></div>
+</section>
+
+<!-- 08 CLOSE -->
+<section class="sec close" id="get">
+  <div class="in">
+    <img class="logo-close rv" src="/assets/brand/rally-lockup-stacked.svg" alt="RALLY. Rating" width="1748" height="1595" loading="lazy">
+    <h2 class="display rv" data-es="Cada partido,<br><span class=&quot;o&quot;>confirmado.</span>">Every match,<br><span class="o">confirmed.</span></h2>
+    <p class="lead rv" data-es="Descárgalo. Elige tu bando. Juega por tu plaza en la Copa.">Download it. Pick your side. Play for your place in the Cup.</p>
+    <div class="btns rv">
+      <a class="btn w" href="https://apps.apple.com/app/id6780019919" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.37 12.6c-.02-2.3 1.88-3.4 1.96-3.46-1.07-1.56-2.73-1.77-3.32-1.8-1.41-.14-2.76.83-3.48.83-.72 0-1.82-.81-3-.79-1.54.02-2.96.9-3.76 2.28-1.6 2.78-.41 6.9 1.15 9.16.76 1.1 1.67 2.34 2.86 2.3 1.15-.05 1.58-.74 2.97-.74 1.38 0 1.78.74 2.99.72 1.24-.02 2.02-1.120 2.77-2.23.87-1.28 1.23-2.52 1.25-2.58-.03-.01-2.4-.92-2.42-3.65zM14.1 5.86c.63-.77 1.06-1.83.94-2.89-.91.04-2.01.61-2.66 1.37-.58.67-1.09 1.75-.96 2.79 1.02.08 2.05-.52 2.68-1.27z"/></svg><span data-es="Descargar en App Store">Download on the App Store</span></a>
+      <button class="btn g" data-android aria-expanded="false"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.6 9.48l1.84-3.18c.16-.31.04-.69-.26-.85-.29-.15-.65-.06-.83.22l-1.88 3.24a11.43 11.43 0 0 0-8.94 0L5.65 5.67c-.19-.28-.55-.37-.84-.22-.3.16-.42.54-.26.85L6.4 9.48C3.3 11.25 1.28 14.44 1 18h22c-.28-3.56-2.3-6.75-5.4-8.52zM7 15.25a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5zm10 0a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5z"/></svg><span data-es="¿Android? Avísanos">On Android? Tell us</span></button>
+    </div>
+    <form class="wait" novalidate><label class="sr" for="w2">Email</label><input id="w2" type="email" placeholder="you@email.com" autocomplete="email" maxlength="254" required><button class="btn w" type="submit" style="height:50px" data-es="Avísanos">Notify me</button><p class="wmsg" aria-live="polite"></p><p class="consent" data-es="Un email cuando Rally esté en Android. Consulta nuestra <a href=&quot;/privacy&quot;>Política de Privacidad</a>.">One email when Rally is on Android. See our <a href="/en/privacy">Privacy Policy</a>.</p></form>
+    <div class="qr"><div class="qr-box"><img id="qr" src="/assets/home/qr.svg" alt="" width="92" height="92"><span class="qr-mark"><img src="/assets/brand/rally-mark.svg" alt="" width="40" height="29"></span></div><p><b data-es="Escanea con el móvil">Scan with your phone</b><span data-es="Te lleva directo a la app.">It takes you straight to the app.</span></p></div>
+  </div>
+</section>
 </main>
 
-<!-- Footer pasted literally from /_partials/footer.html (English set). Real anchor tags:
-     Apple's reviewer, crawlers and anyone with JavaScript blocked must all see them. -->
-<footer class="site">
-  <div class="links">
-    <a href="/en/privacy">Privacy Policy</a>
-    <a href="/en/terms">Terms and Conditions</a>
-    <a href="/en/legal">Legal Notice</a>
-    <a href="/en/support">Support</a>
-    <a href="/en/delete-account">Delete Account</a>
+<footer>
+  <div class="in">
+    <div class="f-top">
+      <a class="wm" href="#top" aria-label="Rally Rating, home"><img class="logo-foot" src="/assets/brand/rally-lockup.svg" alt="RALLY. Rating" width="3639" height="1000" loading="lazy"></a>
+      <p data-es="Rally es el rating de pádel de Madrid. Un partido cuenta cuando tu rival lo confirma.">Rally is the padel rating for Madrid. A match counts when your opponent confirms it.</p>
+    </div>
+    <div class="f-bot">
+      <nav aria-label="Legal">
+        <a href="/en/privacy" data-href-es="/privacy" data-es="Privacidad">Privacy Policy</a>
+        <a href="/en/terms" data-href-es="/terms" data-es="Términos">Terms</a>
+        <a href="/en/legal" data-href-es="/legal" data-es="Aviso legal">Legal Notice</a>
+        <a href="/en/support" data-href-es="/support" data-es="Soporte">Support</a>
+        <a href="/en/delete-account" data-href-es="/delete-account" data-es="Eliminar cuenta">Delete Account</a>
+      </nav>
+      <span>hello@rallyrating.app · Rally Rating S.L. · Madrid · 2026</span>
+    </div>
   </div>
-  <div>Rally Rating S.L. · Madrid · 2026</div>
 </footer>
 
 <script>
-// The film lands Mon 7 Sep 2026, 21:00 Madrid. One constant; everything else is arithmetic.
-var TARGET = Date.parse('2026-09-07T21:00:00+02:00');
-var PER = { d: 86400000, h: 3600000, m: 60000, s: 1000 };
-var prev = {};
+(function(){
+  var d=document, w=window, root=d.documentElement;
+  var reduce=w.matchMedia&&w.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  root.classList.add('js');
+  function clamp(v,a,b){return v<a?a:v>b?b:v;}
+  function ease(t){return 1-Math.pow(1-t,3);}
 
-function pad(n){ return n < 10 ? '0' + n : String(n); }
-
-function paint(id, value){
-  var el = document.getElementById(id), text = pad(value);
-  if (prev[id] === text) return;                       // only a changed unit animates
-  var first = prev[id] === undefined;
-  prev[id] = text;
-  el.textContent = '';
-  for (var i = 0; i < text.length; i++){
-    var span = document.createElement('span');
-    span.className = first ? 'digit' : 'digit tick';
-    span.textContent = text[i];
-    el.appendChild(span);
+  /* ── language ── */
+  var lang='en', tx=[].slice.call(d.querySelectorAll('[data-es]'));
+  tx.forEach(function(el){el.setAttribute('data-en',el.innerHTML);});
+  var T={
+    en:{opens:function(n){return n>1?'Opens in '+n+' days':n===1?'Opens tomorrow':'Live now';},done:'Done. One email the day it lands on Android.',bad:'Check the email and try again.',slow:'Too many tries. Try again later.',err:'Something went wrong. Try again.',
+        words:'A rating isn’t set. It’s *confirmed.* Nothing counts until the other pair says so. Not a single match. Not a single point.'},
+    es:{opens:function(n){return n>1?'Abre en '+n+' días':n===1?'Abre mañana':'En juego';},done:'Hecho. Un email el día que llegue a Android.',bad:'Revisa el email e inténtalo de nuevo.',slow:'Demasiados intentos. Prueba más tarde.',err:'Algo ha fallado. Inténtalo de nuevo.',
+        words:'Un rating no se pone. Se *confirma.* Nada cuenta hasta que la otra pareja lo dice. Ni un partido. Ni un punto.'}
+  };
+  function setLang(l){
+    lang=l; root.lang=l;
+    tx.forEach(function(el){el.innerHTML=el.getAttribute(l==='es'?'data-es':'data-en');});
+    [].forEach.call(d.querySelectorAll('[data-lang]'),function(b){b.setAttribute('aria-pressed',b.getAttribute('data-lang')===l);});
+    [].forEach.call(d.querySelectorAll('[data-href-es]'),function(a){if(!a.hasAttribute('data-href-en'))a.setAttribute('data-href-en',a.getAttribute('href'));a.setAttribute('href',a.getAttribute(l==='es'?'data-href-es':'data-href-en'));});
+    buildWords(); paintOpens(); update();
+    try{localStorage.setItem('rally-lang',l);}catch(e){}
   }
-}
+  [].forEach.call(d.querySelectorAll('[data-lang]'),function(b){b.addEventListener('click',function(){setLang(b.getAttribute('data-lang'));});});
 
-function tick(){
-  var left = TARGET - Date.now();
-  if (left <= 0){ location.replace('/home'); return; }  // at zero the site comes back
-  var d = Math.floor(left / PER.d);
-  var h = Math.floor(left % PER.d / PER.h);
-  var m = Math.floor(left % PER.h / PER.m);
-  var s = Math.floor(left % PER.m / PER.s);
-  paint('d', d); paint('h', h); paint('m', m); paint('s', s);
-  document.getElementById('ld').textContent = d === 1 ? 'DÍA'  : 'DÍAS';
-  document.getElementById('lh').textContent = h === 1 ? 'HORA' : 'HORAS';
-}
+  /* ── android waitlist (preview: nothing is sent) ── */
+  [].forEach.call(d.querySelectorAll('[data-android]'),function(b){
+    var f=b.parentNode.nextElementSibling;
+    b.addEventListener('click',function(){var on=!f.classList.contains('on');f.classList.toggle('on',on);b.setAttribute('aria-expanded',on);if(on)f.querySelector('input').focus();});
+    var msg=f.querySelector('.wmsg'), inp=f.querySelector('input'), sb=f.querySelector('button');
+    f.addEventListener('submit',function(e){
+      e.preventDefault(); var v=inp.value.trim(); msg.textContent='';
+      if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)){msg.textContent=T[lang].bad; inp.setAttribute('aria-invalid','true'); inp.focus(); return;}
+      inp.removeAttribute('aria-invalid'); sb.disabled=true;
+      fetch('https://sbosbkbrkicpyktrzgjo.supabase.co/rest/v1/rpc/join_android_waitlist',{method:'POST',headers:{'Content-Type':'application/json','apikey':'sb_publishable_XLcXQNlCkK6xgNUkcn1wZQ_Lfp_rq5F'},body:JSON.stringify({p_email:v,p_locale:lang})})
+        .then(function(r){if(!r.ok)throw 0;return r.json();})
+        .then(function(res){
+          if(res==='ok'){f.innerHTML='<span class="ok">'+T[lang].done+'</span>';return;}
+          msg.textContent=res==='invalid'?T[lang].bad:res==='slow_down'?T[lang].slow:T[lang].err; sb.disabled=false;
+        })
+        .catch(function(){msg.textContent=T[lang].err; sb.disabled=false;});
+    });
+  });
 
-tick();
-setInterval(tick, 250);
+  /* ── league opening ── */
+  var OPEN=Date.parse('2026-10-10T00:00:00+02:00');
+  function paintOpens(){var s=T[lang].opens(Math.ceil((OPEN-Date.now())/86400000)); d.getElementById('opens').textContent=s; d.getElementById('newsOpens').textContent=s;}
+
+  /* ── words that light up as you read ── */
+  var wordsEl=d.getElementById('words'), wordEls=[];
+  function buildWords(){
+    wordsEl.innerHTML=''; wordEls=[];
+    T[lang].words.split(' ').forEach(function(wd,i){
+      var acid=wd.charAt(0)==='*'; wd=wd.replace(/\*/g,'');
+      var s=d.createElement('span'); s.className='w'+(acid?' a':''); s.textContent=wd;
+      wordsEl.appendChild(s); wordsEl.appendChild(d.createTextNode(' ')); wordEls.push(s);
+    });
+  }
+
+  /* ── scroll scenes ── */
+  var heroPhone=d.getElementById('heroPhone');
+  var conf=d.getElementById('confirm'), big=d.getElementById('big'), delta=d.getElementById('delta');
+  var msgs=[].slice.call(conf.querySelectorAll('.conf-msg span')), cs=[].slice.call(conf.querySelectorAll('[data-c]')), pairs=d.getElementById('pairs');
+  var league=d.getElementById('league'), lgPin=d.getElementById('lgPin');
+  var segs=[].slice.call(d.querySelectorAll('#segs i'));
+  var bigOn=null, steps=[].slice.call(d.querySelectorAll('.step')), stack=[].slice.call(d.querySelectorAll('.stack .phone')), curStep=0;
+  function prog(el){var r=el.getBoundingClientRect(), vh=w.innerHeight; return clamp(-r.top/(r.height-vh),0,1);}
+  function update(){
+    var vh=w.innerHeight;
+    // hero phone straightens as you scroll
+    var hp=clamp(w.scrollY/(vh*.7),0,1);
+    if(!reduce){heroPhone.style.setProperty('--rx',(24*(1-ease(hp))).toFixed(2)+'deg');heroPhone.style.setProperty('--ty',(-60*hp).toFixed(1)+'px');}
+    // the confirmation
+    var p=prog(conf);
+    big.style.setProperty('--bs',(0.9+0.1*ease(clamp(p/.15,0,1))).toFixed(3));
+    var stage=p<.28?0:p<.6?1:2, on=stage===2;
+    cs.forEach(function(c){c.classList.toggle('ok',on);});
+    pairs.classList.toggle('waiting',stage===1); pairs.classList.toggle('done',on);
+    if(on!==bigOn){bigOn=on; big.classList.toggle('on',on); big.textContent=on?'1384':'1370'; delta.classList.toggle('on',on);}
+    var mi=stage; msgs.forEach(function(m,i){m.classList.toggle('on',i===mi);});
+    // story: the step whose middle is nearest the screen's middle owns the phone
+    var bestK=curStep, bestD=1e9;
+    steps.forEach(function(s,k){var b=s.getBoundingClientRect(), dd=Math.abs(b.top+b.height/2-vh/2); if(dd<bestD){bestD=dd;bestK=k;}});
+    if(bestK!==curStep){curStep=bestK; steps.forEach(function(s,i){s.classList.toggle('on',i===bestK);}); stack.forEach(function(s,i){s.classList.toggle('on',i===bestK);});}
+    // league halves collide
+    var lp=prog(league), e=ease(clamp(lp/.5,0,1));
+    lgPin.style.setProperty('--e',ease(clamp((lp-.08)/.4,0,1)).toFixed(3));
+    lgPin.style.setProperty('--fd',(1-clamp(lp/.22,0,1)).toFixed(3));
+    lgPin.style.setProperty('--vs',ease(clamp((lp-.42)/.14,0,1)).toFixed(3));
+    lgPin.style.setProperty('--to',clamp((lp-.5)/.15,0,1).toFixed(3));
+    lgPin.style.setProperty('--po',clamp((lp-.62)/.14,0,1).toFixed(3));
+    // words
+    var r=wordsEl.getBoundingClientRect(), wp=clamp((vh*.82-r.top)/(r.height+vh*.3),0,1), lit=Math.round(wp*wordEls.length*1.08);
+    for(var i=0;i<wordEls.length;i++) wordEls[i].classList.toggle('lit',i<lit);
+  }
+  var ticking=false;
+  function onScroll(){if(!ticking){ticking=true;requestAnimationFrame(function(){ticking=false;update();});}}
+  w.addEventListener('scroll',onScroll,{passive:true});
+  w.addEventListener('resize',onScroll);
+
+  /* ── story: the pinned phone follows the step you're reading ── */
+
+  /* ── reveals: only what starts below the first screen ── */
+  var rvs=[].slice.call(d.querySelectorAll('.rv'));
+  if('IntersectionObserver' in w && !reduce){
+    var ro=new IntersectionObserver(function(es){es.forEach(function(en){if(en.isIntersecting){en.target.classList.remove('pre');ro.unobserve(en.target);
+      if(en.target.classList.contains('t-six')) segs.forEach(function(s,i){setTimeout(function(){s.classList.add('f');},250+i*110);});}});},{rootMargin:'0px 0px -12% 0px'});
+    rvs.forEach(function(el){if(el.getBoundingClientRect().top>w.innerHeight){el.classList.add('pre');ro.observe(el);} else if(el.classList.contains('t-six')) segs.forEach(function(s){s.classList.add('f');});});
+  } else segs.forEach(function(s){s.classList.add('f');});
+
+  /* ── gallery: 1:1 drag, momentum projection, springs, rubber band ── */
+  var car=d.getElementById('car'), track=d.getElementById('track'), slides=[].slice.call(track.children), gd=d.getElementById('gdots');
+  var N=slides.length, x=0, v=0, target=0, zeta=1, resp=.45, raf=0, step=1, idx=0, maxIdx=N-1;
+  slides.forEach(function(_,i){var b=d.createElement('button');b.setAttribute('aria-label','Screen '+(i+1));b.addEventListener('click',function(){goTo(i);});gd.appendChild(b);});
+  function measure(){
+    step=slides[0].getBoundingClientRect().width+parseFloat(getComputedStyle(track).columnGap||24);
+    var pad=parseFloat(getComputedStyle(track).paddingLeft), visible=car.clientWidth-pad*2;
+    var overflow=track.scrollWidth-car.clientWidth; maxIdx=Math.max(0,Math.min(N-1,Math.ceil(overflow/step)));
+    lo=-Math.max(0,overflow);
+  }
+  var lo=0;
+  function posFor(i){return Math.max(lo,-i*step);}
+  function paint(){
+    track.style.transform='translate3d('+x.toFixed(2)+'px,0,0)';
+    var near=0,best=1e9; for(var i=0;i<=maxIdx;i++){var dd=Math.abs(posFor(i)-x); if(dd<best){best=dd;near=i;}}
+    if(near!==idx){idx=near;dots();}
+  }
+  function dots(){[].forEach.call(gd.children,function(b,i){b.setAttribute('aria-current',i===idx);b.hidden=i>maxIdx;});
+    d.getElementById('gPrev').disabled=idx===0; d.getElementById('gNext').disabled=idx>=maxIdx;}
+  function spring(){
+    var last=performance.now(); cancelAnimationFrame(raf);
+    raf=requestAnimationFrame(function tick(now){
+      var dt=Math.min(.032,(now-last)/1000); last=now;
+      var k=Math.pow(2*Math.PI/resp,2), c=4*Math.PI*zeta/resp, h=dt/4;
+      for(var s=0;s<4;s++){var a=-k*(x-target)-c*v; v+=a*h; x+=v*h;}
+      if(Math.abs(x-target)<.3&&Math.abs(v)<4){x=target;v=0;paint();raf=0;return;}
+      paint(); raf=requestAnimationFrame(tick);
+    });
+  }
+  function goTo(i,z){idx=clamp(i,0,maxIdx); target=posFor(idx); zeta=z||1; dots(); if(reduce){x=target;v=0;paint();return;} spring();}
+  function rubber(o,dim){var c=.55;return (o*dim*c)/(dim+c*Math.abs(o));}
+  var down=false,eng=false,sx=0,sy=0,sp=0,hist=[];
+  car.addEventListener('pointerdown',function(e){if(e.button!==0)return;down=true;eng=false;sx=e.clientX;sy=e.clientY;cancelAnimationFrame(raf);raf=0;sp=x;hist=[{x:e.clientX,t:performance.now()}];});
+  car.addEventListener('pointermove',function(e){
+    if(!down)return; var dx=e.clientX-sx;
+    if(!eng){ if(Math.abs(e.clientY-sy)>10&&Math.abs(dx)<10){down=false;return;} if(Math.abs(dx)<6)return; eng=true; car.setPointerCapture(e.pointerId); car.classList.add('drag'); }
+    var raw=sp+dx, W=car.clientWidth; x=raw>0?rubber(raw,W):raw<lo?lo-rubber(lo-raw,W):raw;
+    hist.push({x:e.clientX,t:performance.now()}); if(hist.length>6)hist.shift(); paint();
+  });
+  function release(){
+    if(!down)return; down=false; car.classList.remove('drag'); if(!eng)return;
+    var now=performance.now(), a=hist[0], b=hist[hist.length-1];
+    for(var i=hist.length-1;i>=0;i--){if(now-hist[i].t>90){a=hist[i];break;}}
+    var vel=(b.t-a.t)>0?(b.x-a.x)/((b.t-a.t)/1000):0; if(now-b.t>120)vel=0;
+    var dec=.994, proj=x+(vel/1000)*dec/(1-dec);
+    var best=0,bd=1e9; for(var j=0;j<=maxIdx;j++){var dd=Math.abs(posFor(j)-proj); if(dd<bd){bd=dd;best=j;}}
+    v=vel; goTo(best,Math.abs(vel)>350?.8:1);
+  }
+  car.addEventListener('pointerup',release); car.addEventListener('pointercancel',release); car.addEventListener('lostpointercapture',release);
+  car.addEventListener('keydown',function(e){if(e.key==='ArrowRight'){e.preventDefault();goTo(idx+1);} if(e.key==='ArrowLeft'){e.preventDefault();goTo(idx-1);}});
+  d.getElementById('gPrev').addEventListener('click',function(){goTo(idx-1);});
+  d.getElementById('gNext').addEventListener('click',function(){goTo(idx+1);});
+  function layout(){measure(); x=target=posFor(clamp(idx,0,maxIdx)); v=0; paint(); dots();}
+  w.addEventListener('resize',layout);
+
+  /* ── boot ── */
+  buildWords(); paintOpens(); layout(); update();
+  var saved=null; try{saved=localStorage.getItem('rally-lang');}catch(e){}
+  var nav=(navigator.languages&&navigator.languages[0])||navigator.language||'';
+  if(saved==='es'||(!saved&&/^es/i.test(nav))) setLang('es');
+})();
 </script>
-</body></html>
+</body>
+</html>
