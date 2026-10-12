@@ -8,7 +8,7 @@
 <title>Add me on RALLY</title>
 <meta name="description" content="A friend sent you their RALLY link. Open it with Rally and you're friends straight away." />
 <meta property="og:title" content="Add me on RALLY" />
-<meta property="og:description" content="Open it with Rally and you're on each other's Rank." />
+<meta property="og:description" content="Open it with Rally and you're friends straight away." />
 <!--
   RALLY · Friend link (/f/CODE, rewritten here by vercel.json)
 
@@ -97,12 +97,12 @@
   var es = /^es\b/i.test(navigator.language || '');
   document.documentElement.lang = es ? 'es' : 'en';
   var T = es ? {
-    eyebrow: 'Te han enviado su enlace', what: 'Ábrelo con Rally y sois amigos al momento. Os veréis en el ranking del otro.',
+    eyebrow: 'Te han enviado su enlace', what: 'Ábrelo con Rally y sois amigos al momento. Os veréis en Social.',
     open: 'Abrir en Rally', getIos: 'Descargar en App Store', getAndroid: 'Descargar en Google Play', get: 'Descargar Rally',
     note: 'Con Rally instalado, vuelve a tocar el enlace.',
     notFound: 'Ningún jugador con este enlace', notFoundLede: 'Revisa el enlace o pide que te lo vuelvan a enviar.'
   } : {
-    eyebrow: 'A friend sent you their link', what: 'Open it with Rally and you’re friends straight away. You’ll be on each other’s Rank.',
+    eyebrow: 'A friend sent you their link', what: 'Open it with Rally and you’re friends straight away. You’ll see each other on Social.',
     open: 'Open in Rally', getIos: 'Get it on the App Store', getAndroid: 'Get it on Google Play', get: 'Get Rally',
     note: 'With Rally installed, tap the link again.',
     notFound: 'No player at this link', notFoundLede: 'Check the link, or ask for it to be sent again.'
@@ -141,8 +141,30 @@
     $('note').textContent = T.note;
   }
 
-  if (code && isIos) { location.replace(APP_STORE); }
-  else if (code && isAndroid) { location.replace(intent); }
+  // Note the tap before the store takes over (migration 119): the network
+  // address is read by the server; the page adds platform, screen and time
+  // zone, so a brand-new account can be matched back to this friend.
+  function noteTap() {
+    var tz = '';
+    try { tz = Intl.DateTimeFormat().resolvedOptions().timeZone || ''; } catch (e) {}
+    var sent = fetch(SUPABASE_URL + '/rest/v1/rpc/link_click', {
+      method: 'POST',
+      keepalive: true,
+      headers: { 'Content-Type': 'application/json', apikey: KEY, Authorization: 'Bearer ' + KEY },
+      body: JSON.stringify({
+        p_code: code,
+        p_platform: isIos ? 'ios' : isAndroid ? 'android' : 'web',
+        p_screen: Math.round(screen.width) + 'x' + Math.round(screen.height),
+        p_tz: tz
+      })
+    }).catch(function () {});
+    // never hold anyone more than a moment for it
+    return Promise.race([sent, new Promise(function (r) { setTimeout(r, 700); })]);
+  }
+
+  if (code && isIos) { noteTap().then(function () { location.replace(APP_STORE); }); }
+  else if (code && isAndroid) { noteTap().then(function () { location.replace(intent); }); }
+  else if (code) { noteTap(); }
 
   if (!code) { show(null); return; }
   fetch(SUPABASE_URL + '/rest/v1/rpc/friend_link_preview', {
