@@ -92,10 +92,6 @@
       <p class="lede" id="lede"></p>
     </div>
     <div class="card" id="card" hidden></div>
-    <div class="code" id="codeBox" hidden>
-      <div><div class="eyebrow" id="codeLabel"></div><b id="codeText"></b></div>
-      <button type="button" id="copyBtn"></button>
-    </div>
     <div class="actions">
       <a class="btn primary" id="openBtn" href="#"></a>
       <a class="btn quiet" id="storeBtn" href="#"></a>
@@ -120,7 +116,7 @@
     open: 'Abrir en Rally', getIos: 'Descargar en App Store', getAndroid: 'Descargar en Google Play', get: 'Descargar Rally',
     code: 'TU CÓDIGO', copy: 'Copiar', copied: 'Copiado',
     note: 'Si el enlace no abre la app después de instalarla, toca «¿Tienes un enlace o código de partido?» y pega este código.',
-    keep: 'Al tocar, copiamos tu código. Abre Rally y toca Pegar en la primera pantalla.',
+    keep: 'Descarga Rally y toca Pegar en la primera pantalla. Tu partido te estará esperando.',
     counted: 'Este partido ya cuenta', countedLede: 'Abre Rally para verlo en tu historial.',
     lapsed: 'Este partido ha caducado', lapsedLede: 'Nadie del otro equipo lo confirmó en 14 días.',
     cancelled: 'Este partido se retiró', cancelledLede: 'No se movió ningún rating.',
@@ -133,7 +129,7 @@
     open: 'Open in Rally', getIos: 'Get it on the App Store', getAndroid: 'Get it on Google Play', get: 'Get Rally',
     code: 'YOUR CODE', copy: 'Copy', copied: 'Copied',
     note: 'If the link doesn’t open the app after installing, tap “Got a match link or code?” and paste this code.',
-    keep: 'Tapping copies your code. Open Rally and tap Paste on the first screen.',
+    keep: 'Get Rally, then tap Paste on the first screen. Your match will be waiting.',
     counted: 'This match counts', countedLede: 'Open Rally to see it in your history.',
     lapsed: 'This match lapsed', lapsedLede: 'Nobody on the other team confirmed it within 14 days.',
     cancelled: 'This match was withdrawn', cancelledLede: 'Nobody’s rating moved.',
@@ -180,7 +176,7 @@
       var gone = false;
       var go = function () { if (!gone) { gone = true; location.href = store; } };
       setTimeout(go, 600);
-      try { navigator.clipboard.writeText(code).then(go, go); } catch (x) { go(); }
+      try { navigator.clipboard.writeText(location.origin + '/m/' + code).then(go, go); } catch (x) { go(); }
     });
     // iPhone: this page only shows when Rally isn't installed (with it, the
     // link opens the app), so getting the app is the main button there.
@@ -189,28 +185,21 @@
       $('openBtn').className = 'btn quiet';
       $('storeBtn').parentNode.insertBefore($('storeBtn'), $('openBtn'));
     }
-    if (claimable && (isIos || isAndroid)) { $('keepNote').textContent = T.keep; $('keepNote').hidden = false; }
+    // The Paste note is for iPhone; Android's store carries the link by itself.
+    if (claimable && isIos) { $('keepNote').textContent = T.keep; $('keepNote').hidden = false; }
 
     if (state === 'notfound') {
       $('title').textContent = T.notFound; $('lede').textContent = T.notFoundLede;
       $('openBtn').hidden = true; $('note').hidden = true;
       return;
     }
-    $('eyebrow').textContent = code;
-    $('codeBox').hidden = false;
-    $('codeLabel').textContent = T.code;
-    $('codeText').textContent = code;
-    $('copyBtn').textContent = T.copy;
-    $('copyBtn').addEventListener('click', function () {
-      var done = function () { $('copyBtn').textContent = T.copied; setTimeout(function () { $('copyBtn').textContent = T.copy; }, 1800); };
-      try { navigator.clipboard.writeText(code).then(done, function () {}); } catch (e) {}
-    });
-    $('note').textContent = T.note;
+    // No code on the page any more (12 Oct 2026): the link carries itself.
+    $('note').hidden = true;
 
     var st = data.status;
     if (st === 'counted' || st === 'unrated') { $('title').textContent = T.counted; $('lede').textContent = T.countedLede; }
-    else if (st === 'lapsed') { $('title').textContent = T.lapsed; $('lede').textContent = T.lapsedLede; $('codeBox').hidden = true; $('note').hidden = true; }
-    else if (st === 'cancelled') { $('title').textContent = T.cancelled; $('lede').textContent = T.cancelledLede; $('codeBox').hidden = true; $('note').hidden = true; }
+    else if (st === 'lapsed') { $('title').textContent = T.lapsed; $('lede').textContent = T.lapsedLede; }
+    else if (st === 'cancelled') { $('title').textContent = T.cancelled; $('lede').textContent = T.cancelledLede; }
     else {
       $('title').textContent = T.logged(data.logger);
       var open = (data.seats || []).filter(function (s) { return s.guest && !s.claimed; }).map(function (s) { return s.name; });

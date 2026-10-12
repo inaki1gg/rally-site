@@ -99,12 +99,14 @@
   var T = es ? {
     eyebrow: 'Te han enviado su enlace', what: 'Ábrelo con Rally y sois amigos al momento. Os veréis en Social.',
     open: 'Abrir en Rally', getIos: 'Descargar en App Store', getAndroid: 'Descargar en Google Play', get: 'Descargar Rally',
-    note: 'Con Rally instalado, vuelve a tocar el enlace.',
+    note: 'Descarga Rally y toca Pegar en la primera pantalla. Seréis amigos al momento.',
+    noteAndroid: 'Descarga Rally. Seréis amigos en cuanto te unas.',
     notFound: 'Ningún jugador con este enlace', notFoundLede: 'Revisa el enlace o pide que te lo vuelvan a enviar.'
   } : {
     eyebrow: 'A friend sent you their link', what: 'Open it with Rally and you’re friends straight away. You’ll see each other on Social.',
     open: 'Open in Rally', getIos: 'Get it on the App Store', getAndroid: 'Get it on Google Play', get: 'Get Rally',
-    note: 'With Rally installed, tap the link again.',
+    note: 'Get Rally, then tap Paste on the first screen. You’re friends straight away.',
+    noteAndroid: 'Get Rally. You’re friends as soon as you join.',
     notFound: 'No player at this link', notFoundLede: 'Check the link, or ask for it to be sent again.'
   };
 
@@ -113,7 +115,9 @@
   var isIos = /iPhone|iPad|iPod/i.test(ua);
   var m = /\/f\/([A-Za-z0-9]{8})/.exec(location.pathname) || /[?&]c=([A-Za-z0-9]{8})/.exec(location.search);
   var code = m ? m[1].toUpperCase() : null;
-  var intent = code ? 'intent://f/' + code + '#Intent;scheme=rally;package=app.rallyrating;S.browser_fallback_url=' + encodeURIComponent(PLAY_STORE) + ';end' : '';
+  // Android: the Play Store hands the app the link on first open (referrer).
+  var playWithCode = PLAY_STORE + (code ? '&referrer=' + encodeURIComponent('rally_friend=' + code) : '');
+  var intent = code ? 'intent://f/' + code + '#Intent;scheme=rally;package=app.rallyrating;S.browser_fallback_url=' + encodeURIComponent(playWithCode) + ';end' : '';
 
   function $(id) { return document.getElementById(id); }
 
@@ -121,7 +125,17 @@
     $('loading').hidden = true;
     $('content').hidden = false;
     $('storeBtn').textContent = isIos ? T.getIos : isAndroid ? T.getAndroid : T.get;
-    $('storeBtn').href = isAndroid ? PLAY_STORE : APP_STORE;
+    $('storeBtn').href = isAndroid ? playWithCode : APP_STORE;
+    // iPhone: copy this link on the way to the store, so Rally's first screen
+    // can offer one Paste. Never holds the store up more than 0.6s.
+    $('storeBtn').addEventListener('click', function (e) {
+      if (!code || isAndroid || !navigator.clipboard) return;
+      e.preventDefault();
+      var gone = false;
+      var go = function () { if (!gone) { gone = true; location.href = APP_STORE; } };
+      setTimeout(go, 600);
+      try { navigator.clipboard.writeText(location.origin + '/f/' + code).then(go, go); } catch (x) { go(); }
+    });
     $('openBtn').textContent = T.open;
     $('openBtn').href = isAndroid ? intent : 'rally://f/' + code;
     if (!p) {
@@ -138,33 +152,14 @@
     $('name').textContent = p.first;
     $('what').textContent = T.what;
     $('card').hidden = false;
-    $('note').textContent = T.note;
+    $('note').textContent = isAndroid ? T.noteAndroid : T.note;
   }
 
-  // Note the tap before the store takes over (migration 119): the network
-  // address is read by the server; the page adds platform, screen and time
-  // zone, so a brand-new account can be matched back to this friend.
-  function noteTap() {
-    var tz = '';
-    try { tz = Intl.DateTimeFormat().resolvedOptions().timeZone || ''; } catch (e) {}
-    var sent = fetch(SUPABASE_URL + '/rest/v1/rpc/link_click', {
-      method: 'POST',
-      keepalive: true,
-      headers: { 'Content-Type': 'application/json', apikey: KEY, Authorization: 'Bearer ' + KEY },
-      body: JSON.stringify({
-        p_code: code,
-        p_platform: isIos ? 'ios' : isAndroid ? 'android' : 'web',
-        p_screen: Math.round(screen.width) + 'x' + Math.round(screen.height),
-        p_tz: tz
-      })
-    }).catch(function () {});
-    // never hold anyone more than a moment for it
-    return Promise.race([sent, new Promise(function (r) { setTimeout(r, 700); })]);
-  }
-
-  if (code && isIos) { noteTap().then(function () { location.replace(APP_STORE); }); }
-  else if (code && isAndroid) { noteTap().then(function () { location.replace(intent); }); }
-  else if (code) { noteTap(); }
+  // Android with Rally: the intent opens the app; without it, the Play Store
+  // (which carries the link through). iPhone with Rally never reaches this
+  // page: the link opens the app. So on iPhone the page stays, and getting the
+  // app is its main button (it copies the link for the Paste on first open).
+  if (code && isAndroid) { location.replace(intent); }
 
   if (!code) { show(null); return; }
   fetch(SUPABASE_URL + '/rest/v1/rpc/friend_link_preview', {
